@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>第一章 · 语言记忆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f5f7fb;
+            color: #1a2332;
+            padding: 16px 14px 100px 14px;
+            min-height: 100vh;
+        }
+
+        /* ===== 顶部 ===== */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .header-title span {
+            color: #2d7d46;
+        }
+        .header-back {
+            font-size: 14px;
+            color: #1a5276;
+            background: #e3eef7;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: none;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .header-back:active {
+            transform: scale(0.95);
+        }
+        .header-stats {
+            font-size: 13px;
+            color: #6b7a8f;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: #e8ecf1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: #2d7d46;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #6b7a8f;
+            margin-top: 4px;
+        }
+
+        /* ===== 筛选栏 ===== */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .filter-btn {
+            flex-shrink: 0;
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #d0d7e2;
+            background: white;
+            font-size: 13px;
+            color: #3d4e62;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .filter-btn.active {
+            background: #2d7d46;
+            border-color: #2d7d46;
+            color: white;
+        }
+        .filter-btn:active {
+            transform: scale(0.95);
+        }
+        .filter-btn.wrong-filter {
+            border-color: #c0392b;
+            color: #c0392b;
+        }
+        .filter-btn.wrong-filter.active {
+            background: #c0392b;
+            border-color: #c0392b;
+            color: white;
+        }
+
+        /* ===== 题目卡片 ===== */
+        .question-card {
+            background: white;
+            border-radius: 18px;
+            padding: 24px 20px 20px 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            animation: fadeUp 0.35s ease;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .question-type {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #2d7d46;
+            background: #e6f3ea;
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+        .question-section {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 500;
+            color: #6b7a8f;
+            background: #f0f2f5;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .question-text {
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 1.8;
+            margin: 10px 0 4px 0;
+            color: #1a2332;
+        }
+        .question-text .blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px dashed #2d7d46;
+            margin: 0 4px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0 12px 0;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #e2e7ef;
+            background: white;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1a2332;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            min-height: 52px;
+        }
+        .option-btn:active {
+            transform: scale(0.98);
+        }
+        .option-btn.selected-correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .option-btn.selected-wrong {
+            border-color: #c0392b;
+            background: #fde8e6;
+        }
+        .option-btn.show-correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .option-label {
+            display: inline-block;
+            font-weight: 700;
+            color: #6b7a8f;
+            margin-right: 8px;
+        }
+
+        /* ===== 填空题 ===== */
+        .fill-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .fill-row label {
+            font-weight: 500;
+            color: #3d4e62;
+            min-width: 30px;
+            font-size: 15px;
+        }
+        .fill-row input {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 2px solid #e2e7ef;
+            font-size: 16px;
+            font-family: inherit;
+            background: white;
+            color: #1a2332;
+            transition: border 0.2s;
+            min-height: 48px;
+        }
+        .fill-row input:focus {
+            outline: none;
+            border-color: #2d7d46;
+        }
+        .fill-row input.correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .fill-row input.wrong {
+            border-color: #c0392b;
+            background: #fde8e6;
+        }
+        .fill-row input:disabled {
+            opacity: 0.7;
+        }
+        .fill-row .correct-answer-hint {
+            font-size: 15px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+
+        /* ===== 解析 ===== */
+        .explanation {
+            background: #f8faff;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 12px 0 6px 0;
+            border-left: 4px solid #2d7d46;
+            display: none;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+        .explanation.show {
+            display: block;
+        }
+        .tip-yellow {
+            background: #fcf8e3;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 3px solid #f0ad4e;
+            margin-top: 6px;
+            font-size: 14px;
+        }
+        .tip-yellow strong {
+            color: #8a6d3b;
+        }
+        .mnemonic {
+            background: #f0f7f4;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1a6b3c;
+            margin-top: 6px;
+            border-left: 3px solid #2d7d46;
+        }
+
+        /* ===== 按钮 ===== */
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .btn-primary {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: #2d7d46;
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            min-height: 52px;
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: #236a3a;
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            transform: none;
+        }
+        .btn-secondary {
+            padding: 14px 18px;
+            border: 2px solid #d0d7e2;
+            border-radius: 14px;
+            background: white;
+            color: #3d4e62;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            min-height: 52px;
+        }
+        .btn-secondary:active {
+            transform: scale(0.97);
+            background: #f0f2f5;
+        }
+
+        /* ===== 状态标签 ===== */
+        .status-badge {
+            display: inline-block;
+            font-size: 12px;
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .status-badge.done {
+            background: #e8f5ee;
+            color: #2d7d46;
+        }
+        .status-badge.wrong {
+            background: #fde8e6;
+            color: #c0392b;
+        }
+        .wrong-tag {
+            display: inline-block;
+            background: #c0392b;
+            color: white;
+            font-size: 11px;
+            padding: 1px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+
+        /* ===== 完成页 ===== */
+        .complete-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .complete-screen .big-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+        .complete-screen h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .complete-screen p {
+            color: #6b7a8f;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+        .complete-screen .score-big {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2d7d46;
+            margin: 16px 0;
+        }
+
+        /* ===== 空状态 ===== */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7a8f;
+        }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        /* ===== 错题本悬浮按钮 ===== */
+        .wrong-book-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a2332;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 12px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 100;
+            font-family: inherit;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            min-height: 48px;
+        }
+        .wrong-book-btn:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+        .wrong-book-btn .badge {
+            background: #c0392b;
+            color: white;
+            border-radius: 20px;
+            padding: 0 10px;
+            font-size: 13px;
+            line-height: 22px;
+        }
+
+        /* ===== 返回首页底部按钮 ===== */
+        .home-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 0;
+        }
+        .home-footer .btn-home {
+            background: none;
+            border: 1.5px solid #d0d7e2;
+            border-radius: 30px;
+            padding: 10px 30px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #3d4e62;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+        .home-footer .btn-home:active {
+            transform: scale(0.96);
+            background: #f0f2f5;
+        }
+
+        @media (max-width: 380px) {
+            .question-text {
+                font-size: 15px;
+            }
+            .option-btn {
+                font-size: 14px;
+                padding: 12px 14px;
+                min-height: 44px;
+            }
+            .fill-row input {
+                font-size: 14px;
+                padding: 10px 12px;
+                min-height: 44px;
+            }
+            .btn-primary {
+                font-size: 15px;
+                min-height: 44px;
+            }
+        }
+        @media (min-width: 768px) {
+            body {
+                max-width: 480px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== 顶部 ===== -->
+    <div class="header" id="header">
+        <div class="header-top">
+            <div class="header-title">🧬 语言记忆 · <span>第一章</span></div>
+            <button class="header-back" onclick="goHome()">🏠 首页</button>
+        </div>
+        <div class="header-stats" id="statsLabel">0 / 0</div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label">
+            <span id="correctRate">✅ 正确率：--%</span>
+            <span id="wrongCount">❌ 错题：0</span>
+        </div>
+    </div>
+
+    <!-- ===== 筛选 ===== -->
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">📚 全部</button>
+        <button class="filter-btn" data-filter="1.1">§1.1 细胞学说</button>
+        <button class="filter-btn" data-filter="1.2">§1.2 原核与真核</button>
+        <button class="filter-btn" data-filter="1.3">§1.3 生命层次</button>
+        <button class="filter-btn wrong-filter" data-filter="wrong">📕 错题本</button>
+    </div>
+
+    <!-- ===== 题目容器 ===== -->
+    <div id="questionContainer"></div>
+
+    <!-- ===== 返回首页 ===== -->
+    <div class="home-footer">
+        <button class="btn-home" onclick="goHome()">🏠 返回首页</button>
+    </div>
+
+    <!-- ===== 错题本悬浮按钮 ===== -->
+    <button class="wrong-book-btn" id="wrongBookBtn">
+        📕 错题本
+        <span class="badge" id="wrongBadge">0</span>
+    </button>
+
+    <script>
+        // ============================================================
+        // 第一章语言记忆题库（30题）
+        // ============================================================
+        var questionBank = [{
+            id: 1,
+            type: 'choice',
+            section: '1.1',
+            question: '下列关于细胞与生命活动关系的叙述，错误的是（　）',
+            options: [
+                'A．草履虫等单细胞生物，一个细胞就能完成全部生命活动',
+                'B．病毒没有细胞结构，不能独立生活',
+                'C．细胞是生物体结构和功能的基本单位',
+                'D．一切生物的生命活动都离不开细胞'
+            ],
+            correct: 3,
+            explanation: 'D错在"一切生物"——病毒无细胞结构，不能说"离不开细胞"，只能说"必须寄生在活细胞中"。',
+            tip: '病毒无细胞结构，必须寄生在活细胞中才能繁殖。'
+        }, {
+            id: 2,
+            type: 'choice',
+            section: '1.1',
+            question: '下列关于病毒的叙述，正确的是（　）',
+            options: [
+                'A．病毒是一种单细胞生物',
+                'B．病毒可以在普通培养基上培养',
+                'C．病毒由蛋白质外壳和内部核酸组成',
+                'D．病毒的遗传物质一定是DNA'
+            ],
+            correct: 2,
+            explanation: 'C正确。A错（病毒无细胞结构）；B错（必须用活细胞培养）；D错（病毒遗传物质是DNA或RNA）。',
+            tip: '病毒遗传物质是DNA或RNA（二者之一），不是"DNA和RNA"。'
+        }, {
+            id: 3,
+            type: 'choice',
+            section: '1.1',
+            question: '施莱登和施旺建立细胞学说时，使用的科学方法是（　）',
+            options: ['A．完全归纳法', 'B．不完全归纳法', 'C．假说—演绎法', 'D．同位素标记法'],
+            correct: 1,
+            explanation: '施莱登和施旺从部分动植物细胞中归纳出一般结论，属于不完全归纳法。',
+            mnemonic: '口诀："施莱登施旺看部分，归纳出结论——不完全"。'
+        }, {
+            id: 4,
+            type: 'choice',
+            section: '1.1',
+            question: '细胞学说的建立者主要是（　）',
+            options: ['A．施莱登和施旺', 'B．施莱登和魏尔肖', 'C．施旺和魏尔肖', 'D．施莱登、施旺和魏尔肖'],
+            correct: 0,
+            explanation: '施莱登和施旺共同建立了细胞学说。魏尔肖是修正补充"新细胞来自老细胞分裂"，不是建立者。',
+            tip: '魏尔肖是修正者，不是建立者。'
+        }, {
+            id: 5,
+            type: 'fill',
+            section: '1.1',
+            question: '细胞学说的核心内容：一切动植物都由细胞发育而来，并由【1】和【2】所构成。',
+            blanks: ['细胞', '细胞产物'],
+            explanation: '细胞学说第一条：一切动植物都由细胞发育而来，并由细胞和细胞产物所构成。'
+        }, {
+            id: 6,
+            type: 'fill',
+            section: '1.1',
+            question: '魏尔肖对细胞学说的修正内容是：新细胞来自【1】的分裂。',
+            blanks: ['老细胞'],
+            explanation: '魏尔肖提出"新细胞来自老细胞的分裂"，补充了细胞学说。'
+        }, {
+            id: 7,
+            type: 'fill',
+            section: '1.1',
+            question: '病毒由【1】外壳和内部的【2】组成。',
+            blanks: ['蛋白质', '核酸'],
+            explanation: '病毒的结构：蛋白质外壳 + 内部核酸（DNA或RNA）。',
+            tip: '核酸是DNA或RNA（二者之一），不是"DNA和RNA"。'
+        }, {
+            id: 8,
+            type: 'fill',
+            section: '1.1',
+            question: '细胞学说揭示了动物和植物的【1】性。',
+            blanks: ['统一'],
+            explanation: '细胞学说揭示了动植物界的统一性（都由细胞构成）。',
+            tip: '细胞学说揭示的是"统一性"，不是"差异性"。'
+        }, {
+            id: 9,
+            type: 'choice',
+            section: '1.2',
+            question: '原核细胞和真核细胞的根本区别是（　）',
+            options: ['A．有无细胞壁', 'B．有无核膜包被的细胞核', 'C．有无核糖体', 'D．有无DNA'],
+            correct: 1,
+            explanation: '根本区别是"有无核膜包被的细胞核"。原核无，真核有。',
+            mnemonic: '口诀："原核真核怎么分？核膜是关键。"'
+        }, {
+            id: 10,
+            type: 'choice',
+            section: '1.2',
+            question: '下列生物中，属于原核生物的是（　）',
+            options: ['A．酵母菌', 'B．霉菌', 'C．大肠杆菌', 'D．蘑菇'],
+            correct: 2,
+            explanation: '大肠杆菌是细菌（原核）。酵母菌、霉菌、蘑菇都是真菌（真核）。',
+            mnemonic: '口诀："杆球螺旋是细菌，酵母霉菌是真菌。"',
+            tip: '带"杆/球/螺旋"字样的都是细菌（原核）。'
+        }, {
+            id: 11,
+            type: 'choice',
+            section: '1.2',
+            question: '下列关于蓝藻的叙述，错误的是（　）',
+            options: [
+                'A．蓝藻属于原核生物',
+                'B．蓝藻含有藻蓝素和叶绿素',
+                'C．蓝藻没有叶绿体，不能进行光合作用',
+                'D．常见的蓝藻有颤蓝细菌、念珠蓝细菌、发菜'
+            ],
+            correct: 2,
+            explanation: 'C错。蓝藻没有叶绿体，但含有藻蓝素和叶绿素，能进行光合作用（自养生物）。',
+            tip: '蓝藻无叶绿体，但有藻蓝素和叶绿素，能光合。'
+        }, {
+            id: 12,
+            type: 'choice',
+            section: '1.2',
+            question: '原核细胞和真核细胞共有的细胞器是（　）',
+            options: ['A．线粒体', 'B．叶绿体', 'C．核糖体', 'D．内质网'],
+            correct: 2,
+            explanation: '核糖体是原核和真核细胞唯一共有的细胞器，是蛋白质合成的场所。',
+            mnemonic: '口诀："原核真核共有的细胞器——只有核糖体。"'
+        }, {
+            id: 13,
+            type: 'choice',
+            section: '1.2',
+            question: '下列关于原核细胞DNA的叙述，正确的是（　）',
+            options: [
+                'A．DNA与蛋白质结合形成染色体',
+                'B．DNA呈环状，裸露在拟核中',
+                'C．DNA主要存在于细胞核中',
+                'D．DNA呈链状，分布在细胞质中'
+            ],
+            correct: 1,
+            explanation: '原核细胞DNA呈环状，裸露在拟核中，不与蛋白质结合（无染色体）。',
+            tip: '原核细胞无染色体（DNA不与蛋白质结合），无核膜。'
+        }, {
+            id: 14,
+            type: 'choice',
+            section: '1.2',
+            question: '下列关于细胞的统一性的叙述，错误的是（　）',
+            options: [
+                'A．原核细胞和真核细胞都有细胞膜',
+                'B．原核细胞和真核细胞都有细胞质',
+                'C．原核细胞和真核细胞都有核糖体',
+                'D．原核细胞和真核细胞都有染色体'
+            ],
+            correct: 3,
+            explanation: 'D错。原核细胞无染色体（DNA裸露），真核细胞有染色体（DNA+蛋白质）。',
+            tip: '原核细胞无染色体，真核细胞有染色体。'
+        }, {
+            id: 15,
+            type: 'choice',
+            section: '1.2',
+            question: '下列生物中，属于真核生物的是（　）',
+            options: ['A．大肠杆菌', 'B．乳酸菌', 'C．酵母菌', 'D．硝化细菌'],
+            correct: 2,
+            explanation: '酵母菌是真菌（真核）。硝化细菌带"菌"字，是细菌（原核）。',
+            tip: '硝化细菌是细菌（原核），酵母菌是真菌（真核）。'
+        }, {
+            id: 16,
+            type: 'choice',
+            section: '1.2',
+            question: '下列关于支原体的叙述，错误的是（　）',
+            options: [
+                'A．支原体是原核生物',
+                'B．支原体没有细胞壁',
+                'C．支原体有核膜包被的细胞核',
+                'D．支原体的遗传物质是DNA'
+            ],
+            correct: 2,
+            explanation: 'C错。支原体是原核生物，无核膜包被的细胞核。支原体的特殊之处是没有细胞壁。',
+            tip: '支原体是原核生物，无细胞壁（其他细菌多数有细胞壁）。'
+        }, {
+            id: 17,
+            type: 'fill',
+            section: '1.2',
+            question: '原核细胞的DNA存在于【1】中，该区域没有【2】包被。',
+            blanks: ['拟核', '核膜'],
+            explanation: '原核细胞的DNA存在于拟核中，该区域没有核膜包被。'
+        }, {
+            id: 18,
+            type: 'fill',
+            section: '1.2',
+            question: '真核细胞的DNA与【1】结合形成【2】。',
+            blanks: ['蛋白质', '染色体'],
+            explanation: '真核细胞的DNA与蛋白质结合形成染色体（或染色质）。'
+        }, {
+            id: 19,
+            type: 'fill',
+            section: '1.2',
+            question: '蓝藻细胞内含有【1】和【2】，因此能进行光合作用。',
+            blanks: ['藻蓝素', '叶绿素'],
+            explanation: '蓝藻无叶绿体，但含有藻蓝素和叶绿素，能进行光合作用。',
+            tip: '蓝藻没有叶绿体，但有藻蓝素和叶绿素。'
+        }, {
+            id: 20,
+            type: 'fill',
+            section: '1.2',
+            question: '原核细胞只有【1】一种细胞器。',
+            blanks: ['核糖体'],
+            explanation: '原核细胞只有核糖体一种细胞器。',
+            mnemonic: '口诀："原核细胞器少，只有核糖体把蛋白造。"'
+        }, {
+            id: 21,
+            type: 'choice',
+            section: '1.3',
+            question: '生命系统的结构层次由简单到复杂的正确顺序是（　）',
+            options: [
+                'A．细胞→组织→器官→个体→系统→种群→群落→生态系统→生物圈',
+                'B．细胞→组织→器官→系统→个体→种群→群落→生态系统→生物圈',
+                'C．细胞→组织→系统→器官→个体→种群→群落→生态系统→生物圈',
+                'D．细胞→组织→器官→系统→种群→个体→群落→生态系统→生物圈'
+            ],
+            correct: 1,
+            explanation: '正确顺序：细胞→组织→器官→系统→个体→种群→群落→生态系统→生物圈。',
+            mnemonic: '口诀："细胞组官系，个种群生圈"'
+        }, {
+            id: 22,
+            type: 'choice',
+            section: '1.3',
+            question: '植物体不具有的生命系统结构层次是（　）',
+            options: ['A．细胞', 'B．组织', 'C．器官', 'D．系统'],
+            correct: 3,
+            explanation: '植物没有"系统"层次，由器官直接构成个体。',
+            tip: '植物无"系统"层次，动物有系统层次。'
+        }, {
+            id: 23,
+            type: 'choice',
+            section: '1.3',
+            question: '单细胞生物（如大肠杆菌）在生命系统中属于（　）',
+            options: ['A．只属于细胞层次', 'B．只属于个体层次', 'C．既是细胞层次也是个体层次', 'D．既不是细胞也不是个体'],
+            correct: 2,
+            explanation: '一个单细胞生物就是一个完整的个体，因此同时属于细胞层次和个体层次。',
+            tip: '单细胞生物既是细胞层次，也是个体层次。'
+        }, {
+            id: 24,
+            type: 'choice',
+            section: '1.3',
+            question: '"一个池塘中所有的鲤鱼"属于生命系统中的（　）',
+            options: ['A．种群', 'B．群落', 'C．生态系统', 'D．个体'],
+            correct: 0,
+            explanation: '种群 = 同一时间、同一地点、同种生物的全部个体。'
+        }, {
+            id: 25,
+            type: 'choice',
+            section: '1.3',
+            question: '"一个池塘中所有的生物"属于生命系统中的（　）',
+            options: ['A．种群', 'B．群落', 'C．生态系统', 'D．生物圈'],
+            correct: 1,
+            explanation: '群落 = 同一时间、同一地点、所有生物的全部种群。',
+            tip: '种群=同种生物；群落=所有生物（全部种群）。'
+        }, {
+            id: 26,
+            type: 'choice',
+            section: '1.3',
+            question: '"一个池塘"属于生命系统中的（　）',
+            options: ['A．种群', 'B．群落', 'C．生态系统', 'D．生物圈'],
+            correct: 2,
+            explanation: '生态系统 = 生物群落 + 无机环境（水、阳光、土壤等）。',
+            tip: '生态系统 = 生物群落 + 无机环境。'
+        }, {
+            id: 27,
+            type: 'choice',
+            section: '1.3',
+            question: '地球上最大的生命系统是（　）',
+            options: ['A．生态系统', 'B．生物圈', 'C．群落', 'D．个体'],
+            correct: 1,
+            explanation: '生物圈是地球上最大的生命系统。'
+        }, {
+            id: 28,
+            type: 'fill',
+            section: '1.3',
+            question: '生命系统的结构层次中，由小到大依次是：细胞→组织→【1】→系统→个体→【2】→群落→生态系统→生物圈。',
+            blanks: ['器官', '种群'],
+            explanation: '完整顺序：细胞→组织→器官→系统→个体→种群→群落→生态系统→生物圈。'
+        }, {
+            id: 29,
+            type: 'fill',
+            section: '1.3',
+            question: '同种生物的全部个体构成【1】；所有生物的全部种群构成【2】。',
+            blanks: ['种群', '群落'],
+            explanation: '种群=同种生物全部个体；群落=所有生物全部种群。'
+        }, {
+            id: 30,
+            type: 'fill',
+            section: '1.3',
+            question: '生命系统最基本（最小）的层次是【1】。',
+            blanks: ['细胞'],
+            explanation: '细胞是生命系统最基本（最小）的层次。'
+        }];
+
+        // ============================================================
+        // 状态管理
+        // ============================================================
+        var STATE_KEY = 'bio_ch1_vocab';
+
+        function getState() {
+            try {
+                var raw = localStorage.getItem(STATE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return { answeredIds: [], results: {}, wrongIds: [] };
+        }
+
+        function saveState(state) {
+            localStorage.setItem(STATE_KEY, JSON.stringify(state));
+        }
+
+        // ============================================================
+        // 错题本全局存储（跨页面共享）
+        // ============================================================
+        function getWrongList() {
+            try {
+                var raw = localStorage.getItem('bio_wrong_list');
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return [];
+        }
+
+        function saveWrongList(list) {
+            localStorage.setItem('bio_wrong_list', JSON.stringify(list));
+        }
+
+        function addWrongItem(q, userAnswer) {
+            var list = getWrongList();
+            // 检查是否已存在
+            var exists = list.some(function(item) {
+                return item.chapter === 1 && item.type === 'vocab' && item.questionId === q.id;
+            });
+            if (exists) return;
+            list.push({
+                chapter: 1,
+                type: 'vocab',
+                questionId: q.id,
+                question: q.question,
+                userAnswer: userAnswer || '',
+                correctAnswer: q.type === 'choice' ? q.options[q.correct] : (q.blanks ? q.blanks.join('、') : '')
+            });
+            saveWrongList(list);
+        }
+
+        function removeWrongItem(qId) {
+            var list = getWrongList();
+            list = list.filter(function(item) {
+                return !(item.chapter === 1 && item.type === 'vocab' && item.questionId === qId);
+            });
+            saveWrongList(list);
+        }
+
+        function isWrong(qId) {
+            var list = getWrongList();
+            return list.some(function(item) {
+                return item.chapter === 1 && item.type === 'vocab' && item.questionId === qId;
+            });
+        }
+
+        function getWrongCount() {
+            return getWrongList().filter(function(item) {
+                return item.chapter === 1 && item.type === 'vocab';
+            }).length;
+        }
+
+        // ============================================================
+        // 核心变量
+        // ============================================================
+        var state = getState();
+        var filteredIds = [];
+        var currentFilter = 'all';
+        var currentQuestion = null;
+        var isAnswered = false;
+        var fillInputs = {};
+
+        // ============================================================
+        // 辅助函数
+        // ============================================================
+        function getFilteredIds(filter) {
+            if (filter === 'all') return questionBank.map(function(q) { return q.id; });
+            if (filter === 'wrong') {
+                var wrongIds = getWrongList().filter(function(item) {
+                    return item.chapter === 1 && item.type === 'vocab';
+                }).map(function(item) { return item.questionId; });
+                return wrongIds;
+            }
+            return questionBank.filter(function(q) { return q.section === filter; }).map(function(q) { return q.id; });
+        }
+
+        function getQuestionById(id) {
+            for (var i = 0; i < questionBank.length; i++) {
+                if (questionBank[i].id === id) return questionBank[i];
+            }
+            return null;
+        }
+
+        function shuffleArray(arr) {
+            for (var i = arr.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            return arr;
+        }
+
+        function getUnansweredIds() {
+            var result = [];
+            for (var i = 0; i < filteredIds.length; i++) {
+                if (state.answeredIds.indexOf(filteredIds[i]) === -1) {
+                    result.push(filteredIds[i]);
+                }
+            }
+            return result;
+        }
+
+        function getProgress() {
+            var total = filteredIds.length;
+            var done = state.answeredIds.length;
+            var correct = 0;
+            for (var i = 0; i < state.answeredIds.length; i++) {
+                if (state.results[state.answeredIds[i]] === true) correct++;
+            }
+            var rate = done === 0 ? 0 : Math.round((correct / done) * 100);
+            return { total: total, done: done, correct: correct, rate: rate };
+        }
+
+        function updateUI() {
+            var p = getProgress();
+            var total = p.total;
+            var done = p.done;
+            var rate = p.rate;
+            var wrongCount = getWrongCount();
+
+            document.getElementById('statsLabel').textContent = done + ' / ' + total;
+            document.getElementById('progressFill').style.width = (total === 0 ? 0 : (done / total) * 100) + '%';
+            document.getElementById('correctRate').textContent = '✅ 正确率：' + (done === 0 ? '--%' : rate + '%');
+            document.getElementById('wrongCount').textContent = '❌ 错题：' + wrongCount;
+            document.getElementById('wrongBadge').textContent = wrongCount;
+
+            var btn = document.getElementById('wrongBookBtn');
+            btn.style.display = (wrongCount > 0 && currentFilter !== 'wrong') ? 'flex' : 'none';
+
+            // 更新首页存储的进度
+            var indexData = JSON.parse(localStorage.getItem('bio_index_data') || '{"doneMap":{}}');
+            indexData.doneMap['ch1_vocab'] = done;
+            localStorage.setItem('bio_index_data', JSON.stringify(indexData));
+        }
+
+        // ============================================================
+        // 渲染
+        // ============================================================
+        function render() {
+            var container = document.getElementById('questionContainer');
+
+            if (filteredIds.length === 0) {
+                if (currentFilter === 'wrong') {
+                    container.innerHTML =
+                    '<div class="empty-state"><div class="icon">🎉</div><p>错题本已清空！继续加油！</p></div>';
+                } else {
+                    container.innerHTML =
+                    '<div class="empty-state"><div class="icon">📭</div><p>当前章节暂无题目</p></div>';
+                }
+                updateUI();
+                return;
+            }
+
+            var unanswered = getUnansweredIds();
+            if (unanswered.length === 0 && state.answeredIds.length === filteredIds.length) {
+                var p = getProgress();
+                container.innerHTML =
+                    '<div class="complete-screen">' +
+                    '<div class="big-icon">🎉</div>' +
+                    '<h2>全部通关！</h2>' +
+                    '<p>第一章语言记忆已刷完</p>' +
+                    '<div class="score-big">' + p.rate + '%</div>' +
+                    '<p style="color:#6b7a8f;font-size:14px;">正确率 ' + p.rate + '% · 共 ' + filteredIds.length +
+                    ' 题</p>' +
+                    '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="resetProgress()">🔄 重新开始</button>' +
+                    '</div>';
+                updateUI();
+                return;
+            }
+
+            var targetId = unanswered.length > 0 ? unanswered[0] : filteredIds[filteredIds.length - 1];
+            var q = getQuestionById(targetId);
+            if (!q) {
+                container.innerHTML = '<div class="empty-state"><p>题目加载失败</p></div>';
+                return;
+            }
+
+            currentQuestion = q;
+            isAnswered = false;
+
+            var html = '<div class="question-card">';
+            var typeLabel = q.type === 'choice' ? '🎯 选择题' : '✍️ 填空题';
+            var sectionName = '';
+            if (q.section === '1.1') sectionName = '§1.1 细胞学说';
+            else if (q.section === '1.2') sectionName = '§1.2 原核与真核';
+            else if (q.section === '1.3') sectionName = '§1.3 生命层次';
+
+            html += '<span class="question-type">' + typeLabel + '</span>';
+            html += '<span class="question-section">' + sectionName + '</span>';
+
+            var isWrongQ = isWrong(q.id);
+            if (isWrongQ && currentFilter !== 'wrong') {
+                html += '<span class="wrong-tag">📕 错题</span>';
+            }
+            if (state.answeredIds.indexOf(q.id) !== -1) {
+                if (state.results[q.id] === true) {
+                    html += '<span class="status-badge done">✅ 已掌握</span>';
+                } else if (state.results[q.id] === false) {
+                    html += '<span class="status-badge wrong">❌ 需重练</span>';
+                }
+            }
+
+            var displayText = q.question;
+            if (q.type === 'fill' && q.blanks) {
+                for (var b = 0; b < q.blanks.length; b++) {
+                    displayText = displayText.replace('【' + (b + 1) + '】', '<span class="blank">____</span>');
+                }
+            }
+            html += '<div class="question-text">' + displayText + '</div>';
+
+            if (q.type === 'choice') {
+                var labels = ['A', 'B', 'C', 'D'];
+                html += '<div class="options">';
+                for (var i = 0; i < q.options.length; i++) {
+                    html += '<button class="option-btn" onclick="answerChoice(' + i + ', ' + q.id + ')" id="choiceOpt_' +
+                        i + '">' +
+                        '<span class="option-label">' + labels[i] + '.</span> ' + q.options[i] +
+                        '</button>';
+                }
+                html += '</div>';
+                html += '<div class="explanation" id="explanation_' + q.id + '">';
+                html += '<span class="label">📖 解析：</span>' + q.explanation;
+                if (q.tip) {
+                    html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
+                }
+                if (q.mnemonic) {
+                    html += '<div class="mnemonic">' + q.mnemonic + '</div>';
+                }
+                html += '</div>';
+                html +=
+                '<div class="action-row"><button class="btn-primary" id="nextBtnChoice" onclick="nextQuestion()" disabled>下一题 →</button></div>';
+            } else {
+                html += '<div class="fill-input-area" id="fillArea">';
+                for (var f = 0; f < q.blanks.length; f++) {
+                    var savedVal = fillInputs[q.id + '_' + f] || '';
+                    html += '<div class="fill-row">';
+                    html += '<label>空' + (f + 1) + '：</label>';
+                    html += '<input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" value="' + savedVal +
+                        '" autocomplete="off">';
+                    html += '<span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '<div class="action-row">';
+                html += '<button class="btn-primary" id="fillSubmitBtn" onclick="submitFill()">✅ 提交答案</button>';
+                html += '</div>';
+                html += '<div class="explanation" id="explanation_' + q.id + '">';
+                html += '<span class="label">📖 解析：</span>' + q.explanation;
+                if (q.tip) {
+                    html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
+                }
+                if (q.mnemonic) {
+                    html += '<div class="mnemonic">' + q.mnemonic + '</div>';
+                }
+                html += '</div>';
+                html +=
+                '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="nextQuestion()" disabled>下一题 →</button></div>';
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+            updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (q.type === 'fill') {
+                setTimeout(function() {
+                    var inputs = document.querySelectorAll('.fill-row input');
+                    inputs.forEach(function(inp, idx) {
+                        inp.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                if (idx === inputs.length - 1) {
+                                    submitFill();
+                                } else {
+                                    inputs[idx + 1].focus();
+                                }
+                            }
+                        });
+                    });
+                    if (inputs.length > 0 && !isAnswered) {
+                        inputs[0].focus();
+                    }
+                }, 100);
+            }
+        }
+
+        // ============================================================
+        // 选择题交互
+        // ============================================================
+        window.answerChoice = function(selected, qId) {
+            if (isAnswered) return;
+            var q = getQuestionById(qId);
+            if (!q) return;
+            isAnswered = true;
+            var isCorrect = (selected === q.correct);
+
+            var btns = document.querySelectorAll('.option-btn');
+            btns.forEach(function(b) { b.classList.add('disabled'); });
+
+            if (isCorrect) {
+                btns[selected].classList.add('selected-correct');
+                state.results[qId] = true;
+                removeWrongItem(qId);
+            } else {
+                btns[selected].classList.add('selected-wrong');
+                btns[q.correct].classList.add('show-correct');
+                state.results[qId] = false;
+                addWrongItem(q, q.options[selected]);
+            }
+            if (state.answeredIds.indexOf(qId) === -1) {
+                state.answeredIds.push(qId);
+            }
+            saveState(state);
+
+            var exp = document.getElementById('explanation_' + qId);
+            if (exp) exp.classList.add('show');
+
+            if (currentFilter === 'wrong' && isCorrect) {
+                // 刷新筛选列表
+                filteredIds = getFilteredIds(currentFilter);
+            }
+
+            var nextBtn = document.getElementById('nextBtnChoice');
+            if (nextBtn) nextBtn.disabled = false;
+
+            updateUI();
+        };
+
+        // ============================================================
+        // 填空题交互
+        // ============================================================
+        window.submitFill = function() {
+            if (isAnswered) return;
+            var q = currentQuestion;
+            if (!q || q.type !== 'fill') return;
+
+            var allCorrect = true;
+            var allFilled = true;
+            var userAnswers = [];
+
+            for (var i = 0; i < q.blanks.length; i++) {
+                var input = document.getElementById('fill_' + q.id + '_' + i);
+                if (!input) { allFilled = false; continue; }
+                var userVal = input.value.trim();
+                fillInputs[q.id + '_' + i] = userVal;
+                userAnswers.push(userVal);
+
+                if (userVal === '') {
+                    allFilled = false;
+                    continue;
+                }
+
+                var normalizedUser = userVal.replace(/\s/g, '');
+                var normalizedAnswer = q.blanks[i].replace(/\s/g, '');
+                var isMatch = (normalizedUser === normalizedAnswer);
+
+                if (isMatch) {
+                    input.classList.add('correct');
+                } else {
+                    input.classList.add('wrong');
+                    allCorrect = false;
+                    var hint = document.getElementById('fillHint_' + q.id + '_' + i);
+                    if (hint) {
+                        hint.style.display = 'inline';
+                        hint.textContent = '→ 正确答案：' + q.blanks[i];
+                    }
+                }
+                input.disabled = true;
+            }
+
+            if (!allFilled) {
+                alert('请填写所有空再提交');
+                return;
+            }
+
+            isAnswered = true;
+            if (allCorrect) {
+                state.results[q.id] = true;
+                removeWrongItem(q.id);
+            } else {
+                state.results[q.id] = false;
+                addWrongItem(q, userAnswers.join('、'));
+            }
+            if (state.answeredIds.indexOf(q.id) === -1) {
+                state.answeredIds.push(q.id);
+            }
+            saveState(state);
+
+            var exp = document.getElementById('explanation_' + q.id);
+            if (exp) exp.classList.add('show');
+
+            if (currentFilter === 'wrong' && allCorrect) {
+                filteredIds = getFilteredIds(currentFilter);
+            }
+
+            var submitBtn = document.getElementById('fillSubmitBtn');
+            if (submitBtn) submitBtn.disabled = true;
+
+            var nextBtn = document.getElementById('nextBtnFill');
+            if (nextBtn) nextBtn.disabled = false;
+
+            updateUI();
+        };
+
+        // ============================================================
+        // 导航
+        // ============================================================
+        window.nextQuestion = function() {
+            render();
+        };
+
+        window.resetProgress = function() {
+            if (!confirm('确定重置所有进度吗？')) return;
+            state = { answeredIds: [], results: {}, wrongIds: [] };
+            saveState(state);
+            // 清除该章节的错题
+            var list = getWrongList();
+            list = list.filter(function(item) {
+                return !(item.chapter === 1 && item.type === 'vocab');
+            });
+            saveWrongList(list);
+            fillInputs = {};
+            render();
+        };
+
+        window.goHome = function() {
+            window.location.href = 'index.html';
+        };
+
+        // ============================================================
+        // 筛选
+        // ============================================================
+        function setFilter(filter) {
+            currentFilter = filter;
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) {
+                b.classList.toggle('active', b.dataset.filter === filter);
+            });
+            filteredIds = getFilteredIds(filter);
+            if (filter !== 'wrong') {
+                shuffleArray(filteredIds);
+            }
+            render();
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var filter = this.dataset.filter;
+                if (filter === 'wrong' && getWrongCount() === 0) {
+                    alert('🎉 错题本为空！继续保持！');
+                    return;
+                }
+                setFilter(filter);
+            });
+        });
+
+        document.getElementById('wrongBookBtn').addEventListener('click', function() {
+            if (getWrongCount() === 0) {
+                alert('🎉 错题本是空的！继续保持！');
+                return;
+            }
+            setFilter('wrong');
+        });
+
+        // ============================================================
+        // 初始化
+        // ============================================================
+        function init() {
+            filteredIds = getFilteredIds('all');
+            shuffleArray(filteredIds);
+            render();
+        }
+
+        init();
+        console.log('🧬 第一章语言记忆已加载，共 ' + questionBank.length + ' 题');
+    </script>
+</body>
+</html>
