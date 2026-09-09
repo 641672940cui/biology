@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生物 · 语言与真题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f0f4f0;
+            color: #1a2332;
+            padding: 16px 14px 100px 14px;
+            min-height: 100vh;
+        }
+
+        /* ===== 顶部标题 ===== */
+        .app-header {
+            background: linear-gradient(135deg, #1a3a2a, #2d7d46);
+            border-radius: 20px;
+            padding: 24px 22px 20px 22px;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: 0 4px 16px rgba(45, 125, 70, 0.25);
+        }
+        .app-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .app-header h1 span {
+            font-weight: 300;
+            opacity: 0.85;
+        }
+        .app-header .sub {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-top: 4px;
+        }
+
+        /* ===== 全局进度 ===== */
+        .global-progress {
+            background: white;
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        .global-progress .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #3d4e62;
+        }
+        .global-progress .row .num {
+            font-weight: 700;
+            color: #1a2332;
+        }
+        .global-progress .bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #e8ecf1;
+            border-radius: 6px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .global-progress .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2d7d46, #4aad6a);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* ===== 错题本入口（醒目） ===== */
+        .wrong-book-entry {
+            background: white;
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            border: 2px solid #c0392b;
+            box-shadow: 0 2px 12px rgba(192, 57, 43, 0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .wrong-book-entry:active {
+            transform: scale(0.98);
+        }
+        .wrong-book-entry .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .wrong-book-entry .icon {
+            font-size: 28px;
+        }
+        .wrong-book-entry .info {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2332;
+        }
+        .wrong-book-entry .info .count {
+            color: #c0392b;
+            font-weight: 700;
+        }
+        .wrong-book-entry .badge {
+            background: #c0392b;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+
+        /* ===== 章节卡片 ===== */
+        .chapter-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px 18px 14px 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.2s;
+        }
+        .chapter-card.locked {
+            opacity: 0.5;
+            filter: grayscale(0.3);
+        }
+        .chapter-card .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .chapter-card .head .num {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d7d46;
+            background: #e6f3ea;
+            padding: 2px 12px;
+            border-radius: 20px;
+        }
+        .chapter-card .head .status {
+            font-size: 13px;
+            color: #6b7a8f;
+        }
+        .chapter-card .title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2332;
+            margin-bottom: 2px;
+        }
+        .chapter-card .title .sub {
+            font-size: 13px;
+            font-weight: 400;
+            color: #6b7a8f;
+            margin-left: 6px;
+        }
+        .chapter-card .progress-mini {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0 12px 0;
+        }
+        .chapter-card .progress-mini .bar-bg {
+            flex: 1;
+            height: 6px;
+            background: #e8ecf1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .chapter-card .progress-mini .bar-fill {
+            height: 100%;
+            background: #2d7d46;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        .chapter-card .progress-mini .label {
+            font-size: 12px;
+            color: #6b7a8f;
+            min-width: 36px;
+            text-align: right;
+        }
+        .chapter-card .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .chapter-card .actions .btn {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .chapter-card .actions .btn:active {
+            transform: scale(0.96);
+        }
+        .chapter-card .actions .btn-vocab {
+            background: #e6f3ea;
+            color: #1a6b3c;
+        }
+        .chapter-card .actions .btn-vocab:active {
+            background: #cde0d4;
+        }
+        .chapter-card .actions .btn-exam {
+            background: #e3eef7;
+            color: #1a5276;
+        }
+        .chapter-card .actions .btn-exam:active {
+            background: #cde0ed;
+        }
+        .chapter-card .actions .btn-locked {
+            background: #f0f2f5;
+            color: #9aa8b9;
+            cursor: not-allowed;
+        }
+        .chapter-card .actions .btn-locked:active {
+            transform: none;
+        }
+
+        /* ===== 空状态 ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7a8f;
+        }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .empty-state h3 {
+            font-size: 18px;
+            color: #1a2332;
+            margin-bottom: 4px;
+        }
+
+        /* ===== 底部 ===== */
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #9aa8b9;
+            padding: 20px 0 10px 0;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 380px) {
+            .app-header h1 {
+                font-size: 20px;
+            }
+            .chapter-card .title {
+                font-size: 16px;
+            }
+            .chapter-card .actions .btn {
+                font-size: 13px;
+                padding: 10px 0;
+            }
+        }
+        @media (min-width: 768px) {
+            body {
+                max-width: 480px;
+                margin: 0 auto;
+                padding: 20px 16px 100px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== 顶部标题 ===== -->
+    <div class="app-header">
+        <h1>🧬 生物 <span>· 语言与真题</span></h1>
+        <div class="sub">必修一 · 分子与细胞</div>
+    </div>
+
+    <!-- ===== 全局进度 ===== -->
+    <div class="global-progress" id="globalProgress">
+        <div class="row">
+            <span>📊 总进度</span>
+            <span class="num" id="globalStats">0 / 0 题</span>
+        </div>
+        <div class="bar-bg">
+            <div class="bar-fill" id="globalBar"></div>
+        </div>
+    </div>
+
+    <!-- ===== 错题本入口 ===== -->
+    <div class="wrong-book-entry" id="wrongBookEntry">
+        <div class="left">
+            <span class="icon">📕</span>
+            <span class="info">错题本 · <span class="count" id="wrongTotal">0</span> 题待重练</span>
+        </div>
+        <span class="badge" id="wrongBadge">0</span>
+    </div>
+
+    <!-- ===== 章节列表 ===== -->
+    <div id="chapterList"></div>
+
+    <div class="footer">数据保存在本地 · 清除浏览器缓存会重置</div>
+
+    <script>
+        // ============================================================
+        // 配置
+        // ============================================================
+        var CHAPTERS = [{
+            id: 1,
+            title: '走近细胞',
+            sub: '细胞学说 · 原核与真核 · 生命层次',
+            vocabTotal: 30,
+            examTotal: 12,
+            vocabFile: 'ch1_vocab.html',
+            examFile: 'ch1_exam.html'
+        }, {
+            id: 2,
+            title: '组成细胞的分子',
+            sub: '元素 · 蛋白质 · 核酸 · 糖脂 · 无机物',
+            vocabTotal: 34,
+            examTotal: 12,
+            vocabFile: 'ch2_vocab.html',
+            examFile: 'ch2_exam.html'
+        }, {
+            id: 3,
+            title: '细胞的基本结构',
+            sub: '细胞膜 · 细胞器 · 细胞核',
+            vocabTotal: 0,
+            examTotal: 0,
+            vocabFile: 'ch3_vocab.html',
+            examFile: 'ch3_exam.html',
+            locked: true
+        }, {
+            id: 4,
+            title: '细胞的物质输入和输出',
+            sub: '被动运输 · 主动运输 · 胞吞胞吐',
+            vocabTotal: 0,
+            examTotal: 0,
+            vocabFile: 'ch4_vocab.html',
+            examFile: 'ch4_exam.html',
+            locked: true
+        }, {
+            id: 5,
+            title: '细胞的能量供应和利用',
+            sub: '酶 · ATP · 呼吸 · 光合',
+            vocabTotal: 0,
+            examTotal: 0,
+            vocabFile: 'ch5_vocab.html',
+            examFile: 'ch5_exam.html',
+            locked: true
+        }, {
+            id: 6,
+            title: '细胞的生命历程',
+            sub: '增殖 · 分化 · 衰老 · 死亡',
+            vocabTotal: 0,
+            examTotal: 0,
+            vocabFile: 'ch6_vocab.html',
+            examFile: 'ch6_exam.html',
+            locked: true
+        }];
+
+        // ============================================================
+        // 存储工具
+        // ============================================================
+        var STORAGE_KEY = 'bio_index_data';
+
+        function getStorage() {
+            try {
+                var raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) {}
+            return { doneMap: {} };
+        }
+
+        function saveStorage(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        // ============================================================
+        // 获取章节进度
+        // ============================================================
+        function getChapterProgress(chapterId, type, total) {
+            if (total === 0) return { done: 0, total: 0, rate: 0 };
+            var data = getStorage();
+            var key = 'ch' + chapterId + '_' + type;
+            var done = data.doneMap[key] || 0;
+            return { done: done, total: total, rate: Math.round((done / total) * 100) };
+        }
+
+        function getGlobalStats() {
+            var totalDone = 0;
+            var totalAll = 0;
+            var data = getStorage();
+            CHAPTERS.forEach(function(ch) {
+                if (!ch.locked) {
+                    ['vocab', 'exam'].forEach(function(type) {
+                        var key = 'ch' + ch.id + '_' + type;
+                        var total = type === 'vocab' ? ch.vocabTotal : ch.examTotal;
+                        if (total > 0) {
+                            totalAll += total;
+                            totalDone += (data.doneMap[key] || 0);
+                        }
+                    });
+                }
+            });
+            return { done: totalDone, total: totalAll, rate: totalAll === 0 ? 0 : Math.round((totalDone / totalAll) *
+                100) };
+        }
+
+        // ============================================================
+        // 渲染
+        // ============================================================
+        function render() {
+            var list = document.getElementById('chapterList');
+            var html = '';
+            CHAPTERS.forEach(function(ch) {
+                var isLocked = ch.locked === true;
+                var vProgress = getChapterProgress(ch.id, 'vocab', ch.vocabTotal);
+                var eProgress = getChapterProgress(ch.id, 'exam', ch.examTotal);
+                var totalDone = vProgress.done + eProgress.done;
+                var totalAll = vProgress.total + eProgress.total;
+                var rate = totalAll === 0 ? 0 : Math.round((totalDone / totalAll) * 100);
+
+                // 语言按钮
+                var vocabBtn;
+                if (isLocked) {
+                    vocabBtn = '<span class="btn btn-locked">⏳ 待解锁</span>';
+                } else if (ch.vocabTotal === 0) {
+                    vocabBtn = '<span class="btn btn-locked">⏳ 内容待填充</span>';
+                } else {
+                    vocabBtn = '<a href="' + ch.vocabFile + '" class="btn btn-vocab">📖 语言记忆</a>';
+                }
+
+                // 真题按钮
+                var examBtn;
+                if (isLocked) {
+                    examBtn = '<span class="btn btn-locked">⏳ 待解锁</span>';
+                } else if (ch.examTotal === 0) {
+                    examBtn = '<span class="btn btn-locked">⏳ 内容待填充</span>';
+                } else {
+                    examBtn = '<a href="' + ch.examFile + '" class="btn btn-exam">🎯 真题演练</a>';
+                }
+
+                var statusText = isLocked ? '🔒 未开放' : (totalAll === 0 ? '⏳ 待填充' : totalDone + '/' + totalAll +
+                ' 题完成');
+
+                html += '<div class="chapter-card' + (isLocked ? ' locked' : '') + '">';
+                html += '  <div class="head">';
+                html += '    <span class="num">第' + ch.id + '章</span>';
+                html += '    <span class="status">' + statusText + '</span>';
+                html += '  </div>';
+                html += '  <div class="title">' + ch.title + '<span class="sub">' + ch.sub + '</span></div>';
+                html += '  <div class="progress-mini">';
+                html += '    <div class="bar-bg"><div class="bar-fill" style="width:' + rate + '%;"></div></div>';
+                html += '    <span class="label">' + rate + '%</span>';
+                html += '  </div>';
+                html += '  <div class="actions">';
+                html += '    ' + vocabBtn;
+                html += '    ' + examBtn;
+                html += '  </div>';
+                html += '</div>';
+            });
+            list.innerHTML = html;
+
+            // 全局进度
+            var g = getGlobalStats();
+            document.getElementById('globalStats').textContent = g.done + ' / ' + g.total + ' 题';
+            document.getElementById('globalBar').style.width = g.rate + '%';
+
+            // 错题数（从所有章节汇总）
+            var wrongTotal = getWrongTotal();
+            document.getElementById('wrongTotal').textContent = wrongTotal;
+            document.getElementById('wrongBadge').textContent = wrongTotal;
+        }
+
+        // ============================================================
+        // 错题总数（跨章节汇总）
+        // ============================================================
+        function getWrongTotal() {
+            try {
+                var raw = localStorage.getItem('bio_wrong_list');
+                if (!raw) return 0;
+                var list = JSON.parse(raw);
+                return list.length;
+            } catch (e) { return 0; }
+        }
+
+        // ============================================================
+        // 错题本跳转
+        // ============================================================
+        document.getElementById('wrongBookEntry').addEventListener('click', function() {
+            var total = getWrongTotal();
+            if (total === 0) {
+                alert('🎉 错题本为空！继续保持！');
+                return;
+            }
+            // 跳转到错题本页面（独立页面，跨章节汇总）
+            window.location.href = 'wrongbook.html';
+        });
+
+        // ============================================================
+        // 初始化
+        // ============================================================
+        render();
+
+        // 页面可见时刷新（从其他页面返回时更新）
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                render();
+            }
+        });
+
+        console.log('🏠 首页已加载');
+        console.log('📚 共 ' + CHAPTERS.length + ' 章，其中前2章已填充内容');
+    </script>
+</body>
+</html>
