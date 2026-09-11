@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>第二章 · 语言记忆</title>
+    <title>第三章 · 语言记忆</title>
     <style>
-        /* ===== 全局重置 & 移动端适配 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -20,13 +19,12 @@
             max-width: 480px;
             margin: 0 auto;
         }
-        /* ===== 顶栏 ===== */
         .header {
             background: #fff;
             border-radius: 16px;
             padding: 14px 16px;
             margin-bottom: 14px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             position: sticky;
             top: 0;
             z-index: 10;
@@ -90,7 +88,7 @@
             color: #6b7a8f;
             margin-top: 4px;
         }
-        /* ===== 筛选栏 ===== */
+
         .filter-bar {
             display: flex;
             gap: 6px;
@@ -112,4 +110,1150 @@
         }
         .filter-btn.active {
             background: #2d7d46;
-            border-color: #2d7d
+            border-color: #2d7d46;
+            color: #fff;
+        }
+        .filter-btn.wrong-filter {
+            border-color: #c0392b;
+            color: #c0392b;
+        }
+        .filter-btn.wrong-filter.active {
+            background: #c0392b;
+            border-color: #c0392b;
+            color: #fff;
+        }
+
+        .question-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 16px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            animation: fadeUp 0.35s ease;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .question-type {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #2d7d46;
+            background: #e6f3ea;
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .question-section {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 500;
+            color: #6b7a8f;
+            background: #f0f2f5;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .question-text {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .question-text .blank {
+            display: inline-block;
+            min-width: 70px;
+            border-bottom: 2px dashed #2d7d46;
+            margin: 0 4px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 12px 0 10px;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #e2e7ef;
+            background: #fff;
+            font-size: 15px;
+            line-height: 1.5;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 48px;
+            transition: all 0.2s;
+        }
+        .option-btn:active {
+            transform: scale(0.98);
+        }
+        .option-btn.selected-correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .option-btn.selected-wrong {
+            border-color: #c0392b;
+            background: #fde8e6;
+        }
+        .option-btn.show-correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .option-label {
+            font-weight: 700;
+            color: #6b7a8f;
+            margin-right: 8px;
+        }
+
+        .fill-input-area {
+            margin: 12px 0 10px;
+        }
+        .fill-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .fill-row label {
+            font-weight: 500;
+            color: #3d4e62;
+            min-width: 30px;
+            font-size: 15px;
+        }
+        .fill-row input {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 2px solid #e2e7ef;
+            font-size: 15px;
+            font-family: inherit;
+            background: #fff;
+            color: #1a2332;
+            min-height: 44px;
+            transition: border 0.2s;
+        }
+        .fill-row input:focus {
+            outline: none;
+            border-color: #2d7d46;
+        }
+        .fill-row input.correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .fill-row input.wrong {
+            border-color: #c0392b;
+            background: #fde8e6;
+        }
+        .fill-row input:disabled {
+            opacity: 0.7;
+        }
+        .fill-row .correct-answer-hint {
+            font-size: 14px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+
+        .explanation {
+            background: #f8faff;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 12px 0 6px;
+            border-left: 4px solid #2d7d46;
+            display: none;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #2c3e50;
+        }
+        .explanation.show {
+            display: block;
+        }
+        .tip-yellow {
+            background: #fcf8e3;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 3px solid #f0ad4e;
+            margin-top: 6px;
+            font-size: 14px;
+        }
+        .tip-yellow strong {
+            color: #8a6d3b;
+        }
+        .mnemonic {
+            background: #f0f7f4;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1a6b3c;
+            margin-top: 6px;
+            border-left: 3px solid #2d7d46;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .btn-primary {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: #2d7d46;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 48px;
+            transition: all 0.2s;
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: #236a3a;
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .wrong-tag {
+            display: inline-block;
+            background: #c0392b;
+            color: #fff;
+            font-size: 11px;
+            padding: 1px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .status-badge {
+            display: inline-block;
+            font-size: 12px;
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .status-badge.done {
+            background: #e8f5ee;
+            color: #2d7d46;
+        }
+        .status-badge.wrong {
+            background: #fde8e6;
+            color: #c0392b;
+        }
+
+        .complete-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .complete-screen .big-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+        .complete-screen h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .complete-screen .score-big {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2d7d46;
+            margin: 16px 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7a8f;
+        }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .wrong-list-view {
+            background: #fff;
+            border-radius: 16px;
+            padding: 18px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+        .wrong-list-view .title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .wrong-list-view .item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .wrong-list-view .item:last-child {
+            border-bottom: none;
+        }
+        .wrong-list-view .item .q {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .wrong-list-view .item .your {
+            font-size: 14px;
+            color: #c0392b;
+        }
+        .wrong-list-view .item .correct {
+            font-size: 14px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+
+        .home-footer {
+            text-align: center;
+            margin-top: 16px;
+            padding: 10px 0;
+        }
+        .home-footer .btn-home {
+            background: none;
+            border: 1.5px solid #d0d7e2;
+            border-radius: 30px;
+            padding: 10px 30px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #3d4e62;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 44px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .wrong-book-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a2332;
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 100;
+            font-family: inherit;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            min-height: 48px;
+        }
+        .wrong-book-btn .badge {
+            background: #c0392b;
+            color: #fff;
+            border-radius: 20px;
+            padding: 0 10px;
+            font-size: 13px;
+            line-height: 22px;
+        }
+        .back-to-practice {
+            margin-top: 14px;
+            text-align: center;
+        }
+        .back-to-practice .btn {
+            background: #2d7d46;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 44px;
+        }
+
+        @media (max-width: 380px) {
+            .question-text {
+                font-size: 15px;
+            }
+            .option-btn {
+                font-size: 14px;
+                padding: 12px 14px;
+                min-height: 44px;
+            }
+            .btn-primary {
+                font-size: 15px;
+                min-height: 44px;
+                padding: 12px;
+            }
+            .fill-row input {
+                font-size: 14px;
+                padding: 10px 12px;
+                min-height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-top">
+            <div class="header-title">🧬 语言记忆 · <span>第三章</span></div>
+            <div class="header-right">
+                <a class="header-home" href="index.html">🏠 首页</a>
+                <div class="header-stats" id="statsLabel">0 / 0</div>
+            </div>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+        <div class="progress-label">
+            <span id="correctRate">✅ 正确率：--%</span>
+            <span id="wrongCount">❌ 错题：0</span>
+        </div>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">📚 全部</button>
+        <button class="filter-btn" data-filter="3.1" onclick="setFilter('3.1')">§3.1 细胞膜</button>
+        <button class="filter-btn" data-filter="3.2" onclick="setFilter('3.2')">§3.2 细胞器</button>
+        <button class="filter-btn" data-filter="3.3" onclick="setFilter('3.3')">§3.3 细胞核</button>
+        <button class="filter-btn wrong-filter" data-filter="wrong" onclick="setFilter('wrong')">📕 错题本</button>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="home-footer">
+        <a class="btn-home" href="index.html">🏠 返回首页</a>
+    </div>
+
+    <button class="wrong-book-btn" id="wrongBookBtn" onclick="setFilter('wrong')">
+        📕 错题本 <span class="badge" id="wrongBadge">0</span>
+    </button>
+
+    <script>
+        // ================================================================
+        // 第三章题库（30题）
+        // ================================================================
+        var questionBank = [{
+            id: 1,
+            type: 'choice',
+            section: '3.1',
+            question: '细胞膜的主要成分中，含量最多的是（　）',
+            options: ['蛋白质', '脂质', '糖类', '核酸'],
+            correct: 1,
+            explanation: '细胞膜成分中脂质含量最高（约50%），蛋白质约40%，糖类2%~10%。',
+            tip: '功能越复杂的细胞膜，蛋白质的种类和数量越多。'
+        }, {
+            id: 2,
+            type: 'choice',
+            section: '3.1',
+            question: '下列哪项不属于细胞膜的功能（　）',
+            options: ['将细胞与外界环境分隔开', '控制物质进出', '进行细胞间信息交流', '支持和保护'],
+            correct: 3,
+            explanation: '支持和保护是细胞壁的功能，不是细胞膜的功能。',
+            tip: '植物细胞壁：支持和保护。细胞膜：边界、控制进出、信息交流。'
+        }, {
+            id: 3,
+            type: 'choice',
+            section: '3.1',
+            question: '植物细胞的边界是（　）',
+            options: ['细胞壁', '细胞膜', '细胞核', '细胞质'],
+            correct: 1,
+            explanation: '细胞膜是细胞的边界，细胞壁是全透性的，不是边界。'
+        }, {
+            id: 4,
+            type: 'choice',
+            section: '3.1',
+            question: '下列哪项属于细胞间信息交流的方式（　）',
+            options: ['病毒识别宿主细胞', '精子与卵细胞识别结合', 'CO₂排出细胞', '葡萄糖进入细胞'],
+            correct: 1,
+            explanation: '精子和卵细胞的识别与结合属于膜接触传递信息交流。病毒识别宿主细胞不属于细胞间信息交流。'
+        }, {
+            id: 5,
+            type: 'choice',
+            section: '3.1',
+            question: '流动镶嵌模型的基本骨架是（　）',
+            options: ['蛋白质', '磷脂双分子层', '糖蛋白', '胆固醇'],
+            correct: 1,
+            explanation: '磷脂双分子层是细胞膜的基本骨架，亲水头部朝外，疏水尾部朝内。'
+        }, {
+            id: 6,
+            type: 'choice',
+            section: '3.1',
+            question: '下列哪项体现了细胞膜的流动性（　）',
+            options: ['台盼蓝染死细胞不染活细胞', '变形虫的运动', 'CO₂排出细胞', '葡萄糖进入细胞'],
+            correct: 1,
+            explanation: '变形虫的运动体现了细胞膜的流动性。台盼蓝体现了选择透过性。'
+        }, {
+            id: 7,
+            type: 'choice',
+            section: '3.1',
+            question: '制备纯净细胞膜的最佳材料是（　）',
+            options: ['鸡的红细胞', '人的成熟红细胞', '蛙的红细胞', '洋葱表皮细胞'],
+            correct: 1,
+            explanation: '人的成熟红细胞没有细胞核和众多细胞器，只有细胞膜一种膜结构，是制备纯净细胞膜的最佳材料。'
+        }, {
+            id: 8,
+            type: 'fill',
+            section: '3.1',
+            question: '植物细胞壁的主要成分是【1】和果胶。',
+            blanks: ['纤维素'],
+            explanation: '植物细胞壁的主要成分是纤维素和果胶。'
+        }, {
+            id: 9,
+            type: 'fill',
+            section: '3.1',
+            question: '细胞膜上糖蛋白分布在细胞膜的【1】侧。',
+            blanks: ['外'],
+            explanation: '糖蛋白只分布在细胞膜外侧，据此可判断细胞膜内外。'
+        }, {
+            id: 10,
+            type: 'choice',
+            section: '3.2',
+            question: '下列细胞器中，具有双层膜的是（　）',
+            options: ['内质网', '高尔基体', '线粒体', '核糖体'],
+            correct: 2,
+            explanation: '线粒体和叶绿体具有双层膜。内质网、高尔基体、溶酶体、液泡是单层膜。核糖体、中心体无膜。',
+            mnemonic: '📝 口诀："线叶双"——线粒体、叶绿体双层膜。'
+        }, {
+            id: 11,
+            type: 'choice',
+            section: '3.2',
+            question: '被称为细胞"动力车间"的细胞器是（　）',
+            options: ['叶绿体', '线粒体', '核糖体', '内质网'],
+            correct: 1,
+            explanation: '线粒体是有氧呼吸主要场所，为细胞生命活动提供能量（95%的能量来自线粒体），被称为"动力车间"。'
+        }, {
+            id: 12,
+            type: 'choice',
+            section: '3.2',
+            question: '被称为"养料制造车间"的细胞器是（　）',
+            options: ['线粒体', '叶绿体', '高尔基体', '核糖体'],
+            correct: 1,
+            explanation: '叶绿体是光合作用的场所，将光能转化为化学能，被称为"养料制造车间"。'
+        }, {
+            id: 13,
+            type: 'choice',
+            section: '3.2',
+            question: '下列细胞器中，具有单层膜结构的是（　）',
+            options: ['核糖体', '线粒体', '中心体', '液泡'],
+            correct: 3,
+            explanation: '液泡具有单层膜。核糖体和中心体无膜，线粒体双层膜。',
+            mnemonic: '📝 口诀："内高溶泡单"——内质网、高尔基体、溶酶体、液泡单层膜。'
+        }, {
+            id: 14,
+            type: 'choice',
+            section: '3.2',
+            question: '分泌蛋白合成后，加工的场所是（　）',
+            options: ['核糖体', '内质网', '高尔基体', '细胞膜'],
+            correct: 1,
+            explanation: '分泌蛋白路径：核糖体（合成）→内质网（加工折叠）→高尔基体（进一步加工包装）→细胞膜（胞吐分泌）。'
+        }, {
+            id: 15,
+            type: 'choice',
+            section: '3.2',
+            question: '与植物细胞壁形成有关的细胞器是（　）',
+            options: ['核糖体', '内质网', '高尔基体', '线粒体'],
+            correct: 2,
+            explanation: '高尔基体在植物细胞中与细胞壁的形成有关。'
+        }, {
+            id: 16,
+            type: 'choice',
+            section: '3.2',
+            question: '被称为细胞的"消化车间"的细胞器是（　）',
+            options: ['溶酶体', '高尔基体', '内质网', '液泡'],
+            correct: 0,
+            explanation: '溶酶体含多种水解酶，分解衰老损伤的细胞器，吞噬并杀死入侵的病毒或细菌。'
+        }, {
+            id: 17,
+            type: 'choice',
+            section: '3.2',
+            question: '下列细胞器中，不含DNA的是（　）',
+            options: ['线粒体', '叶绿体', '核糖体', '细胞核'],
+            correct: 2,
+            explanation: '核糖体不含DNA（含rRNA和蛋白质）。线粒体、叶绿体、细胞核都含DNA。'
+        }, {
+            id: 18,
+            type: 'choice',
+            section: '3.2',
+            question: '含有色素的细胞器是（　）',
+            options: ['线粒体和叶绿体', '叶绿体和液泡', '液泡和溶酶体', '内质网和高尔基体'],
+            correct: 1,
+            explanation: '叶绿体含叶绿素，液泡含花青素等色素。'
+        }, {
+            id: 19,
+            type: 'choice',
+            section: '3.2',
+            question: '与有丝分裂有关的细胞器是（　）',
+            options: ['核糖体', '中心体', '高尔基体', '溶酶体'],
+            correct: 1,
+            explanation: '中心体与有丝分裂有关。'
+        }, {
+            id: 20,
+            type: 'fill',
+            section: '3.2',
+            question: '分泌蛋白合成过程中，【1】膜面积减少，【2】膜面积增大。',
+            blanks: ['内质网', '细胞膜'],
+            explanation: '分泌蛋白运输过程中，内质网形成囊泡使膜面积减少，细胞膜接受囊泡使膜面积增大。高尔基体先增后减基本不变。'
+        }, {
+            id: 21,
+            type: 'fill',
+            section: '3.2',
+            question: '观察叶绿体常用的材料是【1】。',
+            blanks: ['黑藻'],
+            explanation: '黑藻叶片薄，叶绿体大而清晰，是观察叶绿体的常用材料。'
+        }, {
+            id: 22,
+            type: 'fill',
+            section: '3.2',
+            question: '分离各种细胞器常用的方法是【1】。',
+            blanks: ['差速离心法'],
+            explanation: '差速离心法：逐渐提高离心速率，分离不同大小的细胞器。'
+        }, {
+            id: 23,
+            type: 'choice',
+            section: '3.3',
+            question: '细胞核中与核糖体形成有关的结构是（　）',
+            options: ['核膜', '核仁', '染色质', '核孔'],
+            correct: 1,
+            explanation: '核仁与某种RNA的合成和核糖体的形成有关。'
+        }, {
+            id: 24,
+            type: 'choice',
+            section: '3.3',
+            question: '染色质的主要成分是（　）',
+            options: ['DNA和RNA', 'DNA和蛋白质', 'RNA和蛋白质', '脂质和蛋白质'],
+            correct: 1,
+            explanation: '染色质的主要成分是DNA和蛋白质。'
+        }, {
+            id: 25,
+            type: 'choice',
+            section: '3.3',
+            question: '染色质和染色体的关系是（　）',
+            options: ['两种不同物质', '同一物质不同时期两种形态', '不同物质不同时期', '同一物质同一时期不同名称'],
+            correct: 1,
+            explanation: '染色质和染色体是同一物质（DNA+蛋白质）在细胞不同时期的两种存在状态。'
+        }, {
+            id: 26,
+            type: 'choice',
+            section: '3.3',
+            question: '细胞核的功能不包括（　）',
+            options: ['遗传信息库', '代谢的控制中心', '遗传的控制中心', '蛋白质合成的场所'],
+            correct: 3,
+            explanation: '蛋白质合成的场所是核糖体，不是细胞核。'
+        }, {
+            id: 27,
+            type: 'choice',
+            section: '3.3',
+            question: '下列关于核孔的叙述，正确的是（　）',
+            options: ['核孔是物质自由进出的通道', '核孔只允许小分子物质通过', '核孔具有选择性', '核孔不允许RNA通过'],
+            correct: 2,
+            explanation: '核孔具有选择性，RNA和蛋白质等大分子可通过核孔进出细胞核。'
+        }, {
+            id: 28,
+            type: 'fill',
+            section: '3.3',
+            question: '细胞核是【1】库，是细胞代谢和遗传的控制中心。',
+            blanks: ['遗传信息'],
+            explanation: '细胞核是遗传信息库，是细胞代谢和遗传的控制中心。'
+        }, {
+            id: 29,
+            type: 'fill',
+            section: '3.3',
+            question: '哺乳动物成熟红细胞【1】细胞核，因此寿命较短。',
+            blanks: ['没有'],
+            explanation: '哺乳动物成熟红细胞没有细胞核和众多细胞器，寿命较短。'
+        }, {
+            id: 30,
+            type: 'choice',
+            section: '3.3',
+            question: '下列细胞中，没有细胞核的是（　）',
+            options: ['骨骼肌细胞', '蛙的红细胞', '人的成熟红细胞', '酵母菌'],
+            correct: 2,
+            explanation: '人的成熟红细胞没有细胞核。骨骼肌细胞有多个细胞核。'
+        }];
+
+        // ================================================================
+        // 存储
+        // ================================================================
+        var STORAGE_KEY = 'ch3_vocab_data';
+        var WRONG_KEY = 'ch3_wrong_data';
+
+        function loadData() {
+            try { var raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch (e) {}
+            return { answered: {}, results: {} };
+        }
+
+        function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+        function loadWrong() {
+            try { var raw = localStorage.getItem(WRONG_KEY); if (raw) return JSON.parse(raw); } catch (e) {}
+            return [];
+        }
+
+        function saveWrong(list) { localStorage.setItem(WRONG_KEY, JSON.stringify(list)); }
+
+        var data = loadData();
+        var wrongList = loadWrong();
+
+        var currentFilter = 'all';
+        var filteredIds = [];
+        var currentQ = null;
+        var isAnswered = false;
+        var isPracticeMode = false;
+
+        function getFilteredIds(filter) {
+            if (filter === 'all') return questionBank.map(function(q) { return q.id; });
+            if (filter === 'wrong') {
+                return wrongList.filter(function(item) { return item.chapter === 3 && item.type === 'vocab'; })
+                    .map(function(item) { return item.qId; });
+            }
+            return questionBank.filter(function(q) { return q.section === filter; }).map(function(q) { return q.id; });
+        }
+
+        function getQ(id) {
+            for (var i = 0; i < questionBank.length; i++) {
+                if (questionBank[i].id === id) return questionBank[i];
+            }
+            return null;
+        }
+
+        function shuffle(arr) {
+            for (var i = arr.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            return arr;
+        }
+
+        function getUnanswered(ids) {
+            var result = [];
+            for (var i = 0; i < ids.length; i++) {
+                if (!data.answered[ids[i]]) result.push(ids[i]);
+            }
+            return result;
+        }
+
+        function getProgress() {
+            var total = filteredIds.length;
+            var done = 0,
+                correct = 0;
+            for (var i = 0; i < filteredIds.length; i++) {
+                var id = filteredIds[i];
+                if (data.answered[id]) {
+                    done++;
+                    if (data.results[id] === true) correct++;
+                }
+            }
+            var rate = done === 0 ? 0 : Math.round((correct / done) * 100);
+            return { total: total, done: done, correct: correct, rate: rate };
+        }
+
+        function updateUI() {
+            var p = getProgress();
+            var wc = wrongList.filter(function(item) { return item.chapter === 3 && item.type === 'vocab'; }).length;
+            document.getElementById('statsLabel').textContent = p.done + ' / ' + p.total;
+            document.getElementById('progressFill').style.width = (p.total === 0 ? 0 : (p.done / p.total) * 100) + '%';
+            document.getElementById('correctRate').textContent = '✅ 正确率：' + (p.done === 0 ? '--%' : p.rate + '%');
+            document.getElementById('wrongCount').textContent = '❌ 错题：' + wc;
+            document.getElementById('wrongBadge').textContent = wc;
+            var btn = document.getElementById('wrongBookBtn');
+            btn.style.display = (wc > 0 && currentFilter !== 'wrong') ? 'flex' : 'none';
+            var idxData = JSON.parse(localStorage.getItem('bio_index_data') || '{"doneMap":{}}');
+            idxData.doneMap['ch3_vocab'] = p.done;
+            localStorage.setItem('bio_index_data', JSON.stringify(idxData));
+        }
+
+        function addWrong(q, userAns) {
+            if (wrongList.some(function(item) { return item.chapter === 3 && item.type === 'vocab' && item.qId === q
+                    .id; })) return;
+            var correctAns = '';
+            if (q.type === 'choice') correctAns = q.options[q.correct];
+            else if (q.type === 'fill') correctAns = q.blanks.join('、');
+            wrongList.push({
+                chapter: 3,
+                type: 'vocab',
+                qId: q.id,
+                question: q.question,
+                userAnswer: userAns || '',
+                correctAnswer: correctAns
+            });
+            saveWrong(wrongList);
+        }
+
+        function removeWrong(qId) {
+            wrongList = wrongList.filter(function(item) {
+                return !(item.chapter === 3 && item.type === 'vocab' && item.qId === qId);
+            });
+            saveWrong(wrongList);
+        }
+
+        function render() {
+            var container = document.getElementById('questionContainer');
+
+            if (currentFilter === 'wrong' && !isPracticeMode) {
+                var list = wrongList.filter(function(item) { return item.chapter === 3 && item.type === 'vocab'; });
+                if (list.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="icon">🎉</div><p>错题本已清空！</p></div>';
+                    updateUI();
+                    return;
+                }
+                var html = '<div class="wrong-list-view"><div class="title">📕 错题本（' + list.length + '题）</div>';
+                list.forEach(function(item) {
+                    html += '<div class="item">';
+                    html += '<div class="q">' + item.question + '</div>';
+                    html += '<div class="your">❌ 你的答案：' + (item.userAnswer || '未填写') + '</div>';
+                    html += '<div class="correct">✅ 正确答案：' + item.correctAnswer + '</div>';
+                    html += '</div>';
+                });
+                html +=
+                    '<div class="back-to-practice"><button class="btn" onclick="startPractice()">🔄 重练错题</button></div>';
+                html += '</div>';
+                container.innerHTML = html;
+                updateUI();
+                return;
+            }
+
+            if (filteredIds.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>当前暂无题目</p></div>';
+                updateUI();
+                return;
+            }
+
+            var unanswered = getUnanswered(filteredIds);
+            if (unanswered.length === 0) {
+                var p = getProgress();
+                var msg = isPracticeMode ? '🎉 错题已全部消灭！' : '🎉 全部通关！';
+                container.innerHTML =
+                    '<div class="complete-screen">' +
+                    '<div class="big-icon">🎉</div><h2>' + msg + '</h2>' +
+                    '<div class="score-big">' + p.rate + '%</div>' +
+                    '<p style="color:#6b7a8f;font-size:14px;">正确率 ' + p.rate + '% · 共 ' + filteredIds.length + ' 题</p>';
+                if (isPracticeMode) {
+                    container.innerHTML +=
+                        '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="exitPractice()">🔙 退出练习</button>';
+                } else {
+                    container.innerHTML +=
+                        '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="resetAll()">🔄 重新开始</button>';
+                }
+                container.innerHTML += '</div>';
+                updateUI();
+                return;
+            }
+
+            var targetId = unanswered[0];
+            var q = getQ(targetId);
+            if (!q) { container.innerHTML = '<div class="empty-state"><p>加载失败</p></div>'; return; }
+
+            currentQ = q;
+            isAnswered = false;
+
+            var html = '<div class="question-card">';
+            var typeLabel = q.type === 'choice' ? '🎯 选择题' : '✍️ 填空题';
+            var sectionName = '';
+            if (q.section === '3.1') sectionName = '§3.1 细胞膜';
+            else if (q.section === '3.2') sectionName = '§3.2 细胞器';
+            else if (q.section === '3.3') sectionName = '§3.3 细胞核';
+            html += '<span class="question-type">' + typeLabel + '</span>';
+            html += '<span class="question-section">' + sectionName + '</span>';
+            if (isPracticeMode) html += '<span class="wrong-tag">📕 错题练习</span>';
+            var isW = wrongList.some(function(item) { return item.chapter === 3 && item.type === 'vocab' && item.qId ===
+                    q.id; });
+            if (isW && currentFilter !== 'wrong') html += '<span class="wrong-tag">📕 错题</span>';
+            if (data.answered[q.id]) {
+                if (data.results[q.id] === true) html += '<span class="status-badge done">✅ 已掌握</span>';
+                else html += '<span class="status-badge wrong">❌ 需重练</span>';
+            }
+
+            var displayText = q.question;
+            if (q.type === 'fill' && q.blanks) {
+                for (var b = 0; b < q.blanks.length; b++) {
+                    displayText = displayText.replace('【' + (b + 1) + '】', '<span class="blank">____</span>');
+                }
+            }
+            html += '<div class="question-text">' + displayText + '</div>';
+
+            if (q.type === 'choice') {
+                var labels = ['A', 'B', 'C', 'D'];
+                html += '<div class="options">';
+                for (var i = 0; i < q.options.length; i++) {
+                    html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i +
+                        '">' +
+                        '<span class="option-label">' + labels[i] + '.</span> ' + q.options[i] +
+                        '</button>';
+                }
+                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">';
+                html += '<span class="label">📖 解析：</span>' + q.explanation;
+                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
+                if (q.mnemonic) html += '<div class="mnemonic">' + q.mnemonic + '</div>';
+                html += '</div>';
+                html +=
+                    '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
+            } else {
+                html += '<div class="fill-input-area">';
+                for (var f = 0; f < q.blanks.length; f++) {
+                    html += '<div class="fill-row">';
+                    html += '<label>空' + (f + 1) + '：</label>';
+                    html += '<input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off">';
+                    html += '<span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f +
+                    '" style="display:none;"></span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html +=
+                    '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id +
+                    ')">✅ 提交答案</button></div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">';
+                html += '<span class="label">📖 解析：</span>' + q.explanation;
+                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
+                if (q.mnemonic) html += '<div class="mnemonic">' + q.mnemonic + '</div>';
+                html += '</div>';
+                html +=
+                    '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
+            }
+            html += '</div>';
+            container.innerHTML = html;
+            updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (q.type === 'fill') {
+                setTimeout(function() {
+                    var inputs = document.querySelectorAll('.fill-row input');
+                    inputs.forEach(function(inp, idx) {
+                        inp.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                if (idx === inputs.length - 1) {
+                                    handleFill(q.id);
+                                } else {
+                                    inputs[idx + 1].focus();
+                                }
+                            }
+                        });
+                    });
+                    if (inputs.length > 0 && !isAnswered) inputs[0].focus();
+                }, 100);
+            }
+        }
+
+        function handleChoice(selected, qId) {
+            if (isAnswered) return;
+            var q = getQ(qId);
+            if (!q) return;
+            isAnswered = true;
+
+            var isCorrect = (selected === q.correct);
+            var btns = document.querySelectorAll('.option-btn');
+            btns.forEach(function(b) { b.classList.add('disabled'); });
+
+            if (isCorrect) {
+                btns[selected].classList.add('selected-correct');
+                data.results[qId] = true;
+                removeWrong(qId);
+            } else {
+                btns[selected].classList.add('selected-wrong');
+                btns[q.correct].classList.add('show-correct');
+                data.results[qId] = false;
+                addWrong(q, q.options[selected]);
+            }
+            data.answered[qId] = true;
+            saveData(data);
+
+            var exp = document.getElementById('exp_' + qId);
+            if (exp) exp.classList.add('show');
+
+            var nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) nextBtn.disabled = false;
+
+            if (isPracticeMode) {
+                var remaining = wrongList.filter(function(item) {
+                    return item.chapter === 3 && item.type === 'vocab' && !data.answered[item.qId];
+                });
+                if (remaining.length === 0) {
+                    render();
+                    return;
+                }
+                var ids = wrongList.filter(function(item) {
+                    return item.chapter === 3 && item.type === 'vocab';
+                }).map(function(item) { return item.qId; });
+                var unanswered = [];
+                for (var i = 0; i < ids.length; i++) {
+                    if (!data.answered[ids[i]]) unanswered.push(ids[i]);
+                }
+                filteredIds = shuffle(unanswered);
+            }
+
+            updateUI();
+        }
+
+        function handleFill(qId) {
+            if (isAnswered) return;
+            var q = getQ(qId);
+            if (!q || q.type !== 'fill') return;
+
+            var allCorrect = true;
+            var allFilled = true;
+            var userAnswers = [];
+
+            for (var i = 0; i < q.blanks.length; i++) {
+                var input = document.getElementById('fill_' + q.id + '_' + i);
+                if (!input) { allFilled = false; continue; }
+                var userVal = input.value.trim();
+                userAnswers.push(userVal);
+                if (userVal === '') { allFilled = false; continue; }
+                if (userVal.replace(/\s/g, '') === q.blanks[i].replace(/\s/g, '')) {
+                    input.classList.add('correct');
+                } else {
+                    input.classList.add('wrong');
+                    allCorrect = false;
+                    var hint = document.getElementById('fillHint_' + q.id + '_' + i);
+                    if (hint) {
+                        hint.style.display = 'inline';
+                        hint.textContent = '→ 正确答案：' + q.blanks[i];
+                    }
+                }
+                input.disabled = true;
+            }
+
+            if (!allFilled) { alert('请填写所有空再提交'); return; }
+
+            isAnswered = true;
+            if (allCorrect) {
+                data.results[qId] = true;
+                removeWrong(qId);
+            } else {
+                data.results[qId] = false;
+                addWrong(q, userAnswers.join('、'));
+            }
+            data.answered[qId] = true;
+            saveData(data);
+
+            var exp = document.getElementById('exp_' + qId);
+            if (exp) exp.classList.add('show');
+
+            var submitBtn = document.getElementById('fillSubmitBtn');
+            if (submitBtn) submitBtn.disabled = true;
+
+            var nextBtn = document.getElementById('nextBtnFill');
+            if (nextBtn) nextBtn.disabled = false;
+
+            if (isPracticeMode) {
+                var remaining = wrongList.filter(function(item) {
+                    return item.chapter === 3 && item.type === 'vocab' && !data.answered[item.qId];
+                });
+                if (remaining.length === 0) {
+                    render();
+                    return;
+                }
+                var ids = wrongList.filter(function(item) {
+                    return item.chapter === 3 && item.type === 'vocab';
+                }).map(function(item) { return item.qId; });
+                var unanswered = [];
+                for (var i = 0; i < ids.length; i++) {
+                    if (!data.answered[ids[i]]) unanswered.push(ids[i]);
+                }
+                filteredIds = shuffle(unanswered);
+            }
+
+            updateUI();
+        }
+
+        function goNext() {
+            if (isPracticeMode) {
+                var ids = wrongList.filter(function(item) {
+                    return item.chapter === 3 && item.type === 'vocab';
+                }).map(function(item) { return item.qId; });
+                var unanswered = [];
+                for (var i = 0; i < ids.length; i++) {
+                    if (!data.answered[ids[i]]) unanswered.push(ids[i]);
+                }
+                if (unanswered.length === 0) {
+                    render();
+                    return;
+                }
+                filteredIds = shuffle(unanswered);
+                render();
+                return;
+            }
+            render();
+        }
+
+        function setFilter(filter) {
+            if (filter === 'wrong') {
+                var wc = wrongList.filter(function(item) { return item.chapter === 3 && item.type === 'vocab'; }).length;
+                if (wc === 0) { alert('🎉 错题本为空！'); return; }
+                isPracticeMode = false;
+                currentFilter = 'wrong';
+                var btns = document.querySelectorAll('.filter-btn');
+                btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
+                render();
+                return;
+            }
+            isPracticeMode = false;
+            currentFilter = filter;
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
+            filteredIds = shuffle(getFilteredIds(filter));
+            render();
+        }
+
+        function startPractice() {
+            var ids = wrongList.filter(function(item) { return item.chapter === 3 && item.type === 'vocab'; })
+                .map(function(item) { return item.qId; });
+            if (ids.length === 0) { alert('错题本为空'); return; }
+            isPracticeMode = true;
+            currentFilter = 'practice';
+            filteredIds = shuffle(ids.slice());
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            render();
+        }
+
+        function exitPractice() {
+            isPracticeMode = false;
+            currentFilter = 'all';
+            filteredIds = shuffle(getFilteredIds('all'));
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+            render();
+        }
+
+        function resetAll() {
+            if (!confirm('重置所有进度？')) return;
+            data = { answered: {}, results: {} };
+            saveData(data);
+            wrongList = [];
+            saveWrong(wrongList);
+            if (isPracticeMode) { isPracticeMode = false; }
+            currentFilter = 'all';
+            filteredIds = shuffle(getFilteredIds('all'));
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+            render();
+        }
+
+        filteredIds = shuffle(getFilteredIds('all'));
+        render();
+        console.log('🧬 第三章语言记忆已加载，共 ' + questionBank.length + ' 题');
+    </script>
+</body>
+</html>
