@@ -11,7 +11,6 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
             font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
             background: #f0f4f0;
@@ -19,8 +18,6 @@
             padding: 16px 14px 100px 14px;
             min-height: 100vh;
         }
-
-        /* ===== 顶部标题 ===== */
         .app-header {
             background: linear-gradient(135deg, #1a3a2a, #2d7d46);
             border-radius: 20px;
@@ -43,8 +40,6 @@
             opacity: 0.85;
             margin-top: 4px;
         }
-
-        /* ===== 全局进度 ===== */
         .global-progress {
             background: white;
             border-radius: 14px;
@@ -78,8 +73,6 @@
             transition: width 0.5s ease;
             width: 0%;
         }
-
-        /* ===== 错题本入口（醒目） ===== */
         .wrong-book-entry {
             background: white;
             border-radius: 14px;
@@ -92,6 +85,7 @@
             align-items: center;
             cursor: pointer;
             transition: all 0.2s;
+            text-decoration: none;
         }
         .wrong-book-entry:active {
             transform: scale(0.98);
@@ -121,8 +115,6 @@
             padding: 4px 14px;
             border-radius: 30px;
         }
-
-        /* ===== 章节卡片 ===== */
         .chapter-card {
             background: white;
             border-radius: 16px;
@@ -234,32 +226,12 @@
         .chapter-card .actions .btn-locked:active {
             transform: none;
         }
-
-        /* ===== 空状态 ===== */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6b7a8f;
-        }
-        .empty-state .icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-        .empty-state h3 {
-            font-size: 18px;
-            color: #1a2332;
-            margin-bottom: 4px;
-        }
-
-        /* ===== 底部 ===== */
         .footer {
             text-align: center;
             font-size: 12px;
             color: #9aa8b9;
             padding: 20px 0 10px 0;
         }
-
-        /* ===== 响应式 ===== */
         @media (max-width: 380px) {
             .app-header h1 {
                 font-size: 20px;
@@ -282,13 +254,11 @@
     </style>
 </head>
 <body>
-    <!-- ===== 顶部标题 ===== -->
     <div class="app-header">
         <h1>🧬 生物 <span>· 语言与真题</span></h1>
         <div class="sub">必修一 · 分子与细胞</div>
     </div>
 
-    <!-- ===== 全局进度 ===== -->
     <div class="global-progress" id="globalProgress">
         <div class="row">
             <span>📊 总进度</span>
@@ -299,75 +269,75 @@
         </div>
     </div>
 
-    <!-- ===== 错题本入口 ===== -->
-    <div class="wrong-book-entry" id="wrongBookEntry">
+    <a class="wrong-book-entry" href="wrongbook.html" id="wrongBookEntry">
         <div class="left">
             <span class="icon">📕</span>
             <span class="info">错题本 · <span class="count" id="wrongTotal">0</span> 题待重练</span>
         </div>
         <span class="badge" id="wrongBadge">0</span>
-    </div>
+    </a>
 
-    <!-- ===== 章节列表 ===== -->
     <div id="chapterList"></div>
 
     <div class="footer">数据保存在本地 · 清除浏览器缓存会重置</div>
 
     <script>
         // ============================================================
-        // 配置
+        // 配置：统一命名风格
         // ============================================================
         var CHAPTERS = [{
             id: 1,
-            title: '走近细胞',
+            title: '第1章 走近细胞',
             sub: '细胞学说 · 原核与真核 · 生命层次',
             vocabTotal: 30,
-            examTotal: 12,
+            examTotal: 0,
             vocabFile: 'ch1_vocab.html',
-            examFile: 'ch1_exam.html'
+            examFile: 'ch1_exam.html',
+            locked: false
         }, {
             id: 2,
-            title: '组成细胞的分子',
+            title: '第2章 组成细胞的分子',
             sub: '元素 · 蛋白质 · 核酸 · 糖脂 · 无机物',
             vocabTotal: 34,
-            examTotal: 12,
+            examTotal: 0,
             vocabFile: 'ch2_vocab.html',
-            examFile: 'ch2_exam.html'
+            examFile: 'ch2_exam.html',
+            locked: false
         }, {
             id: 3,
-            title: '细胞的基本结构',
+            title: '第3章 细胞的基本结构',
             sub: '细胞膜 · 细胞器 · 细胞核',
-            vocabTotal: 0,
+            vocabTotal: 30,
             examTotal: 0,
             vocabFile: 'ch3_vocab.html',
             examFile: 'ch3_exam.html',
-            locked: true
+            locked: false
         }, {
             id: 4,
-            title: '细胞的物质输入和输出',
+            title: '第4章 细胞的物质输入和输出',
             sub: '被动运输 · 主动运输 · 胞吞胞吐',
             vocabTotal: 0,
             examTotal: 0,
-            vocabFile: 'ch4_vocab.html',
-            examFile: 'ch4_exam.html',
+            vocabFile: '#',
+            examFile: '#',
             locked: true
         }, {
             id: 5,
-            title: '细胞的能量供应和利用',
+            title: '第5章 细胞的能量供应和利用',
             sub: '酶 · ATP · 呼吸 · 光合',
             vocabTotal: 0,
             examTotal: 0,
-            vocabFile: 'ch5_vocab.html',
-            examFile: 'ch5_exam.html',
+            vocabFile: '#',
+            examFile: '#',
             locked: true
         }, {
             id: 6,
-            title: '细胞的生命历程',
+            title: '第6章 细胞的生命历程',
             sub: '增殖 · 分化 · 衰老 · 死亡',
             vocabTotal: 0,
             examTotal: 0,
-            vocabFile: 'ch6_vocab.html',
-            examFile: 'ch6_exam.html',
+            vocabFile: '#',
+            examFile: '#',
             locked: true
         }];
 
@@ -377,20 +347,12 @@
         var STORAGE_KEY = 'bio_index_data';
 
         function getStorage() {
-            try {
-                var raw = localStorage.getItem(STORAGE_KEY);
-                if (raw) return JSON.parse(raw);
-            } catch (e) {}
+            try { var raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch (e) {}
             return { doneMap: {} };
         }
 
-        function saveStorage(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        }
+        function saveStorage(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 
-        // ============================================================
-        // 获取章节进度
-        // ============================================================
         function getChapterProgress(chapterId, type, total) {
             if (total === 0) return { done: 0, total: 0, rate: 0 };
             var data = getStorage();
@@ -400,23 +362,26 @@
         }
 
         function getGlobalStats() {
-            var totalDone = 0;
-            var totalAll = 0;
+            var totalDone = 0,
+                totalAll = 0;
             var data = getStorage();
             CHAPTERS.forEach(function(ch) {
                 if (!ch.locked) {
                     ['vocab', 'exam'].forEach(function(type) {
                         var key = 'ch' + ch.id + '_' + type;
                         var total = type === 'vocab' ? ch.vocabTotal : ch.examTotal;
-                        if (total > 0) {
-                            totalAll += total;
-                            totalDone += (data.doneMap[key] || 0);
-                        }
+                        if (total > 0) { totalAll += total;
+                            totalDone += (data.doneMap[key] || 0); }
                     });
                 }
             });
             return { done: totalDone, total: totalAll, rate: totalAll === 0 ? 0 : Math.round((totalDone / totalAll) *
                 100) };
+        }
+
+        function getWrongTotal() {
+            try { var raw = localStorage.getItem('bio_wrong_list'); if (!raw) return 0; var list = JSON.parse(raw); return list
+                    .length; } catch (e) { return 0; }
         }
 
         // ============================================================
@@ -433,7 +398,6 @@
                 var totalAll = vProgress.total + eProgress.total;
                 var rate = totalAll === 0 ? 0 : Math.round((totalDone / totalAll) * 100);
 
-                // 语言按钮
                 var vocabBtn;
                 if (isLocked) {
                     vocabBtn = '<span class="btn btn-locked">⏳ 待解锁</span>';
@@ -443,7 +407,6 @@
                     vocabBtn = '<a href="' + ch.vocabFile + '" class="btn btn-vocab">📖 语言记忆</a>';
                 }
 
-                // 真题按钮
                 var examBtn;
                 if (isLocked) {
                     examBtn = '<span class="btn btn-locked">⏳ 待解锁</span>';
@@ -474,56 +437,22 @@
             });
             list.innerHTML = html;
 
-            // 全局进度
             var g = getGlobalStats();
             document.getElementById('globalStats').textContent = g.done + ' / ' + g.total + ' 题';
             document.getElementById('globalBar').style.width = g.rate + '%';
 
-            // 错题数（从所有章节汇总）
             var wrongTotal = getWrongTotal();
             document.getElementById('wrongTotal').textContent = wrongTotal;
             document.getElementById('wrongBadge').textContent = wrongTotal;
         }
 
-        // ============================================================
-        // 错题总数（跨章节汇总）
-        // ============================================================
-        function getWrongTotal() {
-            try {
-                var raw = localStorage.getItem('bio_wrong_list');
-                if (!raw) return 0;
-                var list = JSON.parse(raw);
-                return list.length;
-            } catch (e) { return 0; }
-        }
-
-        // ============================================================
-        // 错题本跳转
-        // ============================================================
-        document.getElementById('wrongBookEntry').addEventListener('click', function() {
-            var total = getWrongTotal();
-            if (total === 0) {
-                alert('🎉 错题本为空！继续保持！');
-                return;
-            }
-            // 跳转到错题本页面（独立页面，跨章节汇总）
-            window.location.href = 'wrongbook.html';
-        });
-
-        // ============================================================
-        // 初始化
-        // ============================================================
-        render();
-
-        // 页面可见时刷新（从其他页面返回时更新）
         document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                render();
-            }
+            if (!document.hidden) { render(); }
         });
 
+        render();
         console.log('🏠 首页已加载');
-        console.log('📚 共 ' + CHAPTERS.length + ' 章，其中前2章已填充内容');
+        console.log('📚 共 ' + CHAPTERS.length + ' 章，其中前3章已填充语言记忆内容');
     </script>
 </body>
 </html>
