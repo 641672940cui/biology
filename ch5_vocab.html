@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>第五章 · 语言记忆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f5f7fb;
+            color: #1a2332;
+            padding: 12px 12px 100px 12px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #fff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .header-title {
+            font-size: 17px;
+            font-weight: 700;
+        }
+        .header-title span {
+            color: #2d7d46;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-home {
+            font-size: 13px;
+            color: #1a5276;
+            background: #e3eef7;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .header-stats {
+            font-size: 13px;
+            color: #6b7a8f;
+            background: #f0f2f5;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: #e8ecf1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: #2d7d46;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6b7a8f;
+            margin-top: 4px;
+        }
+        .filter-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 14px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .filter-btn {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1.5px solid #d0d7e2;
+            background: #fff;
+            font-size: 12px;
+            color: #3d4e62;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background: #2d7d46;
+            border-color: #2d7d46;
+            color: #fff;
+        }
+        .filter-btn.wrong-filter {
+            border-color: #c0392b;
+            color: #c0392b;
+        }
+        .filter-btn.wrong-filter.active {
+            background: #c0392b;
+            border-color: #c0392b;
+            color: #fff;
+        }
+        .question-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 16px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            animation: fadeUp 0.35s ease;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .question-type {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #2d7d46;
+            background: #e6f3ea;
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .question-section {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 500;
+            color: #6b7a8f;
+            background: #f0f2f5;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .question-text {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .question-text .blank {
+            display: inline-block;
+            min-width: 70px;
+            border-bottom: 2px dashed #2d7d46;
+            margin: 0 4px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 12px 0 10px;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #e2e7ef;
+            background: #fff;
+            font-size: 15px;
+            line-height: 1.5;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 48px;
+            transition: all 0.2s;
+        }
+        .option-btn:active {
+            transform: scale(0.98);
+        }
+        .option-btn.selected-correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .option-btn.selected-wrong {
+            border-color: #c0392b;
+            background: #fde8e6;
+        }
+        .option-btn.show-correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .option-label {
+            font-weight: 700;
+            color: #6b7a8f;
+            margin-right: 8px;
+        }
+        .fill-input-area {
+            margin: 12px 0 10px;
+        }
+        .fill-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .fill-row label {
+            font-weight: 500;
+            color: #3d4e62;
+            min-width: 30px;
+            font-size: 15px;
+        }
+        .fill-row input {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 2px solid #e2e7ef;
+            font-size: 15px;
+            font-family: inherit;
+            background: #fff;
+            color: #1a2332;
+            min-height: 44px;
+            transition: border 0.2s;
+        }
+        .fill-row input:focus {
+            outline: none;
+            border-color: #2d7d46;
+        }
+        .fill-row input.correct {
+            border-color: #2d7d46;
+            background: #e8f5ee;
+        }
+        .fill-row input.wrong {
+            border-color: #c0392b;
+            background: #fde8e6;
+        }
+        .fill-row input:disabled {
+            opacity: 0.7;
+        }
+        .fill-row .correct-answer-hint {
+            font-size: 14px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+        .explanation {
+            background: #f8faff;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 12px 0 6px;
+            border-left: 4px solid #2d7d46;
+            display: none;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #2c3e50;
+        }
+        .explanation.show {
+            display: block;
+        }
+        .tip-yellow {
+            background: #fcf8e3;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 3px solid #f0ad4e;
+            margin-top: 6px;
+            font-size: 14px;
+        }
+        .tip-yellow strong {
+            color: #8a6d3b;
+        }
+        .mnemonic {
+            background: #f0f7f4;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1a6b3c;
+            margin-top: 6px;
+            border-left: 3px solid #2d7d46;
+        }
+        .action-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .btn-primary {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: #2d7d46;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 48px;
+            transition: all 0.2s;
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: #236a3a;
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .wrong-tag {
+            display: inline-block;
+            background: #c0392b;
+            color: #fff;
+            font-size: 11px;
+            padding: 1px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .status-badge {
+            display: inline-block;
+            font-size: 12px;
+            padding: 2px 12px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .status-badge.done {
+            background: #e8f5ee;
+            color: #2d7d46;
+        }
+        .status-badge.wrong {
+            background: #fde8e6;
+            color: #c0392b;
+        }
+        .complete-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .complete-screen .big-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+        .complete-screen h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .complete-screen .score-big {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2d7d46;
+            margin: 16px 0;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7a8f;
+        }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .wrong-list-view {
+            background: #fff;
+            border-radius: 16px;
+            padding: 18px 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+        .wrong-list-view .title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .wrong-list-view .item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .wrong-list-view .item:last-child {
+            border-bottom: none;
+        }
+        .wrong-list-view .item .q {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .wrong-list-view .item .your {
+            font-size: 14px;
+            color: #c0392b;
+        }
+        .wrong-list-view .item .correct {
+            font-size: 14px;
+            color: #2d7d46;
+            font-weight: 600;
+        }
+        .home-footer {
+            text-align: center;
+            margin-top: 16px;
+            padding: 10px 0;
+        }
+        .home-footer .btn-home {
+            background: none;
+            border: 1.5px solid #d0d7e2;
+            border-radius: 30px;
+            padding: 10px 30px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #3d4e62;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 44px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .wrong-book-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a2332;
+            color: #fff;
+            border: none;
+            border-radius: 40px;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 100;
+            font-family: inherit;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            min-height: 48px;
+        }
+        .wrong-book-btn .badge {
+            background: #c0392b;
+            color: #fff;
+            border-radius: 20px;
+            padding: 0 10px;
+            font-size: 13px;
+            line-height: 22px;
+        }
+        .back-to-practice {
+            margin-top: 14px;
+            text-align: center;
+        }
+        .back-to-practice .btn {
+            background: #2d7d46;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 44px;
+        }
+        @media (max-width: 380px) {
+            .question-text {
+                font-size: 15px;
+            }
+            .option-btn {
+                font-size: 14px;
+                padding: 12px 14px;
+                min-height: 44px;
+            }
+            .btn-primary {
+                font-size: 15px;
+                min-height: 44px;
+                padding: 12px;
+            }
+            .fill-row input {
+                font-size: 14px;
+                padding: 10px 12px;
+                min-height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-top">
+            <div class="header-title">🧬 语言记忆 · <span>第五章</span></div>
+            <div class="header-right">
+                <a class="header-home" href="index.html">🏠 首页</a>
+                <div class="header-stats" id="statsLabel">0 / 0</div>
+            </div>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+        <div class="progress-label">
+            <span id="correctRate">✅ 正确率：--%</span>
+            <span id="wrongCount">❌ 错题：0</span>
+        </div>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">📚 全部</button>
+        <button class="filter-btn" data-filter="5.1" onclick="setFilter('5.1')">§5.1 酶</button>
+        <button class="filter-btn" data-filter="5.2" onclick="setFilter('5.2')">§5.2 ATP</button>
+        <button class="filter-btn" data-filter="5.3" onclick="setFilter('5.3')">§5.3 细胞呼吸</button>
+        <button class="filter-btn" data-filter="5.4" onclick="setFilter('5.4')">§5.4 光合作用</button>
+        <button class="filter-btn wrong-filter" data-filter="wrong" onclick="setFilter('wrong')">📕 错题本</button>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="home-footer">
+        <a class="btn-home" href="index.html">🏠 返回首页</a>
+    </div>
+
+    <button class="wrong-book-btn" id="wrongBookBtn" onclick="setFilter('wrong')">
+        📕 错题本 <span class="badge" id="wrongBadge">0</span>
+    </button>
+
+    <script>
+        // ================================================================
+        // 第五章题库（32题）
+        // ================================================================
+        var questionBank = [{
+            id: 1,
+            type: 'choice',
+            section: '5.1',
+            question: '酶的本质是（　）',
+            options: ['都是蛋白质', '绝大多数是蛋白质，少数是RNA', '都是RNA', '都是脂质'],
+            correct: 1,
+            explanation: '绝大多数酶是蛋白质，少数酶是RNA。',
+            tip: '酶不提供能量，只降低化学反应的活化能。'
+        }, {
+            id: 2,
+            type: 'choice',
+            section: '5.1',
+            question: '酶的作用原理是（　）',
+            options: ['提供能量', '降低化学反应的活化能', '改变反应方向', '增加反应物浓度'],
+            correct: 1,
+            explanation: '酶通过降低化学反应的活化能来加速反应。',
+            tip: '酶不提供能量，不改变反应方向，反应前后自身性质和数量不变。'
+        }, {
+            id: 3,
+            type: 'choice',
+            section: '5.1',
+            question: '下列不属于酶特性的是（　）',
+            options: ['高效性', '专一性', '作用条件温和', '提供能量'],
+            correct: 3,
+            explanation: '酶的三大特性：高效性、专一性、作用条件温和。酶不提供能量。',
+            mnemonic: '📝 口诀："高效专一条件温，酶不供能不改变方向。"'
+        }, {
+            id: 4,
+            type: 'choice',
+            section: '5.1',
+            question: '低温对酶的影响是（　）',
+            options: ['使酶变性失活，不可恢复', '抑制酶活性，温度回升后可恢复', '不影响酶活性', '使酶活性升高'],
+            correct: 1,
+            explanation: '低温抑制酶活性但不破坏酶的空间结构，温度回升后活性可恢复。高温使酶变性失活，不可恢复。',
+            tip: '低温抑制（可恢复），高温变性（不可恢复）。'
+        }, {
+            id: 5,
+            type: 'choice',
+            section: '5.1',
+            question: '过酸、过碱对酶的影响是（　）',
+            options: ['抑制酶活性，可恢复', '使酶变性失活，不可恢复', '不影响酶活性', '使酶活性升高'],
+            correct: 1,
+            explanation: '过酸、过碱会破坏酶的空间结构，使酶变性失活，不可恢复。'
+        }, {
+            id: 6,
+            type: 'fill',
+            section: '5.1',
+            question: '酶通过降低化学反应的【1】来加速反应。',
+            blanks: ['活化能'],
+            explanation: '酶的作用原理是降低化学反应的活化能。'
+        }, {
+            id: 7,
+            type: 'fill',
+            section: '5.1',
+            question: '酶的特性包括高效性、【1】和作用条件温和。',
+            blanks: ['专一性'],
+            explanation: '酶的三大特性：高效性、专一性、作用条件温和。'
+        }, {
+            id: 8,
+            type: 'choice',
+            section: '5.2',
+            question: 'ATP的结构简式是（　）',
+            options: ['A-P-P-P', 'A-P~P~P', 'A~P~P~P', 'A-P-P~P'],
+            correct: 1,
+            explanation: 'ATP的结构简式是A-P~P~P。A代表腺苷，P代表磷酸基团，~代表高能磷酸键。',
+            mnemonic: '📝 口诀："A-P~P~P，两个高能键，远离A的易断裂。"'
+        }, {
+            id: 9,
+            type: 'choice',
+            section: '5.2',
+            question: 'ATP中的"A"代表（　）',
+            options: ['腺嘌呤', '腺苷（腺嘌呤+核糖）', '氨基酸', '腺嘌呤核糖核苷酸'],
+            correct: 1,
+            explanation: 'ATP中的A代表腺苷（腺嘌呤+核糖）。而DNA/RNA中的A代表腺嘌呤（只含碱基）。',
+            tip: 'ATP中的A=腺苷；DNA/RNA中的A=腺嘌呤。两者不同！'
+        }, {
+            id: 10,
+            type: 'choice',
+            section: '5.2',
+            question: 'ATP与ADP的转化是（　）',
+            options: ['可逆反应', '不是可逆反应', '氧化还原反应', '分解反应'],
+            correct: 1,
+            explanation: 'ATP与ADP的转化不是可逆反应，因为催化的酶不同、能量来源不同、反应场所不同。',
+            tip: 'ATP与ADP的转化不是可逆反应！'
+        }, {
+            id: 11,
+            type: 'choice',
+            section: '5.2',
+            question: '细胞生命活动的直接能源物质是（　）',
+            options: ['糖类', '脂肪', 'ATP', '蛋白质'],
+            correct: 2,
+            explanation: 'ATP是细胞生命活动的直接能源物质。糖类是主要能源物质，脂肪是储能物质。',
+            tip: '糖类→主要能源；脂肪→储能物质；ATP→直接能源。'
+        }, {
+            id: 12,
+            type: 'fill',
+            section: '5.2',
+            question: 'ATP水解时，【1】的高能磷酸键最容易断裂。',
+            blanks: ['远离A'],
+            explanation: 'ATP中远离A的高能磷酸键最容易断裂，释放能量。'
+        }, {
+            id: 13,
+            type: 'fill',
+            section: '5.2',
+            question: 'ATP在细胞中含量【1】，但转化非常迅速。',
+            blanks: ['很少'],
+            explanation: 'ATP在细胞中含量很少，但转化非常迅速，能满足生命活动的需要。'
+        }, {
+            id: 14,
+            type: 'choice',
+            section: '5.3',
+            question: '有氧呼吸第一阶段的场所是（　）',
+            options: ['细胞质基质', '线粒体基质', '线粒体内膜', '细胞核'],
+            correct: 0,
+            explanation: '有氧呼吸第一阶段在细胞质基质中进行，葡萄糖分解为丙酮酸和[H]。',
+            mnemonic: '📝 口诀："一质二基三内膜"——第一阶段在细胞质基质，第二阶段在线粒体基质，第三阶段在线粒体内膜。'
+        }, {
+            id: 15,
+            type: 'choice',
+            section: '5.3',
+            question: '有氧呼吸中，CO₂产生的阶段是（　）',
+            options: ['第一阶段', '第二阶段', '第三阶段', '三个阶段都产生'],
+            correct: 1,
+            explanation: '有氧呼吸第二阶段（线粒体基质）中，丙酮酸与水反应产生CO₂和[H]。',
+            tip: 'CO₂只在第二阶段产生，O₂只在第三阶段参与。'
+        }, {
+            id: 16,
+            type: 'choice',
+            section: '5.3',
+            question: '有氧呼吸中，水产生的阶段是（　）',
+            options: ['第一阶段', '第二阶段', '第三阶段', '三个阶段都产生'],
+            correct: 2,
+            explanation: '有氧呼吸第三阶段（线粒体内膜）中，[H]与O₂结合生成水。',
+            tip: '第二阶段消耗水，第三阶段产生水。'
+        }, {
+            id: 17,
+            type: 'choice',
+            section: '5.3',
+            question: '有氧呼吸释放能量最多的阶段是（　）',
+            options: ['第一阶段', '第二阶段', '第三阶段', '三个阶段一样多'],
+            correct: 2,
+            explanation: '有氧呼吸第三阶段释放能量最多，生成大量ATP。'
+        }, {
+            id: 18,
+            type: 'choice',
+            section: '5.3',
+            question: '人体细胞无氧呼吸的产物是（　）',
+            options: ['酒精和CO₂', '乳酸', 'CO₂和水', '丙酮酸'],
+            correct: 1,
+            explanation: '人体细胞无氧呼吸产生乳酸。酵母菌等产生酒精和CO₂。',
+            tip: '人体无氧呼吸→乳酸；酵母菌无氧呼吸→酒精+CO₂。'
+        }, {
+            id: 19,
+            type: 'choice',
+            section: '5.3',
+            question: '无氧呼吸的场所是（　）',
+            options: ['细胞质基质', '线粒体', '细胞核', '叶绿体'],
+            correct: 0,
+            explanation: '无氧呼吸全程在细胞质基质中进行。'
+        }, {
+            id: 20,
+            type: 'choice',
+            section: '5.3',
+            question: '有氧呼吸和无氧呼吸的共同点是（　）',
+            options: ['都需要O₂', '都产生CO₂', '第一阶段完全相同', '都产生大量ATP'],
+            correct: 2,
+            explanation: '有氧呼吸和无氧呼吸的第一阶段完全相同（葡萄糖→丙酮酸+[H]），都在细胞质基质中进行。'
+        }, {
+            id: 21,
+            type: 'fill',
+            section: '5.3',
+            question: '有氧呼吸第三阶段的场所是【1】。',
+            blanks: ['线粒体内膜'],
+            explanation: '有氧呼吸第三阶段在线粒体内膜上进行，[H]与O₂结合生成水。'
+        }, {
+            id: 22,
+            type: 'fill',
+            section: '5.3',
+            question: '有氧呼吸中，O₂在【1】阶段参与反应。',
+            blanks: ['第三'],
+            explanation: 'O₂只在有氧呼吸第三阶段参与，与[H]结合生成水。'
+        }, {
+            id: 23,
+            type: 'fill',
+            section: '5.3',
+            question: '酵母菌无氧呼吸的产物是【1】和CO₂。',
+            blanks: ['酒精'],
+            explanation: '酵母菌无氧呼吸产生酒精和CO₂。'
+        }, {
+            id: 24,
+            type: 'choice',
+            section: '5.4',
+            question: '光合作用光反应的场所是（　）',
+            options: ['叶绿体基质', '类囊体薄膜', '细胞质基质', '线粒体'],
+            correct: 1,
+            explanation: '光反应在类囊体薄膜上进行，暗反应在叶绿体基质中进行。',
+            mnemonic: '📝 口诀："光反应在膜上，暗反应在质中。"'
+        }, {
+            id: 25,
+            type: 'choice',
+            section: '5.4',
+            question: '光合作用释放的O₂来自（　）',
+            options: ['CO₂', 'H₂O', '葡萄糖', 'ATP'],
+            correct: 1,
+            explanation: '光合作用释放的O₂来自水（H₂O），由鲁宾和卡门的同位素标记实验证明。',
+            tip: 'O₂来自水，不是CO₂！'
+        }, {
+            id: 26,
+            type: 'choice',
+            section: '5.4',
+            question: '光反应为暗反应提供（　）',
+            options: ['CO₂和H₂O', '[H]和ATP', 'O₂和ATP', 'ADP和Pi'],
+            correct: 1,
+            explanation: '光反应为暗反应提供[H]和ATP；暗反应为光反应提供ADP、Pi和NADP⁺。'
+        }, {
+            id: 27,
+            type: 'choice',
+            section: '5.4',
+            question: '叶绿素主要吸收的光是（　）',
+            options: ['绿光', '红光和蓝紫光', '蓝紫光', '黄光'],
+            correct: 1,
+            explanation: '叶绿素主要吸收红光和蓝紫光，几乎不吸收绿光。类胡萝卜素主要吸收蓝紫光。',
+            tip: '叶子呈绿色是因为绿光被反射，几乎不被吸收。'
+        }, {
+            id: 28,
+            type: 'choice',
+            section: '5.4',
+            question: '暗反应的场所是（　）',
+            options: ['类囊体薄膜', '叶绿体基质', '细胞质基质', '线粒体基质'],
+            correct: 1,
+            explanation: '暗反应在叶绿体基质中进行，CO₂与[H]和ATP反应生成有机物。'
+        }, {
+            id: 29,
+            type: 'fill',
+            section: '5.4',
+            question: '光合作用光反应中，水光解产生O₂和【1】。',
+            blanks: ['[H]'],
+            explanation: '光反应中水光解产生O₂和[H]，同时ADP与Pi合成ATP。'
+        }, {
+            id: 30,
+            type: 'fill',
+            section: '5.4',
+            question: '光合作用释放的O₂来自【1】，由鲁宾和卡门的同位素标记实验证明。',
+            blanks: ['水'],
+            explanation: '光合作用释放的O₂来自水，由鲁宾和卡门用同位素标记实验证明。'
+        }, {
+            id: 31,
+            type: 'fill',
+            section: '5.4',
+            question: '暗反应为光反应提供【1】、Pi和NADP⁺。',
+            blanks: ['ADP'],
+            explanation: '暗反应为光反应提供ADP、Pi和NADP⁺；光反应为暗反应提供[H]和ATP。'
+        }, {
+            id: 32,
+            type: 'fill',
+            section: '5.4',
+            question: '光合色素分布在【1】上。',
+            blanks: ['类囊体薄膜'],
+            explanation: '光合色素（叶绿素和类胡萝卜素）分布在类囊体薄膜上。'
+        }];
+
+        // ================================================================
+        // 存储
+        // ================================================================
+        var STORAGE_KEY = 'ch5_vocab_data';
+        var WRONG_KEY = 'ch5_wrong_data';
+
+        function loadData() {
+            try { var raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch (e) {}
+            return { answered: {}, results: {} };
+        }
+
+        function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+        function loadWrong() {
+            try { var raw = localStorage.getItem(WRONG_KEY); if (raw) return JSON.parse(raw); } catch (e) {}
+            return [];
+        }
+
+        function saveWrong(list) { localStorage.setItem(WRONG_KEY, JSON.stringify(list)); }
+
+        var data = loadData();
+        var wrongList = loadWrong();
+
+        var currentFilter = 'all';
+        var filteredIds = [];
+        var currentQ = null;
+        var isAnswered = false;
+        var isPracticeMode = false;
+
+        function getFilteredIds(filter) {
+            if (filter === 'all') return questionBank.map(function(q) { return q.id; });
+            if (filter === 'wrong') {
+                return wrongList.filter(function(item) { return item.chapter === 5 && item.type === 'vocab'; })
+                    .map(function(item) { return item.qId; });
+            }
+            return questionBank.filter(function(q) { return q.section === filter; }).map(function(q) { return q.id; });
+        }
+
+        function getQ(id) {
+            for (var i = 0; i < questionBank.length; i++) {
+                if (questionBank[i].id === id) return questionBank[i];
+            }
+            return null;
+        }
+
+        function shuffle(arr) {
+            for (var i = arr.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            return arr;
+        }
+
+        function getUnanswered(ids) {
+            var result = [];
+            for (var i = 0; i < ids.length; i++) {
+                if (!data.answered[ids[i]]) result.push(ids[i]);
+            }
+            return result;
+        }
+
+        function getProgress() {
+            var total = filteredIds.length;
+            var done = 0,
+                correct = 0;
+            for (var i = 0; i < filteredIds.length; i++) {
+                var id = filteredIds[i];
+                if (data.answered[id]) {
+                    done++;
+                    if (data.results[id] === true) correct++;
+                }
+            }
+            var rate = done === 0 ? 0 : Math.round((correct / done) * 100);
+            return { total: total, done: done, correct: correct, rate: rate };
+        }
+
+        function updateUI() {
+            var p = getProgress();
+            var wc = wrongList.filter(function(item) { return item.chapter === 5 && item.type === 'vocab'; }).length;
+            document.getElementById('statsLabel').textContent = p.done + ' / ' + p.total;
+            document.getElementById('progressFill').style.width = (p.total === 0 ? 0 : (p.done / p.total) * 100) + '%';
+            document.getElementById('correctRate').textContent = '✅ 正确率：' + (p.done === 0 ? '--%' : p.rate + '%');
+            document.getElementById('wrongCount').textContent = '❌ 错题：' + wc;
+            document.getElementById('wrongBadge').textContent = wc;
+            var btn = document.getElementById('wrongBookBtn');
+            btn.style.display = (wc > 0 && currentFilter !== 'wrong') ? 'flex' : 'none';
+            var idxData = JSON.parse(localStorage.getItem('bio_index_data') || '{"doneMap":{}}');
+            idxData.doneMap['ch5_vocab'] = p.done;
+            localStorage.setItem('bio_index_data', JSON.stringify(idxData));
+        }
+
+        function addWrong(q, userAns) {
+            if (wrongList.some(function(item) { return item.chapter === 5 && item.type === 'vocab' && item.qId === q
+                    .id; })) return;
+            var correctAns = '';
+            if (q.type === 'choice') correctAns = q.options[q.correct];
+            else if (q.type === 'fill') correctAns = q.blanks.join('、');
+            wrongList.push({
+                chapter: 5,
+                type: 'vocab',
+                qId: q.id,
+                question: q.question,
+                userAnswer: userAns || '',
+                correctAnswer: correctAns
+            });
+            saveWrong(wrongList);
+        }
+
+        function removeWrong(qId) {
+            wrongList = wrongList.filter(function(item) {
+                return !(item.chapter === 5 && item.type === 'vocab' && item.qId === qId);
+            });
+            saveWrong(wrongList);
+        }
+
+        function render() {
+            var container = document.getElementById('questionContainer');
+
+            if (currentFilter === 'wrong' && !isPracticeMode) {
+                var list = wrongList.filter(function(item) { return item.chapter === 5 && item.type === 'vocab'; });
+                if (list.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="icon">🎉</div><p>错题本已清空！</p></div>';
+                    updateUI();
+                    return;
+                }
+                var html = '<div class="wrong-list-view"><div class="title">📕 错题本（' + list.length + '题）</div>';
+                list.forEach(function(item) {
+                    html += '<div class="item">';
+                    html += '<div class="q">' + item.question + '</div>';
+                    html += '<div class="your">❌ 你的答案：' + (item.userAnswer || '未填写') + '</div>';
+                    html += '<div class="correct">✅ 正确答案：' + item.correctAnswer + '</div>';
+                    html += '</div>';
+                });
+                html +=
+                    '<div class="back-to-practice"><button class="btn" onclick="startPractice()">🔄 重练错题</button></div>';
+                html += '</div>';
+                container.innerHTML = html;
+                updateUI();
+                return;
+            }
+
+            if (filteredIds.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>当前暂无题目</p></div>';
+                updateUI();
+                return;
+            }
+
+            var unanswered = getUnanswered(filteredIds);
+            if (unanswered.length === 0) {
+                var p = getProgress();
+                var msg = isPracticeMode ? '🎉 错题已全部消灭！' : '🎉 全部通关！';
+                container.innerHTML =
+                    '<div class="complete-screen">' +
+                    '<div class="big-icon">🎉</div><h2>' + msg + '</h2>' +
+                    '<div class="score-big">' + p.rate + '%</div>' +
+                    '<p style="color:#6b7a8f;font-size:14px;">正确率 ' + p.rate + '% · 共 ' + filteredIds.length + ' 题</p>';
+                if (isPracticeMode) {
+                    container.innerHTML +=
+                        '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="exitPractice()">🔙 退出练习</button>';
+                } else {
+                    container.innerHTML +=
+                        '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="resetAll()">🔄 重新开始</button>';
+                }
+                container.innerHTML += '</div>';
+                updateUI();
+                return;
+            }
+
+            var targetId = unanswered[0];
+            var q = getQ(targetId);
+            if (!q) { container.innerHTML = '<div class="empty-state"><p>加载失败</p></div>'; return; }
+
+            currentQ = q;
+            isAnswered = false;
+
+            var html = '<div class="question-card">';
+            var typeLabel = q.type === 'choice' ? '🎯 选择题' : '✍️ 填空题';
+            var sectionName = '';
+            if (q.section === '5.1') sectionName = '§5.1 酶';
+            else if (q.section === '5.2') sectionName = '§5.2 ATP';
+            else if (q.section === '5.3') sectionName = '§5.3 细胞呼吸';
+            else if (q.section === '5.4') sectionName = '§5.4 光合作用';
+            html += '<span class="question-type">' + typeLabel + '</span>';
+            html += '<span class="question-section">' + sectionName + '</span>';
+            if (isPracticeMode) html += '<span class="wrong-tag">📕 错题练习</span>';
+            var isW = wrongList.some(function(item) { return item.chapter === 5 && item.type === 'vocab' && item.qId ===
+                    q.id; });
+            if (isW && currentFilter !== 'wrong') html += '<span class="wrong-tag">📕 错题</span>';
+            if (data.answered[q.id]) {
+                if (data.results[q.id] === true) html += '<span class="status-badge done">✅ 已掌握</span>';
+                else html += '<span class="status-badge wrong">❌ 需重练</span>';
+            }
+
+            var displayText = q.question;
+            if (q.type === 'fill' && q.blanks) {
+                for (var b = 0; b < q.blanks.length; b++) {
+                    displayText = displayText.replace('【' + (b + 1) + '】', '<span class="blank">____</span>');
+                }
+            }
+            html += '<div class="question-text">' + displayText + '</div>';
+
+            if (q.type === 'choice') {
+                var labels = ['A', 'B', 'C', 'D'];
+                html += '<div class="options">';
+                for (var i = 0; i < q.options.length; i++) {
+                    html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i +
+                        '">' +
+                        '<span class="option-label">' + labels[i] + '.</span> ' + q.options[i] +
+                        '</button>';
+                }
+                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">';
+                html += '<span class="label">📖 解析：</span>' + q.explanation;
+                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
+                if (q.mnemonic) html += '<div class="mnemonic">' + q.mnemonic + '</div>';
+                html += '</div>';
+                html +=
+                    '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
+            } else {
+                html += '<div class="fill-input-area">';
+                for (var f = 0; f < q.blanks.length; f++) {
+                    html += '<div class="fill-row">';
+                    html += '<label>空' + (f + 1) + '：</label>';
+                    html += '<input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off">';
+                    html += '<span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f +
+                    '" style="display:none;"></span>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html +=
+                    '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id +
+                    ')">✅ 提交答案</button></div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">';
+                html += '<span class="label">📖 解析：</span>' + q.explanation;
+                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
+                if (q.mnemonic) html += '<div class="mnemonic">' + q.mnemonic + '</div>';
+                html += '</div>';
+                html +=
+                    '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
+            }
+            html += '</div>';
+            container.innerHTML = html;
+            updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (q.type === 'fill') {
+                setTimeout(function() {
+                    var inputs = document.querySelectorAll('.fill-row input');
+                    inputs.forEach(function(inp, idx) {
+                        inp.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                if (idx === inputs.length - 1) {
+                                    handleFill(q.id);
+                                } else {
+                                    inputs[idx + 1].focus();
+                                }
+                            }
+                        });
+                    });
+                    if (inputs.length > 0 && !isAnswered) inputs[0].focus();
+                }, 100);
+            }
+        }
+
+        function handleChoice(selected, qId) {
+            if (isAnswered) return;
+            var q = getQ(qId);
+            if (!q) return;
+            isAnswered = true;
+
+            var isCorrect = (selected === q.correct);
+            var btns = document.querySelectorAll('.option-btn');
+            btns.forEach(function(b) { b.classList.add('disabled'); });
+
+            if (isCorrect) {
+                btns[selected].classList.add('selected-correct');
+                data.results[qId] = true;
+                removeWrong(qId);
+            } else {
+                btns[selected].classList.add('selected-wrong');
+                btns[q.correct].classList.add('show-correct');
+                data.results[qId] = false;
+                addWrong(q, q.options[selected]);
+            }
+            data.answered[qId] = true;
+            saveData(data);
+
+            var exp = document.getElementById('exp_' + qId);
+            if (exp) exp.classList.add('show');
+
+            var nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) nextBtn.disabled = false;
+
+            if (isPracticeMode) {
+                var remaining = wrongList.filter(function(item) {
+                    return item.chapter === 5 && item.type === 'vocab' && !data.answered[item.qId];
+                });
+                if (remaining.length === 0) {
+                    render();
+                    return;
+                }
+                var ids = wrongList.filter(function(item) {
+                    return item.chapter === 5 && item.type === 'vocab';
+                }).map(function(item) { return item.qId; });
+                var unanswered = [];
+                for (var i = 0; i < ids.length; i++) {
+                    if (!data.answered[ids[i]]) unanswered.push(ids[i]);
+                }
+                filteredIds = shuffle(unanswered);
+            }
+
+            updateUI();
+        }
+
+        function handleFill(qId) {
+            if (isAnswered) return;
+            var q = getQ(qId);
+            if (!q || q.type !== 'fill') return;
+
+            var allCorrect = true;
+            var allFilled = true;
+            var userAnswers = [];
+
+            for (var i = 0; i < q.blanks.length; i++) {
+                var input = document.getElementById('fill_' + q.id + '_' + i);
+                if (!input) { allFilled = false; continue; }
+                var userVal = input.value.trim();
+                userAnswers.push(userVal);
+                if (userVal === '') { allFilled = false; continue; }
+                if (userVal.replace(/\s/g, '') === q.blanks[i].replace(/\s/g, '')) {
+                    input.classList.add('correct');
+                } else {
+                    input.classList.add('wrong');
+                    allCorrect = false;
+                    var hint = document.getElementById('fillHint_' + q.id + '_' + i);
+                    if (hint) {
+                        hint.style.display = 'inline';
+                        hint.textContent = '→ 正确答案：' + q.blanks[i];
+                    }
+                }
+                input.disabled = true;
+            }
+
+            if (!allFilled) { alert('请填写所有空再提交'); return; }
+
+            isAnswered = true;
+            if (allCorrect) {
+                data.results[qId] = true;
+                removeWrong(qId);
+            } else {
+                data.results[qId] = false;
+                addWrong(q, userAnswers.join('、'));
+            }
+            data.answered[qId] = true;
+            saveData(data);
+
+            var exp = document.getElementById('exp_' + qId);
+            if (exp) exp.classList.add('show');
+
+            var submitBtn = document.getElementById('fillSubmitBtn');
+            if (submitBtn) submitBtn.disabled = true;
+
+            var nextBtn = document.getElementById('nextBtnFill');
+            if (nextBtn) nextBtn.disabled = false;
+
+            if (isPracticeMode) {
+                var remaining = wrongList.filter(function(item) {
+                    return item.chapter === 5 && item.type === 'vocab' && !data.answered[item.qId];
+                });
+                if (remaining.length === 0) {
+                    render();
+                    return;
+                }
+                var ids = wrongList.filter(function(item) {
+                    return item.chapter === 5 && item.type === 'vocab';
+                }).map(function(item) { return item.qId; });
+                var unanswered = [];
+                for (var i = 0; i < ids.length; i++) {
+                    if (!data.answered[ids[i]]) unanswered.push(ids[i]);
+                }
+                filteredIds = shuffle(unanswered);
+            }
+
+            updateUI();
+        }
+
+        function goNext() {
+            if (isPracticeMode) {
+                var ids = wrongList.filter(function(item) {
+                    return item.chapter === 5 && item.type === 'vocab';
+                }).map(function(item) { return item.qId; });
+                var unanswered = [];
+                for (var i = 0; i < ids.length; i++) {
+                    if (!data.answered[ids[i]]) unanswered.push(ids[i]);
+                }
+                if (unanswered.length === 0) {
+                    render();
+                    return;
+                }
+                filteredIds = shuffle(unanswered);
+                render();
+                return;
+            }
+            render();
+        }
+
+        function setFilter(filter) {
+            if (filter === 'wrong') {
+                var wc = wrongList.filter(function(item) { return item.chapter === 5 && item.type === 'vocab'; }).length;
+                if (wc === 0) { alert('🎉 错题本为空！'); return; }
+                isPracticeMode = false;
+                currentFilter = 'wrong';
+                var btns = document.querySelectorAll('.filter-btn');
+                btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
+                render();
+                return;
+            }
+            isPracticeMode = false;
+            currentFilter = filter;
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); });
+            filteredIds = shuffle(getFilteredIds(filter));
+            render();
+        }
+
+        function startPractice() {
+            var ids = wrongList.filter(function(item) { return item.chapter === 5 && item.type === 'vocab'; })
+                .map(function(item) { return item.qId; });
+            if (ids.length === 0) { alert('错题本为空'); return; }
+            isPracticeMode = true;
+            currentFilter = 'practice';
+            filteredIds = shuffle(ids.slice());
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            render();
+        }
+
+        function exitPractice() {
+            isPracticeMode = false;
+            currentFilter = 'all';
+            filteredIds = shuffle(getFilteredIds('all'));
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+            render();
+        }
+
+        function resetAll() {
+            if (!confirm('重置所有进度？')) return;
+            data = { answered: {}, results: {} };
+            saveData(data);
+            wrongList = [];
+            saveWrong(wrongList);
+            if (isPracticeMode) { isPracticeMode = false; }
+            currentFilter = 'all';
+            filteredIds = shuffle(getFilteredIds('all'));
+            var btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+            render();
+        }
+
+        filteredIds = shuffle(getFilteredIds('all'));
+        render();
+        console.log('🧬 第五章语言记忆已加载，共 ' + questionBank.length + ' 题');
+    </script>
+</body>
+</html>
