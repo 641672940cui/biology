@@ -283,14 +283,14 @@
 
     <script>
         // ============================================================
-        // 配置：全部6章，语言记忆已完成
+        // 配置：全部6章，语言记忆 + 真题演练均已完成
         // ============================================================
         var CHAPTERS = [{
             id: 1,
             title: '第1章 走近细胞',
             sub: '细胞学说 · 原核与真核 · 生命层次',
             vocabTotal: 30,
-            examTotal: 0,
+            examTotal: 10,
             vocabFile: 'ch1_vocab.html',
             examFile: 'ch1_exam.html',
             locked: false
@@ -299,7 +299,7 @@
             title: '第2章 组成细胞的分子',
             sub: '元素 · 蛋白质 · 核酸 · 糖脂 · 无机物',
             vocabTotal: 34,
-            examTotal: 0,
+            examTotal: 10,
             vocabFile: 'ch2_vocab.html',
             examFile: 'ch2_exam.html',
             locked: false
@@ -308,7 +308,7 @@
             title: '第3章 细胞的基本结构',
             sub: '细胞膜 · 细胞器 · 细胞核',
             vocabTotal: 30,
-            examTotal: 0,
+            examTotal: 10,
             vocabFile: 'ch3_vocab.html',
             examFile: 'ch3_exam.html',
             locked: false
@@ -317,7 +317,7 @@
             title: '第4章 细胞的物质输入和输出',
             sub: '被动运输 · 主动运输 · 胞吞胞吐',
             vocabTotal: 30,
-            examTotal: 0,
+            examTotal: 10,
             vocabFile: 'ch4_vocab.html',
             examFile: 'ch4_exam.html',
             locked: false
@@ -326,7 +326,7 @@
             title: '第5章 细胞的能量供应和利用',
             sub: '酶 · ATP · 呼吸 · 光合',
             vocabTotal: 32,
-            examTotal: 0,
+            examTotal: 10,
             vocabFile: 'ch5_vocab.html',
             examFile: 'ch5_exam.html',
             locked: false
@@ -335,7 +335,7 @@
             title: '第6章 细胞的生命历程',
             sub: '增殖 · 分化 · 衰老 · 死亡',
             vocabTotal: 30,
-            examTotal: 0,
+            examTotal: 10,
             vocabFile: 'ch6_vocab.html',
             examFile: 'ch6_exam.html',
             locked: false
@@ -452,8 +452,7 @@
 
         render();
         console.log('🏠 首页已加载');
-        console.log('📚 共 ' + CHAPTERS.length + ' 章，全部章节语言记忆已填充');
-        console.log('📝 真题演练待后续生成');
+        console.log('📚 共 ' + CHAPTERS.length + ' 章，语言记忆 + 真题演练全部可用');
     </script>
 </body>
 </html>
