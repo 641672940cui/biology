@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>第三章 · 真题演练</title>
+    <title>第三章 · 真题演练（四步法）</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f7fb; color: #1a2332; padding: 12px 12px 100px 12px; max-width: 480px; margin: 0 auto; }
@@ -47,7 +47,11 @@
         .fill-row .correct-answer-hint { font-size: 14px; color: #2d7d46; font-weight: 600; }
         .explanation { background: #f8faff; border-radius: 12px; padding: 14px 16px; margin: 12px 0 6px; border-left: 4px solid #1a5276; display: none; font-size: 14px; line-height: 1.7; color: #2c3e50; }
         .explanation.show { display: block; }
-        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 6px; font-size: 14px; }
+        .step-block { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #fff; border-left: 3px solid #1a5276; }
+        .step-block:last-child { margin-bottom: 0; }
+        .step-label { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #1a5276; padding: 2px 10px; border-radius: 10px; margin-bottom: 6px; }
+        .step-content { font-size: 14px; line-height: 1.7; color: #2c3e50; }
+        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 8px; font-size: 13px; }
         .tip-yellow strong { color: #8a6d3b; }
         .source-link { font-size: 12px; color: #1a5276; margin-top: 8px; padding: 6px 10px; background: #f0f5fa; border-radius: 6px; }
         .action-row { display: flex; gap: 10px; margin-top: 14px; }
@@ -116,66 +120,126 @@
             question: '下图为动、植物细胞亚显微结构模式图，下列有关该图的叙述正确的是（　）',
             options: ['植物细胞都不具有的结构是中心体', '胰岛B细胞合成胰岛素的场所是高尔基体', '细胞在清水中不会涨破，是因为有细胞壁', '图的下半部分可用来表示紫色洋葱鳞片叶表皮细胞的结构'],
             correct: 2,
-            explanation: '植物细胞有细胞壁，在清水中不会涨破。胰岛素在核糖体合成。',
+            explanation: {
+                step1: '题目给出动、植物细胞亚显微结构图，问相关叙述。',
+                step2: '动植物细胞结构差异、细胞器功能、细胞壁的作用。',
+                step3: '细胞结构的逻辑链条：植物细胞有细胞壁→清水吸水不会涨破；胰岛素（分泌蛋白）在**核糖体**合成；中心体存在于动物细胞和低等植物细胞；紫色洋葱鳞片叶表皮细胞有紫色液泡，但无叶绿体。',
+                step4: 'A：低等植物细胞**有**中心体 ❌；B：胰岛素在**核糖体**合成，高尔基体负责加工 ❌；C：细胞壁起支持和保护作用，清水不会涨破 ✅；D：洋葱鳞片叶表皮细胞无叶绿体，图中有叶绿体 ❌。'
+            },
+            tip: '植物细胞有细胞壁，清水不涨破；分泌蛋白在核糖体合成。',
             source: '第3章单元测试'
         }, {
             id: 2, type: 'choice', section: 'choice',
             question: '下图为细胞质膜的结构模式图，蛋白质A、B、C均为膜上蛋白质。下列相关叙述正确的是（　）',
             options: ['组成动物细胞质膜的脂质成分，除了含有磷脂分子外还含有胆固醇', '将鸡红细胞的磷脂分子全部提取出来并铺展成单层，其面积等于细胞表面积的2倍', '如果蛋白A具有信息交流功能，则其常与多糖相结合并分布在细胞质膜的内、外表面', '蛋白A、B既有疏水性又有亲水性，蛋白C镶在磷脂分子层表面，具有亲水性'],
             correct: 0,
-            explanation: '动物细胞膜含胆固醇。鸡红细胞有细胞核和细胞器，磷脂单层面积大于细胞表面积的2倍。',
+            explanation: {
+                step1: '题目给出细胞膜结构模式图，问相关叙述。',
+                step2: '细胞膜成分、流动镶嵌模型、糖蛋白分布。',
+                step3: '细胞膜的逻辑链条：动物细胞膜含磷脂和**胆固醇**；鸡红细胞有**细胞核和细胞器**，磷脂单层面积**大于**细胞表面积的2倍；糖蛋白只分布在细胞膜**外侧**。',
+                step4: 'A：动物细胞膜含胆固醇 ✅；B：鸡红细胞有核和细胞器，面积大于2倍 ❌；C：糖蛋白分布在**外侧**，不是内外都有 ❌；D：蛋白C镶在表面，但“具有亲水性”说法不完整，且A、B的描述也不准确 ❌。'
+            },
+            tip: '动物细胞膜含胆固醇；糖蛋白只在外侧；哺乳动物成熟红细胞才是“面积=2倍”。',
             source: '第3章单元测试'
         }, {
             id: 3, type: 'choice', section: 'choice',
             question: '肌动蛋白是细胞骨架的主要成分之一。研究表明，Cofilin-1是一种能与肌动蛋白相结合的蛋白质，介导肌动蛋白进入细胞核。下列有关叙述正确的是（　）',
             options: ['肌动蛋白可通过核孔自由进出细胞核', 'Cofilin-1缺失不会影响细胞核控制细胞代谢的能力', 'Cofilin-1和肌动蛋白一定都含C、H、O、N四种元素', '肌动蛋白作为细胞骨架成分，可能与细胞的运动、分裂、分化等生命活动密切相关'],
             correct: 3,
-            explanation: '核孔具有选择性，不是自由进出。Cofilin-1缺失会导致细胞核变形，影响代谢控制。',
+            explanation: {
+                step1: '题目说Cofilin-1介导肌动蛋白进入细胞核，问相关叙述。',
+                step2: '核孔的功能、细胞骨架的作用、蛋白质的元素组成。',
+                step3: '细胞核与细胞骨架的逻辑链条：核孔具有**选择性**，不是自由进出；Cofilin-1缺失→肌动蛋白异常→细胞核变形→**影响**代谢控制；蛋白质都含C、H、O、N；细胞骨架与细胞运动、分裂、分化有关。',
+                step4: 'A：核孔有**选择性**，不是自由进出 ❌；B：缺失会**影响**细胞核功能 ❌；C：蛋白质含C、H、O、N，但“一定”说法过于绝对（有些蛋白质还含S等）⚠️；D：细胞骨架与运动、分裂、分化密切相关 ✅。'
+            },
+            tip: '核孔有选择性；细胞骨架参与运动、分裂、分化。',
             source: '第3章单元测试'
         }, {
             id: 4, type: 'choice', section: 'choice',
             question: '分泌蛋白的合成和运输过程中，在囊泡与细胞膜的融合过程中需要______为之提供能量；囊泡内“货物”为水解酶，由此推测该结构是______。',
             options: ['线粒体、溶酶体', '高尔基体、溶酶体', '线粒体、高尔基体', '核糖体、溶酶体'],
             correct: 0,
-            explanation: '囊泡融合需要线粒体提供能量；含水解酶的囊泡是溶酶体。',
+            explanation: {
+                step1: '题目问囊泡融合的能量来源和含水解酶的囊泡是什么结构。',
+                step2: '分泌蛋白运输路径、线粒体供能、溶酶体的功能。',
+                step3: '分泌蛋白运输的逻辑链条：核糖体（合成）→ 内质网（加工）→ 高尔基体（包装）→ 囊泡 → 细胞膜（胞吐）。全程由**线粒体**供能。含水解酶的囊泡是**溶酶体**。',
+                step4: 'A：线粒体供能 + 溶酶体含水解酶 ✅；B：高尔基体不供能 ❌；C：高尔基体不是含水解酶的结构 ❌；D：核糖体不供能 ❌。'
+            },
+            tip: '分泌蛋白运输由线粒体供能；含水解酶的细胞器是溶酶体。',
             source: '第3章单元测试'
         }, {
             id: 5, type: 'choice', section: 'choice',
             question: '下列关于细胞膜的说法，错误的是（　）',
             options: ['细胞膜主要由脂质和蛋白质组成', '细胞膜上的蛋白质分布是不均匀的', '细胞膜具有流动性', '细胞膜是静态的，不能移动'],
             correct: 3,
-            explanation: '细胞膜具有流动性，不是静态的。',
+            explanation: {
+                step1: '题目问细胞膜的错误说法。',
+                step2: '细胞膜的成分、结构和特性。',
+                step3: '细胞膜的逻辑链条：细胞膜主要由**脂质和蛋白质**组成；蛋白质**不均匀**分布；细胞膜具有**流动性**（结构特性）；细胞膜不是静态的。',
+                step4: 'A：主要由脂质和蛋白质组成 ✅；B：蛋白质不均匀分布 ✅；C：具有流动性 ✅；D：细胞膜**不是**静态的 ❌。'
+            },
+            tip: '细胞膜具有流动性（结构特性）和选择透过性（功能特性）。',
             source: '第3章单元检测'
         }, {
             id: 6, type: 'choice', section: 'choice',
             question: '细胞核是遗传信息库，是细胞代谢和遗传的控制中心。下列有关细胞核的叙述，正确的是（　）',
             options: ['核膜是单层膜', '核孔可以让所有物质自由通过', '染色质和染色体是同一物质在不同时期的两种形态', '核仁是细胞器'],
             correct: 2,
-            explanation: '核膜是双层膜；核孔具有选择性；核仁不是细胞器。',
+            explanation: {
+                step1: '题目问细胞核的正确叙述。',
+                step2: '细胞核的结构：核膜、核孔、染色质、核仁。',
+                step3: '细胞核的逻辑链条：核膜是**双层膜**；核孔具有**选择性**；染色质和染色体是**同一物质**在不同时期的两种形态；核仁**不是**细胞器。',
+                step4: 'A：核膜是**双层膜** ❌；B：核孔有**选择性** ❌；C：同一物质不同时期两种形态 ✅；D：核仁**不是**细胞器 ❌。'
+            },
+            tip: '核膜双层；核孔有选择性；核仁不是细胞器。',
             source: '第3章单元检测'
         }, {
             id: 7, type: 'fill', section: 'fill',
             question: '动物细胞膜上含有的脂质，除了磷脂外还含有【1】。',
             blanks: ['胆固醇'],
-            explanation: '动物细胞膜含少量胆固醇。',
+            explanation: {
+                step1: '题目问动物细胞膜除磷脂外还含有什么脂质。',
+                step2: '细胞膜的脂质成分。',
+                step3: '细胞膜脂质的逻辑链条：细胞膜脂质主要是**磷脂**，动物细胞膜还含有**胆固醇**。',
+                step4: '答案：**胆固醇**。'
+            },
+            tip: '动物细胞膜含胆固醇，植物细胞膜不含。',
             source: '第3章单元检测'
         }, {
             id: 8, type: 'fill', section: 'fill',
             question: '细胞膜的基本支架是【1】，蛋白质【2】（填“均匀”或“不均匀”）分布在其中。',
             blanks: ['磷脂双分子层', '不均匀'],
-            explanation: '磷脂双分子层是基本支架，蛋白质不均匀分布。',
+            explanation: {
+                step1: '题目问细胞膜的基本支架和蛋白质分布特点。',
+                step2: '流动镶嵌模型。',
+                step3: '流动镶嵌模型的逻辑链条：基本支架是**磷脂双分子层**；蛋白质**不均匀**分布（镶在表面、部分或全部嵌入、贯穿）。',
+                step4: '答案：**磷脂双分子层**、**不均匀**。'
+            },
+            tip: '磷脂双分子层是基本支架，蛋白质不均匀分布。',
             source: '第3章单元检测'
         }, {
             id: 9, type: 'fill', section: 'fill',
             question: '目前被大多数人所接受的关于生物膜分子结构的模型是【1】。',
             blanks: ['流动镶嵌模型'],
-            explanation: '流动镶嵌模型被大多数人所接受。',
+            explanation: {
+                step1: '题目问被大多数人接受的生物膜结构模型。',
+                step2: '生物膜结构模型的提出。',
+                step3: '生物膜模型的逻辑链条：1972年**辛格和尼科尔森**提出**流动镶嵌模型**，被大多数人接受。',
+                step4: '答案：**流动镶嵌模型**。'
+            },
+            tip: '流动镶嵌模型由辛格和尼科尔森提出。',
             source: '第3章单元检测'
         }, {
             id: 10, type: 'fill', section: 'fill',
             question: '从进化角度看，首先由于【1】的出现，产生了原始的细胞，并成为相对独立的生命系统。',
             blanks: ['细胞膜'],
-            explanation: '细胞膜的出现使生命物质与外界环境分隔开。',
+            explanation: {
+                step1: '题目问进化中什么结构的出现使原始细胞成为相对独立的生命系统。',
+                step2: '细胞膜的功能。',
+                step3: '细胞膜功能的逻辑链条：细胞膜将细胞与外界环境**分隔开**，保障细胞内部环境相对稳定。因此，**细胞膜**的出现使原始细胞成为相对独立的生命系统。',
+                step4: '答案：**细胞膜**。'
+            },
+            tip: '细胞膜的出现是生命起源的关键。',
             source: '第3章单元检测'
         }];
 
@@ -219,6 +283,18 @@
         }
         function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 3 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
 
+        function renderExplanation(q) {
+            var e = q.explanation;
+            var html = '';
+            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
+            if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
+            if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
+            return html;
+        }
+
         function render() {
             var container = document.getElementById('questionContainer');
             if (currentFilter === 'wrong' && !isPracticeMode) {
@@ -257,20 +333,14 @@
                 html += '<div class="options">';
                 for (var i = 0; i < q.options.length; i++) { html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i + '"><span class="option-label">' + labels[i] + '.</span> ' + q.options[i] + '</button>'; }
                 html += '</div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
             } else {
                 html += '<div class="fill-input-area">';
                 for (var f = 0; f < q.blanks.length; f++) { html += '<div class="fill-row"><label>空' + (f + 1) + '：</label><input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off"><span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span></div>'; }
                 html += '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id + ')">✅ 提交答案</button></div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
             }
             html += '</div>';
@@ -328,7 +398,7 @@
         function exitPractice() { isPracticeMode = false; currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         function resetAll() { if (!confirm('重置所有进度？')) return; data = { answered: {}, results: {} }; saveData(data); wrongList = []; saveWrong(wrongList); if (isPracticeMode) { isPracticeMode = false; } currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         filteredIds = shuffle(getFilteredIds('all')); render();
-        console.log('📝 第三章真题演练已加载，共 ' + questionBank.length + ' 题');
+        console.log('📝 第三章真题演练（四步法）已加载，共 ' + questionBank.length + ' 题');
     </script>
 </body>
 </html>
