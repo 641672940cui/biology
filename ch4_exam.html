@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>第四章 · 真题演练</title>
+    <title>第四章 · 真题演练（四步法）</title>
     <style>
-        /* 样式与ch3_exam完全一致 */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f7fb; color: #1a2332; padding: 12px 12px 100px 12px; max-width: 480px; margin: 0 auto; }
         .header { background: #fff; border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); position: sticky; top: 0; z-index: 10; }
@@ -48,7 +47,11 @@
         .fill-row .correct-answer-hint { font-size: 14px; color: #2d7d46; font-weight: 600; }
         .explanation { background: #f8faff; border-radius: 12px; padding: 14px 16px; margin: 12px 0 6px; border-left: 4px solid #1a5276; display: none; font-size: 14px; line-height: 1.7; color: #2c3e50; }
         .explanation.show { display: block; }
-        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 6px; font-size: 14px; }
+        .step-block { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #fff; border-left: 3px solid #1a5276; }
+        .step-block:last-child { margin-bottom: 0; }
+        .step-label { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #1a5276; padding: 2px 10px; border-radius: 10px; margin-bottom: 6px; }
+        .step-content { font-size: 14px; line-height: 1.7; color: #2c3e50; }
+        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 8px; font-size: 13px; }
         .tip-yellow strong { color: #8a6d3b; }
         .source-link { font-size: 12px; color: #1a5276; margin-top: 8px; padding: 6px 10px; background: #f0f5fa; border-radius: 6px; }
         .action-row { display: flex; gap: 10px; margin-top: 14px; }
@@ -117,66 +120,126 @@
             question: '下图为氨基酸和Na⁺进出肾小管上皮细胞的示意图，管腔中氨基酸→上皮细胞、管腔中Na⁺→上皮细胞、上皮细胞中氨基酸→组织液的运输方式分别是（　）',
             options: ['主动运输、被动运输、主动运输', '被动运输、被动运输、被动运输', '被动运输、主动运输、被动运输', '主动运输、被动运输、被动运输'],
             correct: 3,
-            explanation: '管腔中氨基酸进入上皮细胞是主动运输；Na⁺是顺浓度梯度，为被动运输；氨基酸进入组织液是顺浓度梯度，为被动运输。',
+            explanation: {
+                step1: '题目给出肾小管上皮细胞的物质运输示意图，问三种运输方式。',
+                step2: '三种跨膜运输方式的判断依据：是否需要载体、是否耗能、是否逆浓度梯度。',
+                step3: '跨膜运输的逻辑链条：管腔中氨基酸→上皮细胞：逆浓度梯度，需要载体，耗能→**主动运输**；管腔中Na⁺→上皮细胞：顺浓度梯度，需要载体，不耗能→**被动运输**（协助扩散）；上皮细胞中氨基酸→组织液：顺浓度梯度，不耗能→**被动运输**。',
+                step4: '答案：主动运输、被动运输、被动运输 → **D**。'
+            },
+            tip: '判断运输方式：看方向（高→低还是低→高）+ 看是否需要载体 + 看是否耗能。',
             source: '第4章期末复习巩固训练'
         }, {
             id: 2, type: 'choice', section: 'choice',
             question: '哺乳动物细胞在0.9%NaCl溶液中仍能保持其正常形态。将兔红细胞置于不同浓度NaCl溶液中，下列叙述正确的是（　）',
             options: ['在高于0.9%NaCl溶液中，红细胞因渗透作用失水皱缩并发生质壁分离', '在0.9%NaCl溶液中，红细胞形态未变是由于此时没有水分子进出细胞', '在低于0.9%NaCl溶液中，红细胞因渗透作用吸水膨胀甚至有的破裂', '渗透作用是指水分子从溶液浓度较高处向溶液浓度较低处进行的扩散'],
             correct: 2,
-            explanation: '动物细胞没有细胞壁，不会发生质壁分离。0.9%NaCl中水分子仍在进出，处于动态平衡。',
+            explanation: {
+                step1: '题目说兔红细胞在不同浓度NaCl溶液中的形态变化。',
+                step2: '渗透作用、动物细胞的吸水失水、质壁分离的条件。',
+                step3: '渗透作用的逻辑链条：动物细胞**没有细胞壁**，不会发生质壁分离；0.9%NaCl是等渗溶液，水分子**仍在进出**，处于动态平衡；低于0.9%时，外界浓度低→细胞吸水→膨胀甚至破裂；渗透作用中水分子从**低浓度溶液**向**高浓度溶液**运动。',
+                step4: 'A：动物细胞**无细胞壁**，不会质壁分离 ❌；B：水分子仍在进出，只是动态平衡 ❌；C：低于0.9%→吸水膨胀破裂 ✅；D：水从**低浓度**向**高浓度**运动，说反了 ❌。'
+            },
+            tip: '动物细胞无细胞壁，不会质壁分离。0.9%NaCl是等渗溶液。',
             source: '第4章期末复习巩固训练'
         }, {
             id: 3, type: 'choice', section: 'choice',
             question: '将三组生理状态相同的某植物幼根分别培养在含有相同培养液的密闭培养瓶中，测定根吸收某一矿质元素离子的量。空气17℃吸收量100%，氮气17℃吸收量10%，空气3℃吸收量28%。下列分析正确的是（　）',
             options: ['有氧条件有利于该植物幼根对该离子的吸收', '该植物幼根对该离子的吸收与温度的变化无关', '氮气环境中该植物幼根细胞吸收该离子不消耗ATP', '与空气相比，氮气环境有利于该植物幼根对该离子的吸收'],
             correct: 0,
-            explanation: '空气（有氧）条件下吸收量远高于氮气条件，说明有氧有利于吸收。该吸收需要能量，是主动运输。',
+            explanation: {
+                step1: '题目给出三种条件下的离子吸收量数据，问分析结论。',
+                step2: '主动运输的条件：需要载体和能量（ATP）。能量来自细胞呼吸。',
+                step3: '主动运输的逻辑链条：空气（有氧）→有氧呼吸→能量多→吸收量100%；氮气（无氧）→无氧呼吸→能量少→吸收量10%；空气3℃→低温→酶活性低→细胞呼吸弱→能量少→吸收量28%。对比可知：有氧有利于吸收，温度影响吸收。',
+                step4: 'A：有氧有利于吸收 ✅；B：温度影响吸收（17℃ vs 3℃差异明显）❌；C：氮气环境中仍吸收10%，说明**仍消耗ATP**（无氧呼吸也产生少量ATP）❌；D：氮气环境吸收量远低于空气 ❌。'
+            },
+            tip: '主动运输需要能量，能量来自细胞呼吸。有氧>无氧，温度影响酶活性。',
             source: '第4章期末复习巩固训练'
         }, {
             id: 4, type: 'choice', section: 'choice',
             question: '将某种植物的成熟细胞放入一定浓度的物质A溶液中，发现其原生质体的体积先减小后增大。下列叙述正确的是（　）',
             options: ['0~4h内物质A没有通过细胞膜进入细胞内', '0~1h内细胞体积与原生质体体积的变化量相等', '2~3h内物质A溶液的渗透压小于细胞液的渗透压', '0~1h内液泡中液体的渗透压大于细胞质基质的渗透压'],
             correct: 2,
-            explanation: '原生质体先减小后增大，说明细胞先失水发生质壁分离，后物质A进入细胞，细胞液浓度升高，细胞重新吸水。',
+            explanation: {
+                step1: '题目说成熟植物细胞放入物质A溶液中，原生质体体积先减小后增大。',
+                step2: '质壁分离与复原、渗透作用、细胞壁的特性。',
+                step3: '质壁分离的逻辑链条：原生质体先减小→细胞失水→发生质壁分离；后增大→细胞吸水→质壁分离复原→说明物质A**进入了细胞**，使细胞液浓度升高。2~3h时原生质体体积增大→细胞吸水→物质A溶液的渗透压**小于**细胞液的渗透压。',
+                step4: 'A：物质A**进入了**细胞（否则不会复原）❌；B：细胞壁伸缩性小，细胞体积变化量**小于**原生质体 ❌；C：2~3h时细胞吸水→外界渗透压小于细胞液 ✅；D：0~1h时细胞失水→液泡渗透压**小于**细胞质基质 ❌。'
+            },
+            tip: '先减小后增大：先质壁分离，后物质A进入细胞导致复原。',
             source: '第4章期末复习巩固训练'
         }, {
             id: 5, type: 'choice', section: 'choice',
             question: '将某植物花冠切成大小和形状相同的细条，分别置于不同浓度的蔗糖溶液中，浸泡相同时间后测量长度。结果发现，a组长度增加，f组长度减小。使细条在浸泡前后长度不变的蔗糖浓度介于（　）',
             options: ['0.2～0.3mol/L', '0.3～0.4mol/L', '0.4～0.5mol/L', '0.5～0.6mol/L'],
             correct: 2,
-            explanation: '根据实验数据推断，长度不变的浓度介于0.4～0.5mol/L之间。',
+            explanation: {
+                step1: '题目说不同浓度蔗糖溶液中细条长度变化，问长度不变的浓度范围。',
+                step2: '渗透作用：外界浓度=细胞液浓度时，水分进出平衡，长度不变。',
+                step3: '渗透作用的逻辑链条：a组长度增加→细胞吸水→外界浓度**低于**细胞液浓度；f组长度减小→细胞失水→外界浓度**高于**细胞液浓度。长度不变的浓度应在a组和f组浓度之间。',
+                step4: '根据实验数据推断，长度不变的浓度介于**0.4～0.5mol/L**之间 → C。'
+            },
+            tip: '长度不变→外界浓度≈细胞液浓度（等渗）。',
             source: '第4章期末复习巩固训练'
         }, {
             id: 6, type: 'choice', section: 'choice',
             question: '下列有关物质跨膜运输的叙述，正确的是（　）',
             options: ['巨噬细胞摄入病原体的过程属于协助扩散', '固醇类激素进入靶细胞的过程属于主动运输', '神经细胞受到刺激时产生的Na⁺内流属于被动运输', '护肤品中的甘油进入皮肤细胞的过程属于主动运输'],
             correct: 2,
-            explanation: '巨噬细胞摄入病原体是胞吞；固醇类激素和甘油是自由扩散；Na⁺内流是协助扩散（被动运输）。',
+            explanation: {
+                step1: '题目问物质跨膜运输方式的正确判断。',
+                step2: '各种物质运输方式的实例：胞吞、自由扩散、协助扩散、主动运输。',
+                step3: '跨膜运输的逻辑链条：巨噬细胞摄入病原体→**胞吞**（大分子）；固醇类激素→**自由扩散**（脂溶性）；Na⁺内流→**协助扩散**（顺浓度梯度，需通道蛋白）；甘油→**自由扩散**（脂溶性小分子）。',
+                step4: 'A：巨噬细胞摄入病原体是**胞吞** ❌；B：固醇类激素是**自由扩散** ❌；C：Na⁺内流是**被动运输**（协助扩散）✅；D：甘油是**自由扩散** ❌。'
+            },
+            tip: '脂溶性小分子（甘油、固醇）→自由扩散；Na⁺内流→协助扩散。',
             source: '第4章期末复习巩固训练'
         }, {
             id: 7, type: 'fill', section: 'fill',
             question: '成熟植物细胞的原生质层由【1】、液泡膜以及两层膜之间的细胞质组成。',
             blanks: ['细胞膜'],
-            explanation: '原生质层 = 细胞膜 + 液泡膜 + 两层膜之间的细胞质。',
+            explanation: {
+                step1: '题目问原生质层的组成。',
+                step2: '原生质层的定义。',
+                step3: '原生质层的逻辑链条：原生质层 = **细胞膜** + 液泡膜 + 两层膜之间的细胞质。相当于一层半透膜。',
+                step4: '答案：**细胞膜**。'
+            },
+            tip: '原生质层 = 细胞膜 + 液泡膜 + 两层膜之间的细胞质。',
             source: '第4章复习学案'
         }, {
             id: 8, type: 'fill', section: 'fill',
             question: '质壁分离中的“质”指【1】，“壁”指【2】。',
             blanks: ['原生质层', '细胞壁'],
-            explanation: '质壁分离中“质”指原生质层，“壁”指细胞壁。',
+            explanation: {
+                step1: '题目问质壁分离中“质”和“壁”分别指什么。',
+                step2: '质壁分离的名称来源。',
+                step3: '质壁分离的逻辑链条：“质”指**原生质层**，“壁”指**细胞壁**。质壁分离 = 原生质层与细胞壁分离。',
+                step4: '答案：**原生质层**、**细胞壁**。'
+            },
+            tip: '质壁分离的“质”不是细胞质，是原生质层。',
             source: '第4章复习学案'
         }, {
             id: 9, type: 'fill', section: 'fill',
             question: '主动运输需要【1】蛋白的协助，并消耗【2】。',
             blanks: ['载体', '能量（ATP）'],
-            explanation: '主动运输需要载体蛋白和能量。',
+            explanation: {
+                step1: '题目问主动运输的条件。',
+                step2: '主动运输的特点。',
+                step3: '主动运输的逻辑链条：主动运输**逆浓度梯度**，需要**载体蛋白**协助，消耗**能量（ATP）**。',
+                step4: '答案：**载体**、**能量（ATP）**。'
+            },
+            tip: '主动运输 = 逆浓度梯度 + 载体 + 能量。',
             source: '第4章复习学案'
         }, {
             id: 10, type: 'fill', section: 'fill',
             question: '胞吞和胞吐依赖于细胞膜的【1】性。',
             blanks: ['流动'],
-            explanation: '胞吞和胞吐依赖细胞膜的流动性。',
+            explanation: {
+                step1: '题目问胞吞和胞吐依赖细胞膜的什么特性。',
+                step2: '胞吞胞吐的机制。',
+                step3: '胞吞胞吐的逻辑链条：胞吞和胞吐通过细胞膜的**变形**完成，依赖细胞膜的**流动性**。',
+                step4: '答案：**流动**。'
+            },
+            tip: '胞吞胞吐依赖细胞膜的流动性，不需要载体，但需要能量。',
             source: '第4章复习学案'
         }];
 
@@ -220,6 +283,18 @@
         }
         function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 4 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
 
+        function renderExplanation(q) {
+            var e = q.explanation;
+            var html = '';
+            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
+            if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
+            if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
+            return html;
+        }
+
         function render() {
             var container = document.getElementById('questionContainer');
             if (currentFilter === 'wrong' && !isPracticeMode) {
@@ -258,20 +333,14 @@
                 html += '<div class="options">';
                 for (var i = 0; i < q.options.length; i++) { html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i + '"><span class="option-label">' + labels[i] + '.</span> ' + q.options[i] + '</button>'; }
                 html += '</div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
             } else {
                 html += '<div class="fill-input-area">';
                 for (var f = 0; f < q.blanks.length; f++) { html += '<div class="fill-row"><label>空' + (f + 1) + '：</label><input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off"><span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span></div>'; }
                 html += '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id + ')">✅ 提交答案</button></div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
             }
             html += '</div>';
@@ -329,7 +398,7 @@
         function exitPractice() { isPracticeMode = false; currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         function resetAll() { if (!confirm('重置所有进度？')) return; data = { answered: {}, results: {} }; saveData(data); wrongList = []; saveWrong(wrongList); if (isPracticeMode) { isPracticeMode = false; } currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         filteredIds = shuffle(getFilteredIds('all')); render();
-        console.log('📝 第四章真题演练已加载，共 ' + questionBank.length + ' 题');
+        console.log('📝 第四章真题演练（四步法）已加载，共 ' + questionBank.length + ' 题');
     </script>
 </body>
 </html>
