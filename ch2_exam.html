@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>第二章 · 真题演练</title>
+    <title>第二章 · 真题演练（四步法）</title>
     <style>
-        /* 样式与ch1_exam完全一致，此处省略以节省篇幅 */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f7fb; color: #1a2332; padding: 12px 12px 100px 12px; max-width: 480px; margin: 0 auto; }
         .header { background: #fff; border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); position: sticky; top: 0; z-index: 10; }
@@ -48,7 +47,12 @@
         .fill-row .correct-answer-hint { font-size: 14px; color: #2d7d46; font-weight: 600; }
         .explanation { background: #f8faff; border-radius: 12px; padding: 14px 16px; margin: 12px 0 6px; border-left: 4px solid #1a5276; display: none; font-size: 14px; line-height: 1.7; color: #2c3e50; }
         .explanation.show { display: block; }
-        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 6px; font-size: 14px; }
+        .step-block { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #fff; border-left: 3px solid #1a5276; }
+        .step-block:last-child { margin-bottom: 0; }
+        .step-label { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #1a5276; padding: 2px 10px; border-radius: 10px; margin-bottom: 6px; }
+        .step-content { font-size: 14px; line-height: 1.7; color: #2c3e50; }
+        .step-content .chain { background: #f0f5fa; padding: 6px 10px; border-radius: 6px; margin-top: 4px; font-size: 13px; }
+        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 8px; font-size: 13px; }
         .tip-yellow strong { color: #8a6d3b; }
         .source-link { font-size: 12px; color: #1a5276; margin-top: 8px; padding: 6px 10px; background: #f0f5fa; border-radius: 6px; }
         .action-row { display: flex; gap: 10px; margin-top: 14px; }
@@ -117,67 +121,127 @@
             question: '用化学分析法测得某有机物的化学元素及含量：C 55.64%、O 19.08%、N 16.64%、H 7.34%、S 0.39%、Fe 0.34%。该物质最可能是（　）',
             options: ['核酸', '脂肪', '蛋白质', '糖类'],
             correct: 2,
-            explanation: '蛋白质的基本组成元素是C、H、O、N，有的含S、Fe等。该物质含S和Fe，最可能是蛋白质。',
+            explanation: {
+                step1: '题目给出一组元素含量数据，问“该物质最可能是什么”。',
+                step2: '根据元素组成判断有机物的种类。',
+                step3: '各类有机物元素组成的逻辑链条：糖类/脂肪只含C、H、O；核酸含C、H、O、N、P；蛋白质含C、H、O、N，有的含S、Fe等。该物质含S和Fe → 最可能是蛋白质。',
+                step4: 'A：核酸含P，不含S、Fe ❌；B：脂肪只含C、H、O ❌；C：蛋白质含C、H、O、N，有的含S、Fe ✅；D：糖类只含C、H、O ❌。'
+            },
+            tip: '含S、Fe的有机物最可能是蛋白质。',
             source: '第2章章末综合试题'
         }, {
             id: 2, type: 'choice', section: 'choice',
             question: '脑啡肽是一种具有镇痛作用的药物。其结构简式显示有4个肽键，形成这条肽链的氨基酸分子数以及生成的水分子数分别是（　）',
             options: ['3和2', '4和3', '5和4', '6和5'],
             correct: 2,
-            explanation: '肽键数=氨基酸数-肽链数。一条肽链有4个肽键，氨基酸数=4+1=5，脱去水分子数=4。',
+            explanation: {
+                step1: '题目说脑啡肽有4个肽键，问氨基酸数和生成的水分子数。',
+                step2: '肽键数、氨基酸数、脱水数的关系。',
+                step3: '蛋白质计算的逻辑链条：一条肽链中，肽键数 = 脱水数 = 氨基酸数 - 1。',
+                step4: '肽键数 = 4 → 氨基酸数 = 4 + 1 = **5**；脱水数 = 肽键数 = **4**。答案：5和4 → C。'
+            },
+            tip: '一条肽链：肽键数=脱水数=氨基酸数-1。',
             source: '第2章章末综合试题'
         }, {
             id: 3, type: 'choice', section: 'choice',
             question: 'DNA完全水解后，得到的化学物质是（　）',
             options: ['氨基酸、葡萄糖、含氮碱基', '氨基酸、核苷酸、葡萄糖', '核糖、含氮碱基、磷酸', '脱氧核糖、含氮碱基、磷酸'],
             correct: 3,
-            explanation: 'DNA彻底水解产物是脱氧核糖、含氮碱基（A、T、C、G）、磷酸。',
+            explanation: {
+                step1: '题目问DNA彻底水解的产物。',
+                step2: 'DNA的基本组成单位和水解层次。',
+                step3: 'DNA水解的逻辑链条：DNA → 初步水解 → 脱氧核苷酸 → 彻底水解 → 脱氧核糖 + 含氮碱基（A、T、C、G）+ 磷酸。',
+                step4: 'A：含氨基酸、葡萄糖，是蛋白质和糖类的产物 ❌；B：含氨基酸和核苷酸，水解不彻底 ❌；C：含核糖，是RNA的成分 ❌；D：脱氧核糖、含氮碱基、磷酸 ✅。'
+            },
+            tip: 'DNA彻底水解：脱氧核糖+含氮碱基+磷酸。RNA彻底水解：核糖+含氮碱基+磷酸。',
             source: '第2章章末综合试题'
         }, {
             id: 4, type: 'choice', section: 'choice',
             question: '下列有关细胞中元素和化合物的叙述，正确的是（　）',
             options: ['C是构成细胞的最基本元素，在人体细胞中含量最多', '脂肪分子中含H比糖类多，是主要的能源物质', '氨基酸脱水缩合产生水，水中的氧来自氨基酸的羧基', 'P是脂肪、ATP、DNA等不可缺少的成分'],
             correct: 2,
-            explanation: '人体细胞鲜重中含量最多的是O；糖类是主要能源物质；脂肪不含P。',
+            explanation: {
+                step1: '题目问细胞中元素和化合物的正确叙述。',
+                step2: '元素含量、能源物质、脱水缩合、元素组成。',
+                step3: '逐个判断的逻辑链条：C是最基本元素，但含量最多的是O；脂肪是储能物质，糖类是主要能源物质；脱水缩合中水中的氧来自羧基；脂肪不含P。',
+                step4: 'A：C是最基本元素，但人体细胞中含量最多的是**O** ❌；B：脂肪是**储能物质**，糖类是主要能源物质 ❌；C：脱水缩合产生的水，氧来自**羧基** ✅；D：脂肪不含P ❌。'
+            },
+            tip: '最基本元素=C，含量最多元素=O，主要能源物质=糖类，储能物质=脂肪。',
             source: '期末必刷200题'
         }, {
             id: 5, type: 'choice', section: 'choice',
             question: '下列关于植物体内水分的叙述，错误的是（　）',
             options: ['植物体内的水分参与营养物质的运输', '水是构成叶肉细胞的重要化合物之一', '自由水可作为细胞内化学反应的反应物', '同种植物萌发种子的含水量和休眠种子的相同'],
             correct: 3,
-            explanation: '萌发种子充分吸水，代谢旺盛，含水量大于休眠种子。',
+            explanation: {
+                step1: '题目问植物体内水分的错误叙述。',
+                step2: '水的存在形式（自由水/结合水）和功能。',
+                step3: '水的逻辑链条：自由水参与运输和化学反应；结合水是细胞结构组成成分；萌发种子代谢旺盛，自由水多，含水量**大于**休眠种子。',
+                step4: 'A：自由水参与运输 ✅；B：结合水是结构成分 ✅；C：自由水是反应物 ✅；D：萌发种子含水量**大于**休眠种子 ❌。'
+            },
+            tip: '萌发种子含水量>休眠种子；自由水/结合水比值越高，代谢越旺盛。',
             source: '期末必刷200题'
         }, {
             id: 6, type: 'choice', section: 'choice',
             question: '下列有关无机盐的说法错误的是（　）',
             options: ['菠菜中铁的含量较高，缺铁性贫血患者应该多吃些菠菜', '含氮的无机盐能促进植物细胞的分裂和生长', '用含有少量钙的生理盐水灌注，蛙心脏可持续跳动数小时', '钙盐能为蛙心脏的持续跳动提供能量'],
             correct: 3,
-            explanation: '钙盐维持生命活动，但不能提供能量。提供能量的是ATP。',
+            explanation: {
+                step1: '题目问无机盐的错误说法。',
+                step2: '无机盐的存在形式和功能。',
+                step3: '无机盐的逻辑链条：无机盐多以离子形式存在，功能是组成化合物、维持生命活动，但**不提供能量**。提供能量的是ATP。',
+                step4: 'A：Fe是血红蛋白成分 ✅；B：N促进细胞分裂生长 ✅；C：Ca维持心脏跳动 ✅；D：钙盐**不提供能量** ❌。'
+            },
+            tip: '无机盐不提供能量，只维持生命活动。提供能量的是ATP。',
             source: '期末必刷200题'
         }, {
             id: 7, type: 'choice', section: 'choice',
             question: '现有氨基酸2000个，其中氨基总数为2012个，羧基总数为2010个，由这些氨基酸合成的含有2条肽链的蛋白质共有肽键、氨基和羧基的数目依次为（　）',
             options: ['1998、2和2', '1998、14和12', '1999、12和10', '1999、14和12'],
             correct: 1,
-            explanation: '肽键数=2000-2=1998；氨基数=2+(2012-2000)=14；羧基数=2+(2010-2000)=12。',
+            explanation: {
+                step1: '题目给出2000个氨基酸、总氨基数、总羧基数，问2条肽链的蛋白质的肽键数、氨基数、羧基数。',
+                step2: '肽键数公式、R基计算、肽链末端计算。',
+                step3: '蛋白质计算的逻辑链条：肽键数=氨基酸数-肽链数；R基上的氨基数=总氨基数-氨基酸数；蛋白质中氨基数=肽链数+R基上的氨基数。',
+                step4: '肽键数=2000-2=**1998**；R基氨基=2012-2000=12；蛋白质氨基=2+12=**14**；R基羧基=2010-2000=10；蛋白质羧基=2+10=**12**。答案：1998、14、12 → B。'
+            },
+            tip: '蛋白质中氨基数=肽链数+R基上的氨基数；R基氨基=总氨基-氨基酸数。',
             source: '高一期末改编'
         }, {
             id: 8, type: 'fill', section: 'fill',
             question: '核酸的组成元素是【1】。',
             blanks: ['C、H、O、N、P'],
-            explanation: '核酸的组成元素是C、H、O、N、P。',
+            explanation: {
+                step1: '题目问核酸的组成元素。',
+                step2: '核酸的元素组成。',
+                step3: '核酸元素组成的逻辑链条：核酸由核苷酸组成，核苷酸含磷酸（P）、五碳糖（C、H、O）、含氮碱基（N）→ 元素组成为**C、H、O、N、P**。',
+                step4: '答案：**C、H、O、N、P**。'
+            },
+            tip: '核酸含P，蛋白质含S、Fe，糖类和脂肪只含C、H、O。',
             source: '第2章章末综合试题'
         }, {
             id: 9, type: 'fill', section: 'fill',
             question: '烫发时，先用还原剂使头发角蛋白的二硫键断裂，再用卷发器将头发固定形状，最后用氧化剂使角蛋白在新的位置形成二硫键。这一过程改变了角蛋白的【1】。',
             blanks: ['空间结构'],
-            explanation: '二硫键的断裂和重新形成改变了角蛋白的空间结构。',
+            explanation: {
+                step1: '题目说烫发过程中二硫键断裂和重新形成，问改变了角蛋白的什么。',
+                step2: '蛋白质结构与功能的关系。',
+                step3: '蛋白质结构的逻辑链条：二硫键是维持蛋白质**空间结构**的重要化学键。二硫键断裂和重新形成 → 改变蛋白质的空间结构 → 蛋白质变性。',
+                step4: '答案：**空间结构**。'
+            },
+            tip: '二硫键断裂改变空间结构，但肽键不断裂。',
             source: '第2章单元测试'
         }, {
             id: 10, type: 'fill', section: 'fill',
             question: '氨基酸脱水缩合产生的水，其中的氧来自氨基酸的【1】。',
             blanks: ['羧基'],
-            explanation: '脱水缩合时，水中的氧来自羧基（-COOH）。',
+            explanation: {
+                step1: '题目问脱水缩合产生的水中，氧来自哪里。',
+                step2: '脱水缩合的化学反应过程。',
+                step3: '脱水缩合的逻辑链条：一个氨基酸的**羧基**（-COOH）和另一个氨基酸的**氨基**（-NH₂）反应，脱去一分子水。水中的氧来自**羧基**，氢来自羧基和氨基。',
+                step4: '答案：**羧基**。'
+            },
+            tip: '水中的氧来自羧基，氢来自羧基和氨基。',
             source: '期末必刷200题'
         }];
 
@@ -221,6 +285,18 @@
         }
         function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 2 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
 
+        function renderExplanation(q) {
+            var e = q.explanation;
+            var html = '';
+            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
+            if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
+            if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
+            return html;
+        }
+
         function render() {
             var container = document.getElementById('questionContainer');
             if (currentFilter === 'wrong' && !isPracticeMode) {
@@ -259,20 +335,14 @@
                 html += '<div class="options">';
                 for (var i = 0; i < q.options.length; i++) { html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i + '"><span class="option-label">' + labels[i] + '.</span> ' + q.options[i] + '</button>'; }
                 html += '</div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
             } else {
                 html += '<div class="fill-input-area">';
                 for (var f = 0; f < q.blanks.length; f++) { html += '<div class="fill-row"><label>空' + (f + 1) + '：</label><input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off"><span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span></div>'; }
                 html += '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id + ')">✅ 提交答案</button></div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
             }
             html += '</div>';
@@ -330,7 +400,7 @@
         function exitPractice() { isPracticeMode = false; currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         function resetAll() { if (!confirm('重置所有进度？')) return; data = { answered: {}, results: {} }; saveData(data); wrongList = []; saveWrong(wrongList); if (isPracticeMode) { isPracticeMode = false; } currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         filteredIds = shuffle(getFilteredIds('all')); render();
-        console.log('📝 第二章真题演练已加载，共 ' + questionBank.length + ' 题');
+        console.log('📝 第二章真题演练（四步法）已加载，共 ' + questionBank.length + ' 题');
     </script>
 </body>
 </html>
