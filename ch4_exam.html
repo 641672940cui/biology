@@ -266,4 +266,145 @@
         function getQ(id) { for (var i = 0; i < questionBank.length; i++) { if (questionBank[i].id === id) return questionBank[i]; } return null; }
         function shuffle(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
         function getUnanswered(ids) { var r = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) r.push(ids[i]); } return r; }
-        function getProgress() { var total = filteredIds.length, done =
+        function getProgress() { var total = filteredIds.length, done = 0, correct = 0; for (var i = 0; i < filteredIds.length; i++) { var id = filteredIds[i]; if (data.answered[id]) { done++; if (data.results[id] === true) correct++; } } var rate = done === 0 ? 0 : Math.round((correct / done) * 100); return { total: total, done: done, correct: correct, rate: rate }; }
+        function updateUI() {
+            var p = getProgress();
+            var wc = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).length;
+            document.getElementById('statsLabel').textContent = p.done + ' / ' + p.total;
+            document.getElementById('progressFill').style.width = (p.total === 0 ? 0 : (p.done / p.total) * 100) + '%';
+            document.getElementById('correctRate').textContent = '✅ 正确率：' + (p.done === 0 ? '--%' : p.rate + '%');
+            document.getElementById('wrongCount').textContent = '❌ 错题：' + wc;
+            document.getElementById('wrongBadge').textContent = wc;
+            document.getElementById('wrongBookBtn').style.display = (wc > 0 && currentFilter !== 'wrong') ? 'flex' : 'none';
+            var idxData = JSON.parse(localStorage.getItem('bio_index_data') || '{"doneMap":{}}');
+            idxData.doneMap['ch4_exam'] = p.done;
+            localStorage.setItem('bio_index_data', JSON.stringify(idxData));
+        }
+        function addWrong(q, userAns) {
+            if (wrongList.some(function(item) { return item.chapter === 4 && item.type === 'exam' && item.qId === q.id; })) return;
+            var correctAns = q.type === 'choice' ? q.options[q.correct] : q.blanks.join('、');
+            wrongList.push({ chapter: 4, type: 'exam', qId: q.id, question: q.question, userAnswer: userAns || '', correctAnswer: correctAns });
+            saveWrong(wrongList);
+        }
+        function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 4 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
+
+        function renderExplanation(q) {
+            var e = q.explanation;
+            var html = '';
+            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
+            if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
+            if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
+            return html;
+        }
+
+        function render() {
+            var container = document.getElementById('questionContainer');
+            if (currentFilter === 'wrong' && !isPracticeMode) {
+                var list = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; });
+                if (list.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">🎉</div><p>错题本已清空！</p></div>'; updateUI(); return; }
+                var html = '<div class="wrong-list-view"><div class="title">📕 错题本（' + list.length + '题）</div>';
+                list.forEach(function(item) { html += '<div class="item"><div class="q">' + item.question + '</div><div class="your">❌ 你的答案：' + (item.userAnswer || '未填写') + '</div><div class="correct">✅ 正确答案：' + item.correctAnswer + '</div></div>'; });
+                html += '<div class="back-to-practice"><button class="btn" onclick="startPractice()">🔄 重练错题</button></div></div>';
+                container.innerHTML = html; updateUI(); return;
+            }
+            if (filteredIds.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>当前暂无题目</p></div>'; updateUI(); return; }
+            var unanswered = getUnanswered(filteredIds);
+            if (unanswered.length === 0) {
+                var p = getProgress();
+                var msg = isPracticeMode ? '🎉 错题已全部消灭！' : '🎉 全部通关！';
+                container.innerHTML = '<div class="complete-screen"><div class="big-icon">🎉</div><h2>' + msg + '</h2><div class="score-big">' + p.rate + '%</div><p style="color:#6b7a8f;font-size:14px;">正确率 ' + p.rate + '% · 共 ' + filteredIds.length + ' 题</p>';
+                container.innerHTML += isPracticeMode ? '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="exitPractice()">🔙 退出练习</button>' : '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="resetAll()">🔄 重新开始</button>';
+                container.innerHTML += '</div>'; updateUI(); return;
+            }
+            var targetId = unanswered[0]; var q = getQ(targetId);
+            if (!q) { container.innerHTML = '<div class="empty-state"><p>加载失败</p></div>'; return; }
+            currentQ = q; isAnswered = false;
+            var html = '<div class="question-card">';
+            var typeLabel = q.type === 'choice' ? '🎯 选择题' : '✍️ 非选择题';
+            html += '<span class="question-type">' + typeLabel + '</span>';
+            if (q.source) html += '<span class="question-source">📖 ' + q.source + '</span>';
+            if (isPracticeMode) html += '<span class="wrong-tag">📕 错题练习</span>';
+            var isW = wrongList.some(function(item) { return item.chapter === 4 && item.type === 'exam' && item.qId === q.id; });
+            if (isW && currentFilter !== 'wrong') html += '<span class="wrong-tag">📕 错题</span>';
+            if (data.answered[q.id]) { html += data.results[q.id] === true ? '<span class="status-badge done">✅ 已掌握</span>' : '<span class="status-badge wrong">❌ 需重练</span>'; }
+            var displayText = q.question;
+            if (q.type === 'fill' && q.blanks) { for (var b = 0; b < q.blanks.length; b++) { displayText = displayText.replace('【' + (b + 1) + '】', '<span class="blank">____</span>'); } }
+            html += '<div class="question-text">' + displayText + '</div>';
+            if (q.dataTable) html += q.dataTable;
+            if (q.type === 'choice') {
+                var labels = ['A', 'B', 'C', 'D'];
+                html += '<div class="options">';
+                for (var i = 0; i < q.options.length; i++) { html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i + '"><span class="option-label">' + labels[i] + '.</span> ' + q.options[i] + '</button>'; }
+                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
+                html += '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
+            } else {
+                html += '<div class="fill-input-area">';
+                for (var f = 0; f < q.blanks.length; f++) { html += '<div class="fill-row"><label>空' + (f + 1) + '：</label><input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off"><span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span></div>'; }
+                html += '</div>';
+                html += '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id + ')">✅ 提交答案</button></div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
+                html += '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
+            }
+            html += '</div>';
+            container.innerHTML = html; updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (q.type === 'fill') {
+                setTimeout(function() {
+                    var inputs = document.querySelectorAll('.fill-row input');
+                    inputs.forEach(function(inp, idx) { inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); if (idx === inputs.length - 1) handleFill(q.id); else inputs[idx + 1].focus(); } }); });
+                    if (inputs.length > 0 && !isAnswered) inputs[0].focus();
+                }, 100);
+            }
+        }
+
+        function handleChoice(selected, qId) {
+            if (isAnswered) return; var q = getQ(qId); if (!q) return; isAnswered = true;
+            var isCorrect = (selected === q.correct);
+            var btns = document.querySelectorAll('.option-btn'); btns.forEach(function(b) { b.classList.add('disabled'); });
+            if (isCorrect) { btns[selected].classList.add('selected-correct'); data.results[qId] = true; removeWrong(qId); }
+            else { btns[selected].classList.add('selected-wrong'); btns[q.correct].classList.add('show-correct'); data.results[qId] = false; addWrong(q, q.options[selected]); }
+            data.answered[qId] = true; saveData(data);
+            var exp = document.getElementById('exp_' + qId); if (exp) exp.classList.add('show');
+            var nextBtn = document.getElementById('nextBtn'); if (nextBtn) nextBtn.disabled = false;
+            if (isPracticeMode) { var remaining = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam' && !data.answered[item.qId]; }); if (remaining.length === 0) { render(); return; } var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); var un = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) un.push(ids[i]); } filteredIds = shuffle(un); }
+            updateUI();
+        }
+        function handleFill(qId) {
+            if (isAnswered) return; var q = getQ(qId); if (!q || q.type !== 'fill') return;
+            var allCorrect = true, allFilled = true, userAnswers = [];
+            for (var i = 0; i < q.blanks.length; i++) {
+                var input = document.getElementById('fill_' + q.id + '_' + i); if (!input) { allFilled = false; continue; }
+                var userVal = input.value.trim(); userAnswers.push(userVal);
+                if (userVal === '') { allFilled = false; continue; }
+                if (userVal.replace(/\s/g, '') === q.blanks[i].replace(/\s/g, '')) { input.classList.add('correct'); }
+                else { input.classList.add('wrong'); allCorrect = false; var hint = document.getElementById('fillHint_' + q.id + '_' + i); if (hint) { hint.style.display = 'inline'; hint.textContent = '→ 正确答案：' + q.blanks[i]; } }
+                input.disabled = true;
+            }
+            if (!allFilled) { alert('请填写所有空再提交'); return; }
+            isAnswered = true;
+            if (allCorrect) { data.results[qId] = true; removeWrong(qId); }
+            else { data.results[qId] = false; addWrong(q, userAnswers.join('、')); }
+            data.answered[qId] = true; saveData(data);
+            var exp = document.getElementById('exp_' + qId); if (exp) exp.classList.add('show');
+            var submitBtn = document.getElementById('fillSubmitBtn'); if (submitBtn) submitBtn.disabled = true;
+            var nextBtn = document.getElementById('nextBtnFill'); if (nextBtn) nextBtn.disabled = false;
+            if (isPracticeMode) { var remaining = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam' && !data.answered[item.qId]; }); if (remaining.length === 0) { render(); return; } var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); var un = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) un.push(ids[i]); } filteredIds = shuffle(un); }
+            updateUI();
+        }
+        function goNext() { if (isPracticeMode) { var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); var un = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) un.push(ids[i]); } if (un.length === 0) { render(); return; } filteredIds = shuffle(un); render(); return; } render(); }
+        function setFilter(filter) {
+            if (filter === 'wrong') { var wc = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).length; if (wc === 0) { alert('🎉 错题本为空！'); return; } isPracticeMode = false; currentFilter = 'wrong'; var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); }); render(); return; }
+            isPracticeMode = false; currentFilter = filter; var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); }); filteredIds = shuffle(getFilteredIds(filter)); render();
+        }
+        function startPractice() { var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); if (ids.length === 0) { alert('错题本为空'); return; } isPracticeMode = true; currentFilter = 'practice'; filteredIds = shuffle(ids.slice()); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); render(); }
+        function exitPractice() { isPracticeMode = false; currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
+        function resetAll() { if (!confirm('重置所有进度？')) return; data = { answered: {}, results: {} }; saveData(data); wrongList = []; saveWrong(wrongList); if (isPracticeMode) { isPracticeMode = false; } currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
+        filteredIds = shuffle(getFilteredIds('all')); render();
+        console.log('📝 第四章真题演练（四步法）已加载，共 ' + questionBank.length + ' 题');
+    </script>
+</body>
+</html>
