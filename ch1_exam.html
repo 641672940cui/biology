@@ -45,22 +45,12 @@
         .fill-row input.wrong { border-color: #c0392b; background: #fde8e6; }
         .fill-row input:disabled { opacity: 0.7; }
         .fill-row .correct-answer-hint { font-size: 14px; color: #2d7d46; font-weight: 600; }
-
-        /* ===== 四步法解析样式 ===== */
         .explanation { background: #f8faff; border-radius: 12px; padding: 14px 16px; margin: 12px 0 6px; border-left: 4px solid #1a5276; display: none; font-size: 14px; line-height: 1.7; color: #2c3e50; }
         .explanation.show { display: block; }
         .step-block { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #fff; border-left: 3px solid #1a5276; }
         .step-block:last-child { margin-bottom: 0; }
         .step-label { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #1a5276; padding: 2px 10px; border-radius: 10px; margin-bottom: 6px; }
         .step-content { font-size: 14px; line-height: 1.7; color: #2c3e50; }
-        .step-content .chain { background: #f0f5fa; padding: 6px 10px; border-radius: 6px; margin-top: 4px; font-size: 13px; }
-        .step-content .chain-item { display: inline-block; background: #e3eef7; color: #1a5276; padding: 2px 8px; border-radius: 6px; margin: 2px 2px; font-weight: 600; font-size: 13px; }
-        .step-content .arrow { color: #1a5276; font-weight: 700; margin: 0 2px; }
-        .compare-table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 13px; }
-        .compare-table th { background: #e3eef7; color: #1a5276; padding: 6px 8px; text-align: left; font-weight: 600; }
-        .compare-table td { padding: 6px 8px; border-bottom: 1px solid #e8ecf1; }
-        .compare-table .ok { color: #2d7d46; font-weight: 600; }
-        .compare-table .no { color: #c0392b; font-weight: 600; }
         .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 8px; font-size: 13px; }
         .tip-yellow strong { color: #8a6d3b; }
         .source-link { font-size: 12px; color: #1a5276; margin-top: 8px; padding: 6px 10px; background: #f0f5fa; border-radius: 6px; }
@@ -125,22 +115,19 @@
     <button class="wrong-book-btn" id="wrongBookBtn" onclick="setFilter('wrong')">📕 错题本 <span class="badge" id="wrongBadge">0</span></button>
 
     <script>
-        // ================================================================
-        // 第一章真题演练题库（四步法解析）
-        // ================================================================
         var questionBank = [{
             id: 1, type: 'choice', section: 'choice',
-            question: '肺炎支原体和大肠杆菌细胞中都没有细胞骨架。关于肺炎支原体的叙述正确的是（　）',
-            options: ['肺炎支原体和大肠杆菌细胞中都没有细胞骨架', '肺炎支原体中有部分水失去了流动性和溶解性', '肺炎支原体有核膜包被的细胞核', '肺炎支原体属于真核生物'],
-            correct: 0,
+            question: '肺炎支原体是一种能在宿主细胞内寄生并引起肺炎的病原体。下列有关肺炎支原体的叙述，错误的是（　）',
+            options: ['肺炎支原体属于原核生物，没有核膜包被的细胞核', '肺炎支原体细胞中只有核糖体一种细胞器', '肺炎支原体细胞中既有自由水也有结合水', '肺炎支原体可以进行有丝分裂，快速增殖'],
+            correct: 3,
             explanation: {
-                step1: '题目说的是“肺炎支原体”，一种微生物。',
-                step2: '“支原体”属于**原核生物**（无细胞壁、无核膜）。',
-                step3: '原核生物的逻辑链条：无核膜包被的细胞核 → 无染色体 → 只有核糖体一种细胞器 → 无细胞骨架。',
-                step4: 'A：原核生物无细胞骨架 ✅；B：结合水才失去流动性，自由水有流动性，说法不准确 ❌；C：原核生物无核膜 ❌；D：原核生物不是真核生物 ❌。'
+                step1: '题目说肺炎支原体是引起肺炎的病原体，问错误叙述。',
+                step2: '支原体的分类（原核）、细胞器、水的存在形式、繁殖方式。',
+                step3: '原核生物的逻辑链条：支原体是**原核生物** → 无核膜包被的细胞核；只有**核糖体**一种细胞器；细胞中既有自由水也有结合水；原核生物进行**二分裂**，不进行有丝分裂。',
+                step4: 'A：原核生物，无核膜 ✅；B：只有核糖体一种细胞器 ✅；C：既有自由水也有结合水 ✅；D：原核生物进行**二分裂**，不进行有丝分裂 ❌。'
             },
-            tip: '支原体是原核生物，无细胞壁、无核膜、无细胞骨架。',
-            source: '第1章单元测试'
+            tip: '原核生物进行二分裂，不进行有丝分裂和减数分裂。',
+            source: '第1章单元测试（改编）'
         }, {
             id: 2, type: 'choice', section: 'choice',
             question: '下列关于细胞学说的叙述中，正确的是（　）',
@@ -150,7 +137,7 @@
                 step1: '题目问的是“细胞学说”的相关叙述。',
                 step2: '细胞学说的建立者、内容、意义。',
                 step3: '细胞学说的逻辑链条：施莱登+施旺建立 → 一切动植物都由细胞构成 → 揭示动植物统一性 → 魏尔肖补充“新细胞来自老细胞分裂”。',
-                step4: 'A：细胞学说使研究进入**细胞水平**，不是分子水平 ❌；B：施莱登提出植物由细胞构成，“新细胞来自老细胞分裂”是**魏尔肖**提出的 ❌；C：细胞学说揭示了生物界的统一性，说明生物之间有亲缘关系 ✅；D：细胞学说只涉及**动植物**，不涉及原核与真核的区别 ❌。'
+                step4: 'A：细胞学说使研究进入**细胞水平**，不是分子水平 ❌；B：“新细胞来自老细胞分裂”是**魏尔肖**提出的 ❌；C：细胞学说揭示了生物界的统一性，说明生物之间有亲缘关系 ✅；D：细胞学说只涉及**动植物**，不涉及原核与真核的区别 ❌。'
             },
             tip: '细胞学说揭示的是动植物界的统一性，不是原核与真核的统一性。',
             source: '第1章单元测试'
@@ -195,17 +182,17 @@
             source: '第1章单元测试'
         }, {
             id: 6, type: 'choice', section: 'choice',
-            question: '下列关于真核生物和原核生物的叙述中，正确的是（　）',
-            options: ['酵母菌和大肠杆菌都属于原核生物', '金黄色葡萄球菌和金针菇都含有核糖体和DNA', '原核生物中既有自养生物又有异养生物', '细胞没有叶绿体就不能进行光合作用'],
-            correct: 1,
+            question: '下列关于真核生物和原核生物的叙述中，错误的是（　）',
+            options: ['酵母菌和大肠杆菌都属于原核生物', '金黄色葡萄球菌和金针菇都含有核糖体和DNA', '原核生物中既有自养生物又有异养生物', '蓝细菌没有叶绿体，但能进行光合作用'],
+            correct: 0,
             explanation: {
-                step1: '题目比较真核生物和原核生物。',
+                step1: '题目问真核生物和原核生物的错误叙述。',
                 step2: '判断各选项中的生物属于哪一类。',
-                step3: '生物分类的逻辑链条：酵母菌=真菌=真核；大肠杆菌=细菌=原核；金黄色葡萄球菌=细菌=原核；金针菇=真菌=真核。原核和真核都含核糖体和DNA。',
-                step4: 'A：酵母菌是真核 ❌；B：金黄色葡萄球菌（原核）+金针菇（真核），都含核糖体和DNA ✅；C：原核生物有自养（蓝细菌）也有异养（大肠杆菌），但选项本身说法正确，不是最佳答案；D：蓝细菌无叶绿体但能光合 ❌。'
+                step3: '生物分类的逻辑链条：酵母菌=真菌=**真核**；大肠杆菌=细菌=**原核**；金黄色葡萄球菌=细菌=原核；金针菇=真菌=真核。原核和真核都含核糖体和DNA。蓝细菌无叶绿体但能光合。',
+                step4: 'A：酵母菌是**真核**，不是原核 ❌；B：金黄色葡萄球菌（原核）+金针菇（真核），都含核糖体和DNA ✅；C：蓝细菌自养，大肠杆菌异养 ✅；D：蓝细菌无叶绿体但能光合 ✅。'
             },
-            tip: '原核和真核都含核糖体和DNA，这是细胞的统一性。',
-            source: '第1章单元测试'
+            tip: '酵母菌是真核（真菌），大肠杆菌是原核（细菌）。',
+            source: '第1章单元测试（改编）'
         }, {
             id: 7, type: 'choice', section: 'choice',
             question: '细胞学说为生物学的发展起到了奠基作用，主要原因是它揭示了（　）',
@@ -257,9 +244,6 @@
             source: '第1章单元测试'
         }];
 
-        // ================================================================
-        // 存储
-        // ================================================================
         var STORAGE_KEY = 'ch1_exam_data';
         var WRONG_KEY = 'ch1_exam_wrong_data';
         function loadData() { try { var raw = localStorage.getItem(STORAGE_KEY); if (raw) return JSON.parse(raw); } catch (e) {} return { answered: {}, results: {} }; }
@@ -300,28 +284,13 @@
         }
         function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 1 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
 
-        // ================================================================
-        // 渲染四步法解析
-        // ================================================================
         function renderExplanation(q) {
             var e = q.explanation;
             var html = '';
-            html += '<div class="step-block">';
-            html += '<span class="step-label">第1步 · 识别情境</span>';
-            html += '<div class="step-content">' + e.step1 + '</div>';
-            html += '</div>';
-            html += '<div class="step-block">';
-            html += '<span class="step-label">第2步 · 定位知识</span>';
-            html += '<div class="step-content">' + e.step2 + '</div>';
-            html += '</div>';
-            html += '<div class="step-block">';
-            html += '<span class="step-label">第3步 · 调用模型</span>';
-            html += '<div class="step-content">' + e.step3 + '</div>';
-            html += '</div>';
-            html += '<div class="step-block">';
-            html += '<span class="step-label">第4步 · 比对输出</span>';
-            html += '<div class="step-content">' + e.step4 + '</div>';
-            html += '</div>';
+            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
             if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
             if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
             return html;
