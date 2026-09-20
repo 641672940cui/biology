@@ -28,6 +28,9 @@
         .question-source { display: inline-block; font-size: 10px; font-weight: 400; color: #6b7a8f; background: #f5f5f5; padding: 2px 10px; border-radius: 12px; margin-left: 8px; }
         .question-text { font-size: 16px; font-weight: 500; line-height: 1.7; margin-bottom: 12px; }
         .question-text .blank { display: inline-block; min-width: 70px; border-bottom: 2px dashed #1a5276; margin: 0 4px; color: #1a5276; font-weight: 600; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+        .data-table th { background: #e3eef7; color: #1a5276; padding: 8px 10px; text-align: center; font-weight: 600; border: 1px solid #d0d7e2; }
+        .data-table td { padding: 8px 10px; text-align: center; border: 1px solid #e8ecf1; }
         .options { display: flex; flex-direction: column; gap: 10px; margin: 12px 0 10px; }
         .option-btn { display: block; width: 100%; text-align: left; padding: 14px 16px; border-radius: 12px; border: 2px solid #e2e7ef; background: #fff; font-size: 15px; line-height: 1.5; cursor: pointer; font-family: inherit; min-height: 48px; transition: all 0.2s; }
         .option-btn:active { transform: scale(0.98); }
@@ -86,6 +89,7 @@
             .option-btn { font-size: 14px; padding: 12px 14px; min-height: 44px; }
             .btn-primary { font-size: 15px; min-height: 44px; padding: 12px; }
             .fill-row input { font-size: 14px; padding: 10px 12px; min-height: 40px; }
+            .data-table { font-size: 13px; }
         }
     </style>
 </head>
@@ -117,17 +121,17 @@
     <script>
         var questionBank = [{
             id: 1, type: 'choice', section: 'choice',
-            question: '下图为氨基酸和Na⁺进出肾小管上皮细胞的示意图，管腔中氨基酸→上皮细胞、管腔中Na⁺→上皮细胞、上皮细胞中氨基酸→组织液的运输方式分别是（　）',
-            options: ['主动运输、被动运输、主动运输', '被动运输、被动运输、被动运输', '被动运输、主动运输、被动运输', '主动运输、被动运输、被动运输'],
+            question: '肾小管上皮细胞能从管腔中吸收氨基酸和Na⁺。已知：管腔中氨基酸浓度低于上皮细胞内，管腔中Na⁺浓度高于上皮细胞内；上皮细胞内氨基酸浓度高于组织液。下列叙述正确的是（　）',
+            options: ['管腔中氨基酸进入上皮细胞是协助扩散', '管腔中Na⁺进入上皮细胞是主动运输', '上皮细胞中氨基酸进入组织液是主动运输', '管腔中Na⁺进入上皮细胞是顺浓度梯度运输'],
             correct: 3,
             explanation: {
-                step1: '题目给出肾小管上皮细胞的物质运输示意图，问三种运输方式。',
+                step1: '题目说肾小管上皮细胞吸收氨基酸和Na⁺，给出浓度关系。',
                 step2: '三种跨膜运输方式的判断依据：是否需要载体、是否耗能、是否逆浓度梯度。',
-                step3: '跨膜运输的逻辑链条：管腔中氨基酸→上皮细胞：逆浓度梯度，需要载体，耗能→**主动运输**；管腔中Na⁺→上皮细胞：顺浓度梯度，需要载体，不耗能→**被动运输**（协助扩散）；上皮细胞中氨基酸→组织液：顺浓度梯度，不耗能→**被动运输**。',
-                step4: '答案：主动运输、被动运输、被动运输 → **D**。'
+                step3: '跨膜运输的逻辑链条：管腔中氨基酸→上皮细胞：管腔浓度低于细胞内→逆浓度梯度→**主动运输**；管腔中Na⁺→上皮细胞：管腔浓度高于细胞内→顺浓度梯度→**被动运输**（协助扩散）；上皮细胞中氨基酸→组织液：细胞内浓度高于组织液→顺浓度梯度→**被动运输**。',
+                step4: 'A：氨基酸进入上皮细胞是**主动运输**（逆浓度梯度）❌；B：Na⁺进入上皮细胞是**被动运输**（顺浓度梯度）❌；C：氨基酸进入组织液是**被动运输**（顺浓度梯度）❌；D：Na⁺进入上皮细胞是**顺浓度梯度运输** ✅。'
             },
             tip: '判断运输方式：看方向（高→低还是低→高）+ 看是否需要载体 + 看是否耗能。',
-            source: '第4章期末复习巩固训练'
+            source: '第4章期末复习巩固训练（改编）'
         }, {
             id: 2, type: 'choice', section: 'choice',
             question: '哺乳动物细胞在0.9%NaCl溶液中仍能保持其正常形态。将兔红细胞置于不同浓度NaCl溶液中，下列叙述正确的是（　）',
@@ -143,7 +147,8 @@
             source: '第4章期末复习巩固训练'
         }, {
             id: 3, type: 'choice', section: 'choice',
-            question: '将三组生理状态相同的某植物幼根分别培养在含有相同培养液的密闭培养瓶中，测定根吸收某一矿质元素离子的量。空气17℃吸收量100%，氮气17℃吸收量10%，空气3℃吸收量28%。下列分析正确的是（　）',
+            question: '将三组生理状态相同的某植物幼根分别培养在含有相同培养液的密闭培养瓶中，测定根吸收某一矿质元素离子的量。培养条件及实验结果如下表。下列分析正确的是（　）',
+            dataTable: '<table class="data-table"><tr><th>培养瓶中气体</th><th>温度（℃）</th><th>离子相对吸收量（%）</th></tr><tr><td>空气</td><td>17</td><td>100</td></tr><tr><td>氮气</td><td>17</td><td>10</td></tr><tr><td>空气</td><td>3</td><td>28</td></tr></table>',
             options: ['有氧条件有利于该植物幼根对该离子的吸收', '该植物幼根对该离子的吸收与温度的变化无关', '氮气环境中该植物幼根细胞吸收该离子不消耗ATP', '与空气相比，氮气环境有利于该植物幼根对该离子的吸收'],
             correct: 0,
             explanation: {
@@ -156,7 +161,7 @@
             source: '第4章期末复习巩固训练'
         }, {
             id: 4, type: 'choice', section: 'choice',
-            question: '将某种植物的成熟细胞放入一定浓度的物质A溶液中，发现其原生质体的体积先减小后增大。下列叙述正确的是（　）',
+            question: '将某种植物的成熟细胞放入一定浓度的物质A溶液中，发现其原生质体的体积先减小后增大，最终恢复到接近初始水平。下列叙述正确的是（　）',
             options: ['0~4h内物质A没有通过细胞膜进入细胞内', '0~1h内细胞体积与原生质体体积的变化量相等', '2~3h内物质A溶液的渗透压小于细胞液的渗透压', '0~1h内液泡中液体的渗透压大于细胞质基质的渗透压'],
             correct: 2,
             explanation: {
@@ -166,10 +171,10 @@
                 step4: 'A：物质A**进入了**细胞（否则不会复原）❌；B：细胞壁伸缩性小，细胞体积变化量**小于**原生质体 ❌；C：2~3h时细胞吸水→外界渗透压小于细胞液 ✅；D：0~1h时细胞失水→液泡渗透压**小于**细胞质基质 ❌。'
             },
             tip: '先减小后增大：先质壁分离，后物质A进入细胞导致复原。',
-            source: '第4章期末复习巩固训练'
+            source: '第4章期末复习巩固训练（改编）'
         }, {
             id: 5, type: 'choice', section: 'choice',
-            question: '将某植物花冠切成大小和形状相同的细条，分别置于不同浓度的蔗糖溶液中，浸泡相同时间后测量长度。结果发现，a组长度增加，f组长度减小。使细条在浸泡前后长度不变的蔗糖浓度介于（　）',
+            question: '将某植物花冠切成大小和形状相同的细条，分为a、b、c、d、e、f六组，分别置于不同浓度的蔗糖溶液中，浸泡相同时间后测量各组细条的长度。结果发现：a组细条长度增加，f组细条长度减小，b、c、d、e组长度变化不明显。使细条在浸泡前后长度不变的蔗糖浓度介于（　）',
             options: ['0.2～0.3mol/L', '0.3～0.4mol/L', '0.4～0.5mol/L', '0.5～0.6mol/L'],
             correct: 2,
             explanation: {
@@ -179,7 +184,7 @@
                 step4: '根据实验数据推断，长度不变的浓度介于**0.4～0.5mol/L**之间 → C。'
             },
             tip: '长度不变→外界浓度≈细胞液浓度（等渗）。',
-            source: '第4章期末复习巩固训练'
+            source: '第4章期末复习巩固训练（改编）'
         }, {
             id: 6, type: 'choice', section: 'choice',
             question: '下列有关物质跨膜运输的叙述，正确的是（　）',
@@ -261,144 +266,4 @@
         function getQ(id) { for (var i = 0; i < questionBank.length; i++) { if (questionBank[i].id === id) return questionBank[i]; } return null; }
         function shuffle(arr) { for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; } return arr; }
         function getUnanswered(ids) { var r = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) r.push(ids[i]); } return r; }
-        function getProgress() { var total = filteredIds.length, done = 0, correct = 0; for (var i = 0; i < filteredIds.length; i++) { var id = filteredIds[i]; if (data.answered[id]) { done++; if (data.results[id] === true) correct++; } } var rate = done === 0 ? 0 : Math.round((correct / done) * 100); return { total: total, done: done, correct: correct, rate: rate }; }
-        function updateUI() {
-            var p = getProgress();
-            var wc = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).length;
-            document.getElementById('statsLabel').textContent = p.done + ' / ' + p.total;
-            document.getElementById('progressFill').style.width = (p.total === 0 ? 0 : (p.done / p.total) * 100) + '%';
-            document.getElementById('correctRate').textContent = '✅ 正确率：' + (p.done === 0 ? '--%' : p.rate + '%');
-            document.getElementById('wrongCount').textContent = '❌ 错题：' + wc;
-            document.getElementById('wrongBadge').textContent = wc;
-            document.getElementById('wrongBookBtn').style.display = (wc > 0 && currentFilter !== 'wrong') ? 'flex' : 'none';
-            var idxData = JSON.parse(localStorage.getItem('bio_index_data') || '{"doneMap":{}}');
-            idxData.doneMap['ch4_exam'] = p.done;
-            localStorage.setItem('bio_index_data', JSON.stringify(idxData));
-        }
-        function addWrong(q, userAns) {
-            if (wrongList.some(function(item) { return item.chapter === 4 && item.type === 'exam' && item.qId === q.id; })) return;
-            var correctAns = q.type === 'choice' ? q.options[q.correct] : q.blanks.join('、');
-            wrongList.push({ chapter: 4, type: 'exam', qId: q.id, question: q.question, userAnswer: userAns || '', correctAnswer: correctAns });
-            saveWrong(wrongList);
-        }
-        function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 4 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
-
-        function renderExplanation(q) {
-            var e = q.explanation;
-            var html = '';
-            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
-            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
-            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
-            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
-            if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
-            if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-            return html;
-        }
-
-        function render() {
-            var container = document.getElementById('questionContainer');
-            if (currentFilter === 'wrong' && !isPracticeMode) {
-                var list = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; });
-                if (list.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">🎉</div><p>错题本已清空！</p></div>'; updateUI(); return; }
-                var html = '<div class="wrong-list-view"><div class="title">📕 错题本（' + list.length + '题）</div>';
-                list.forEach(function(item) { html += '<div class="item"><div class="q">' + item.question + '</div><div class="your">❌ 你的答案：' + (item.userAnswer || '未填写') + '</div><div class="correct">✅ 正确答案：' + item.correctAnswer + '</div></div>'; });
-                html += '<div class="back-to-practice"><button class="btn" onclick="startPractice()">🔄 重练错题</button></div></div>';
-                container.innerHTML = html; updateUI(); return;
-            }
-            if (filteredIds.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>当前暂无题目</p></div>'; updateUI(); return; }
-            var unanswered = getUnanswered(filteredIds);
-            if (unanswered.length === 0) {
-                var p = getProgress();
-                var msg = isPracticeMode ? '🎉 错题已全部消灭！' : '🎉 全部通关！';
-                container.innerHTML = '<div class="complete-screen"><div class="big-icon">🎉</div><h2>' + msg + '</h2><div class="score-big">' + p.rate + '%</div><p style="color:#6b7a8f;font-size:14px;">正确率 ' + p.rate + '% · 共 ' + filteredIds.length + ' 题</p>';
-                container.innerHTML += isPracticeMode ? '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="exitPractice()">🔙 退出练习</button>' : '<button class="btn-primary" style="margin-top:20px;max-width:200px;display:inline-block;" onclick="resetAll()">🔄 重新开始</button>';
-                container.innerHTML += '</div>'; updateUI(); return;
-            }
-            var targetId = unanswered[0]; var q = getQ(targetId);
-            if (!q) { container.innerHTML = '<div class="empty-state"><p>加载失败</p></div>'; return; }
-            currentQ = q; isAnswered = false;
-            var html = '<div class="question-card">';
-            var typeLabel = q.type === 'choice' ? '🎯 选择题' : '✍️ 非选择题';
-            html += '<span class="question-type">' + typeLabel + '</span>';
-            if (q.source) html += '<span class="question-source">📖 ' + q.source + '</span>';
-            if (isPracticeMode) html += '<span class="wrong-tag">📕 错题练习</span>';
-            var isW = wrongList.some(function(item) { return item.chapter === 4 && item.type === 'exam' && item.qId === q.id; });
-            if (isW && currentFilter !== 'wrong') html += '<span class="wrong-tag">📕 错题</span>';
-            if (data.answered[q.id]) { html += data.results[q.id] === true ? '<span class="status-badge done">✅ 已掌握</span>' : '<span class="status-badge wrong">❌ 需重练</span>'; }
-            var displayText = q.question;
-            if (q.type === 'fill' && q.blanks) { for (var b = 0; b < q.blanks.length; b++) { displayText = displayText.replace('【' + (b + 1) + '】', '<span class="blank">____</span>'); } }
-            html += '<div class="question-text">' + displayText + '</div>';
-            if (q.type === 'choice') {
-                var labels = ['A', 'B', 'C', 'D'];
-                html += '<div class="options">';
-                for (var i = 0; i < q.options.length; i++) { html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i + '"><span class="option-label">' + labels[i] + '.</span> ' + q.options[i] + '</button>'; }
-                html += '</div>';
-                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
-                html += '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
-            } else {
-                html += '<div class="fill-input-area">';
-                for (var f = 0; f < q.blanks.length; f++) { html += '<div class="fill-row"><label>空' + (f + 1) + '：</label><input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off"><span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span></div>'; }
-                html += '</div>';
-                html += '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id + ')">✅ 提交答案</button></div>';
-                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
-                html += '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
-            }
-            html += '</div>';
-            container.innerHTML = html; updateUI();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (q.type === 'fill') {
-                setTimeout(function() {
-                    var inputs = document.querySelectorAll('.fill-row input');
-                    inputs.forEach(function(inp, idx) { inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); if (idx === inputs.length - 1) handleFill(q.id); else inputs[idx + 1].focus(); } }); });
-                    if (inputs.length > 0 && !isAnswered) inputs[0].focus();
-                }, 100);
-            }
-        }
-
-        function handleChoice(selected, qId) {
-            if (isAnswered) return; var q = getQ(qId); if (!q) return; isAnswered = true;
-            var isCorrect = (selected === q.correct);
-            var btns = document.querySelectorAll('.option-btn'); btns.forEach(function(b) { b.classList.add('disabled'); });
-            if (isCorrect) { btns[selected].classList.add('selected-correct'); data.results[qId] = true; removeWrong(qId); }
-            else { btns[selected].classList.add('selected-wrong'); btns[q.correct].classList.add('show-correct'); data.results[qId] = false; addWrong(q, q.options[selected]); }
-            data.answered[qId] = true; saveData(data);
-            var exp = document.getElementById('exp_' + qId); if (exp) exp.classList.add('show');
-            var nextBtn = document.getElementById('nextBtn'); if (nextBtn) nextBtn.disabled = false;
-            if (isPracticeMode) { var remaining = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam' && !data.answered[item.qId]; }); if (remaining.length === 0) { render(); return; } var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); var un = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) un.push(ids[i]); } filteredIds = shuffle(un); }
-            updateUI();
-        }
-        function handleFill(qId) {
-            if (isAnswered) return; var q = getQ(qId); if (!q || q.type !== 'fill') return;
-            var allCorrect = true, allFilled = true, userAnswers = [];
-            for (var i = 0; i < q.blanks.length; i++) {
-                var input = document.getElementById('fill_' + q.id + '_' + i); if (!input) { allFilled = false; continue; }
-                var userVal = input.value.trim(); userAnswers.push(userVal);
-                if (userVal === '') { allFilled = false; continue; }
-                if (userVal.replace(/\s/g, '') === q.blanks[i].replace(/\s/g, '')) { input.classList.add('correct'); }
-                else { input.classList.add('wrong'); allCorrect = false; var hint = document.getElementById('fillHint_' + q.id + '_' + i); if (hint) { hint.style.display = 'inline'; hint.textContent = '→ 正确答案：' + q.blanks[i]; } }
-                input.disabled = true;
-            }
-            if (!allFilled) { alert('请填写所有空再提交'); return; }
-            isAnswered = true;
-            if (allCorrect) { data.results[qId] = true; removeWrong(qId); }
-            else { data.results[qId] = false; addWrong(q, userAnswers.join('、')); }
-            data.answered[qId] = true; saveData(data);
-            var exp = document.getElementById('exp_' + qId); if (exp) exp.classList.add('show');
-            var submitBtn = document.getElementById('fillSubmitBtn'); if (submitBtn) submitBtn.disabled = true;
-            var nextBtn = document.getElementById('nextBtnFill'); if (nextBtn) nextBtn.disabled = false;
-            if (isPracticeMode) { var remaining = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam' && !data.answered[item.qId]; }); if (remaining.length === 0) { render(); return; } var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); var un = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) un.push(ids[i]); } filteredIds = shuffle(un); }
-            updateUI();
-        }
-        function goNext() { if (isPracticeMode) { var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); var un = []; for (var i = 0; i < ids.length; i++) { if (!data.answered[ids[i]]) un.push(ids[i]); } if (un.length === 0) { render(); return; } filteredIds = shuffle(un); render(); return; } render(); }
-        function setFilter(filter) {
-            if (filter === 'wrong') { var wc = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).length; if (wc === 0) { alert('🎉 错题本为空！'); return; } isPracticeMode = false; currentFilter = 'wrong'; var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); }); render(); return; }
-            isPracticeMode = false; currentFilter = filter; var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filter === filter); }); filteredIds = shuffle(getFilteredIds(filter)); render();
-        }
-        function startPractice() { var ids = wrongList.filter(function(item) { return item.chapter === 4 && item.type === 'exam'; }).map(function(item) { return item.qId; }); if (ids.length === 0) { alert('错题本为空'); return; } isPracticeMode = true; currentFilter = 'practice'; filteredIds = shuffle(ids.slice()); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); render(); }
-        function exitPractice() { isPracticeMode = false; currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
-        function resetAll() { if (!confirm('重置所有进度？')) return; data = { answered: {}, results: {} }; saveData(data); wrongList = []; saveWrong(wrongList); if (isPracticeMode) { isPracticeMode = false; } currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
-        filteredIds = shuffle(getFilteredIds('all')); render();
-        console.log('📝 第四章真题演练（四步法）已加载，共 ' + questionBank.length + ' 题');
-    </script>
-</body>
-</html>
+        function getProgress() { var total = filteredIds.length, done =
