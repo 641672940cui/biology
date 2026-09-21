@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>第五章 · 真题演练</title>
+    <title>第五章 · 真题演练（四步法）</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f7fb; color: #1a2332; padding: 12px 12px 100px 12px; max-width: 480px; margin: 0 auto; }
@@ -28,6 +28,9 @@
         .question-source { display: inline-block; font-size: 10px; font-weight: 400; color: #6b7a8f; background: #f5f5f5; padding: 2px 10px; border-radius: 12px; margin-left: 8px; }
         .question-text { font-size: 16px; font-weight: 500; line-height: 1.7; margin-bottom: 12px; }
         .question-text .blank { display: inline-block; min-width: 70px; border-bottom: 2px dashed #1a5276; margin: 0 4px; color: #1a5276; font-weight: 600; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+        .data-table th { background: #e3eef7; color: #1a5276; padding: 6px 8px; text-align: center; font-weight: 600; border: 1px solid #d0d7e2; }
+        .data-table td { padding: 6px 8px; text-align: center; border: 1px solid #e8ecf1; }
         .options { display: flex; flex-direction: column; gap: 10px; margin: 12px 0 10px; }
         .option-btn { display: block; width: 100%; text-align: left; padding: 14px 16px; border-radius: 12px; border: 2px solid #e2e7ef; background: #fff; font-size: 15px; line-height: 1.5; cursor: pointer; font-family: inherit; min-height: 48px; transition: all 0.2s; }
         .option-btn:active { transform: scale(0.98); }
@@ -47,7 +50,11 @@
         .fill-row .correct-answer-hint { font-size: 14px; color: #2d7d46; font-weight: 600; }
         .explanation { background: #f8faff; border-radius: 12px; padding: 14px 16px; margin: 12px 0 6px; border-left: 4px solid #1a5276; display: none; font-size: 14px; line-height: 1.7; color: #2c3e50; }
         .explanation.show { display: block; }
-        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 6px; font-size: 14px; }
+        .step-block { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #fff; border-left: 3px solid #1a5276; }
+        .step-block:last-child { margin-bottom: 0; }
+        .step-label { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #1a5276; padding: 2px 10px; border-radius: 10px; margin-bottom: 6px; }
+        .step-content { font-size: 14px; line-height: 1.7; color: #2c3e50; }
+        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 8px; font-size: 13px; }
         .tip-yellow strong { color: #8a6d3b; }
         .source-link { font-size: 12px; color: #1a5276; margin-top: 8px; padding: 6px 10px; background: #f0f5fa; border-radius: 6px; }
         .action-row { display: flex; gap: 10px; margin-top: 14px; }
@@ -82,6 +89,7 @@
             .option-btn { font-size: 14px; padding: 12px 14px; min-height: 44px; }
             .btn-primary { font-size: 15px; min-height: 44px; padding: 12px; }
             .fill-row input { font-size: 14px; padding: 10px 12px; min-height: 40px; }
+            .data-table { font-size: 12px; }
         }
     </style>
 </head>
@@ -116,67 +124,128 @@
             question: '酶是生物催化剂，其作用受pH等因素的影响。下列叙述错误的是（　）',
             options: ['酶分子有一定的形状，其形状与底物的结合无关', '绝大多数酶是蛋白质，其作用的强弱可用酶活性表示', '麦芽糖酶能催化麦芽糖的水解，不能催化蔗糖的水解', '将胃蛋白酶加入pH＝10的溶液中，其空间结构会改变'],
             correct: 0,
-            explanation: '酶分子有一定的形状，其形状与底物的结合有关。',
+            explanation: {
+                step1: '题目问酶的相关叙述中，哪一项是错误的。',
+                step2: '酶的本质、特性（专一性、条件温和）、pH对酶的影响。',
+                step3: '酶的逻辑链条：绝大多数酶是**蛋白质**；酶具有**专一性**（一种酶只催化一种或一类底物）；酶的形状与底物结合**有关**（锁钥模型）；过酸、过碱使酶**变性失活**，空间结构改变。',
+                step4: 'A：酶的形状与底物结合**有关**，不是无关 ❌；B：绝大多数酶是蛋白质 ✅；C：麦芽糖酶只催化麦芽糖，体现专一性 ✅；D：pH=10使胃蛋白酶变性，空间结构改变 ✅。'
+            },
+            tip: '酶的形状与底物结合有关（锁钥模型）；过酸过碱使酶变性失活。',
             source: '第5章单元测试卷'
         }, {
             id: 2, type: 'choice', section: 'choice',
             question: 'ATP是细胞中的能量通货。下列叙述错误的是（　）',
             options: ['ATP是细胞内的直接能源物质', 'ATP水解释放的能量可用于物质合成、肌肉收缩等生命活动', 'ATP含量在细胞内可维持在相对稳定的水平', 'ATP-ADP相互转化使细胞内物质和能量得以循环利用'],
             correct: 3,
-            explanation: '物质可以循环利用，但能量不能循环。',
+            explanation: {
+                step1: '题目问ATP的相关叙述中，哪一项是错误的。',
+                step2: 'ATP的功能、ATP与ADP的相互转化。',
+                step3: 'ATP的逻辑链条：ATP是**直接能源物质**；ATP水解释放能量用于各项生命活动；ATP在细胞中含量**很少**但转化**迅速**，维持在相对稳定水平；ATP与ADP的转化中，**物质可以循环，但能量不能循环**。',
+                step4: 'A：直接能源物质 ✅；B：水解释放能量用于生命活动 ✅；C：含量维持在相对稳定水平 ✅；D：能量**不能**循环利用 ❌。'
+            },
+            tip: '物质可以循环利用，能量不能循环。这是ATP-ADP转化的关键。',
             source: '第5章期末满分冲刺攻略'
         }, {
             id: 3, type: 'choice', section: 'choice',
             question: '下列关于ATP的叙述，正确的是（　）',
             options: ['ATP的化学性质很稳定', 'ATP中的五碳糖是核糖', '组成ATP的化学元素中没有N', 'ATP的A代表腺嘌呤'],
             correct: 1,
-            explanation: 'ATP中的五碳糖是核糖。ATP的A代表腺苷（腺嘌呤+核糖），化学性质不稳定。',
+            explanation: {
+                step1: '题目问ATP的正确叙述。',
+                step2: 'ATP的结构、组成元素、化学性质。',
+                step3: 'ATP的逻辑链条：ATP含**核糖**（五碳糖）；ATP的A代表**腺苷**（腺嘌呤+核糖）；ATP含C、H、O、N、P；ATP化学性质**不稳定**，远离A的高能磷酸键易断裂。',
+                step4: 'A：ATP化学性质**不稳定** ❌；B：五碳糖是**核糖** ✅；C：ATP含**N**（腺嘌呤中有N）❌；D：A代表**腺苷**，不是腺嘌呤 ❌。'
+            },
+            tip: 'ATP中的A=腺苷（腺嘌呤+核糖）；DNA/RNA中的A=腺嘌呤。',
             source: '第5章期末满分冲刺攻略'
         }, {
             id: 4, type: 'choice', section: 'choice',
             question: '下列关于酶与ATP的说法中，错误的是（　）',
             options: ['ATP参与的反应一定发生于细胞内部', '酶分子有一定的形状，其形状与底物的结合有关', '不是所有的酶都在核糖体上合成', 'ATP中的“A”与ATP彻底水解后生成的“A”表示相同物质'],
             correct: 3,
-            explanation: 'ATP中的“A”是腺苷，彻底水解后生成的“A”是腺嘌呤，两者不同。',
+            explanation: {
+                step1: '题目问酶与ATP的错误说法。',
+                step2: 'ATP的组成、酶的本质与合成场所。',
+                step3: '酶与ATP的逻辑链条：ATP参与的反应在细胞内进行；酶的形状与底物结合**有关**；酶绝大多数是蛋白质（在核糖体合成），少数是**RNA**（在细胞核合成）；ATP中的A是**腺苷**，彻底水解后的A是**腺嘌呤**，两者**不同**。',
+                step4: 'A：ATP反应在细胞内 ✅；B：酶形状与底物结合有关 ✅；C：少数酶是RNA，不在核糖体合成 ✅；D：ATP中的A是腺苷，水解后的A是腺嘌呤，**不同** ❌。'
+            },
+            tip: 'ATP中的A=腺苷；彻底水解后的A=腺嘌呤。两者不同！',
             source: '第5章期末满分冲刺攻略'
         }, {
             id: 5, type: 'choice', section: 'choice',
-            question: '对曲线图的相关描述，正确的是（　）',
-            options: ['图1纵坐标可以是K⁺吸收量，横坐标可以是呼吸作用强度', '图2纵坐标可以是酶活性，横坐标可以是温度', '若图3中横坐标表示底物浓度，纵坐标表示反应速率，则①②可表示等量酶在不同温度下的反应速率曲线', '若图3中横坐标表示底物浓度，纵坐标表示反应速率，①表示正常情况下反应速率与底物浓度的关系，则④可表示加入抑制剂后的反应速率与底物浓度的关系'],
-            correct: 3,
-            explanation: '加入抑制剂后反应速率降低，④可表示加入抑制剂后的曲线。',
-            source: '第5章单元测试卷'
+            question: '下列关于酶促反应速率影响因素的说法，正确的是（　）',
+            options: ['K⁺吸收量随呼吸作用强度的增加而增大，两者呈正相关', '酶活性随温度升高而增大，两者呈正相关', '底物浓度增加时，酶促反应速率先增大后趋于稳定，这是因为酶数量有限', '加入抑制剂后，酶促反应速率与底物浓度的关系曲线会整体上移'],
+            correct: 2,
+            explanation: {
+                step1: '题目问酶促反应速率影响因素的正确说法。',
+                step2: '温度、底物浓度、酶浓度、抑制剂对酶促反应的影响。',
+                step3: '酶促反应的逻辑链条：K⁺吸收是主动运输，受载体数量限制，不是简单正相关；酶活性随温度**先升后降**（有最适温度），不是正相关；底物浓度增加→反应速率先增大，后因**酶饱和**而趋于稳定；加入抑制剂后速率**降低**，曲线下移。',
+                step4: 'A：K⁺吸收受载体限制，不是简单正相关 ❌；B：酶活性随温度先升后降 ❌；C：底物增加→先升后稳定，因为酶数量有限 ✅；D：抑制剂使速率降低，曲线**下移** ❌。'
+            },
+            tip: '温度对酶活性：先升后降；底物浓度对反应速率：先升后平；抑制剂：曲线下移。',
+            source: '第5章单元测试卷（改编）'
         }, {
             id: 6, type: 'choice', section: 'choice',
-            question: '某同学在学习了酶的有关内容后想探究某些问题，设计了实验：管号1~4，稀释唾液5滴，分别放置37℃、沸水浴、0~4℃冰浴、37℃，缓冲液pH6.8，淀粉溶液1%，稀碘液检测。相关叙述正确的是（　）',
+            question: '某同学设计了探究温度对酶活性影响的实验，实验设计如下表。相关叙述正确的是（　）',
+            dataTable: '<table class="data-table"><tr><th>管号</th><th>稀释唾液</th><th>温度处理</th><th>缓冲液</th><th>淀粉溶液</th><th>检测试剂</th></tr><tr><td>1</td><td>5滴</td><td>37℃</td><td>pH6.8</td><td>1%</td><td>稀碘液</td></tr><tr><td>2</td><td>5滴</td><td>沸水浴</td><td>pH6.8</td><td>1%</td><td>稀碘液</td></tr><tr><td>3</td><td>5滴</td><td>0~4℃冰浴</td><td>pH6.8</td><td>1%</td><td>稀碘液</td></tr><tr><td>4</td><td>5滴</td><td>37℃</td><td>pH6.8</td><td>1%</td><td>稀碘液</td></tr></table>',
             options: ['3号试管逐渐升温至37℃，反应速率逐渐增大', '2号试管因为高温破坏酶的活性滴加碘液不变蓝', '本实验也可选用斐林试剂代替碘液进行检测', '本实验中，淀粉溶液的浓度和用量也是实验的自变量'],
             correct: 0,
-            explanation: '低温抑制酶活性，逐渐升温至37℃酶活性恢复，反应速率逐渐增大。',
+            explanation: {
+                step1: '题目给出探究温度对酶活性影响的实验设计表，问相关叙述。',
+                step2: '温度对酶活性的影响、实验设计原则（单一变量）。',
+                step3: '实验设计的逻辑链条：低温**抑制**酶活性，逐渐升温至37℃→酶活性**恢复**→反应速率逐渐增大；高温使酶**变性失活**→淀粉不被分解→滴加碘液**变蓝**；斐林试剂需要**水浴加热**，会干扰温度变量；本实验的自变量是**温度**。',
+                step4: 'A：低温抑制→升温后恢复→速率增大 ✅；B：高温失活→淀粉不分解→碘液**变蓝** ❌；C：斐林试剂需加热，**不能**替代 ❌；D：自变量是温度，不是淀粉浓度 ❌。'
+            },
+            tip: '低温抑制（可恢复），高温变性（不可恢复）。斐林试剂需加热，不能用于温度实验。',
             source: '第5章单元测试卷'
         }, {
             id: 7, type: 'choice', section: 'choice',
             question: '若呼吸作用产生的ATP可为C₃的还原过程供能，则没有光反应暗反应也能进行。该说法（　）',
-            options: ['正确', '错误', '无法判断', '部分正确'],
+            options: ['正确，因为ATP是直接能源物质', '错误，因为暗反应还需要光反应提供[H]', '正确，因为呼吸作用也能产生ATP', '错误，因为暗反应必须在光下进行'],
             correct: 1,
-            explanation: '暗反应必须需要光反应为其提供ATP和[H]，没有光反应则暗反应无法进行。',
-            source: '高一期末'
+            explanation: {
+                step1: '题目问暗反应能否在没有光反应的情况下进行。',
+                step2: '光反应与暗反应的关系。',
+                step3: '光合作用的逻辑链条：光反应为暗反应提供**[H]和ATP**；暗反应为光反应提供**ADP、Pi、NADP⁺**。暗反应不仅需要ATP，还需要**[H]**。呼吸作用产生的ATP**不能替代[H]**。',
+                step4: 'A：ATP不够，还需要[H] ❌；B：暗反应还需要光反应提供[H] ✅；C：呼吸作用产生的ATP不能替代[H] ❌；D：暗反应不需要光，但需要光反应的产物，理由错误 ❌。'
+            },
+            tip: '暗反应需要光反应提供[H]和ATP，缺一不可。',
+            source: '高一期末（改编）'
         }, {
             id: 8, type: 'fill', section: 'fill',
             question: 'ATP的结构简式是【1】，其中“～”代表【2】。',
             blanks: ['A-P~P~P', '高能磷酸键'],
-            explanation: 'ATP结构简式A-P~P~P，“～”代表高能磷酸键。',
+            explanation: {
+                step1: '题目问ATP的结构简式和“～”的含义。',
+                step2: 'ATP的结构。',
+                step3: 'ATP结构的逻辑链条：ATP = **A-P~P~P**；A代表腺苷，P代表磷酸基团，“～”代表**高能磷酸键**。',
+                step4: '答案：**A-P~P~P**、**高能磷酸键**。'
+            },
+            tip: 'ATP结构简式A-P~P~P，远离A的高能磷酸键最易断裂。',
             source: '第5章复习'
         }, {
             id: 9, type: 'fill', section: 'fill',
             question: '有氧呼吸第三阶段的场所是【1】，该阶段释放能量最多。',
             blanks: ['线粒体内膜'],
-            explanation: '有氧呼吸第三阶段在线粒体内膜上进行，释放能量最多。',
+            explanation: {
+                step1: '题目问有氧呼吸第三阶段的场所。',
+                step2: '有氧呼吸三个阶段。',
+                step3: '有氧呼吸的逻辑链条：第一阶段在**细胞质基质**；第二阶段在**线粒体基质**；第三阶段在**线粒体内膜**，释放能量最多。',
+                step4: '答案：**线粒体内膜**。'
+            },
+            tip: '口诀：“一质二基三内膜”——第一阶段细胞质基质，第二阶段线粒体基质，第三阶段线粒体内膜。',
             source: '第5章复习'
         }, {
             id: 10, type: 'fill', section: 'fill',
             question: '光合作用释放的O₂来自【1】，由鲁宾和卡门的同位素标记实验证明。',
             blanks: ['水'],
-            explanation: '光合作用释放的O₂来自水。',
+            explanation: {
+                step1: '题目问光合作用释放的O₂来自什么物质。',
+                step2: '光合作用光反应中水的光解。',
+                step3: '光合作用的逻辑链条：光反应中，**水光解**产生O₂和[H]。鲁宾和卡门用同位素标记实验证明：O₂来自**水**，不是CO₂。',
+                step4: '答案：**水**。'
+            },
+            tip: '光合作用释放的O₂来自水，由鲁宾和卡门的实验证明。',
             source: '第5章复习'
         }];
 
@@ -220,6 +289,18 @@
         }
         function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 5 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
 
+        function renderExplanation(q) {
+            var e = q.explanation;
+            var html = '';
+            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
+            if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
+            if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
+            return html;
+        }
+
         function render() {
             var container = document.getElementById('questionContainer');
             if (currentFilter === 'wrong' && !isPracticeMode) {
@@ -253,25 +334,20 @@
             var displayText = q.question;
             if (q.type === 'fill' && q.blanks) { for (var b = 0; b < q.blanks.length; b++) { displayText = displayText.replace('【' + (b + 1) + '】', '<span class="blank">____</span>'); } }
             html += '<div class="question-text">' + displayText + '</div>';
+            if (q.dataTable) html += q.dataTable;
             if (q.type === 'choice') {
                 var labels = ['A', 'B', 'C', 'D'];
                 html += '<div class="options">';
                 for (var i = 0; i < q.options.length; i++) { html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i + '"><span class="option-label">' + labels[i] + '.</span> ' + q.options[i] + '</button>'; }
                 html += '</div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
             } else {
                 html += '<div class="fill-input-area">';
                 for (var f = 0; f < q.blanks.length; f++) { html += '<div class="fill-row"><label>空' + (f + 1) + '：</label><input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off"><span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span></div>'; }
                 html += '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id + ')">✅ 提交答案</button></div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
             }
             html += '</div>';
@@ -329,7 +405,7 @@
         function exitPractice() { isPracticeMode = false; currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         function resetAll() { if (!confirm('重置所有进度？')) return; data = { answered: {}, results: {} }; saveData(data); wrongList = []; saveWrong(wrongList); if (isPracticeMode) { isPracticeMode = false; } currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         filteredIds = shuffle(getFilteredIds('all')); render();
-        console.log('📝 第五章真题演练已加载，共 ' + questionBank.length + ' 题');
+        console.log('📝 第五章真题演练（四步法）已加载，共 ' + questionBank.length + ' 题');
     </script>
 </body>
 </html>
