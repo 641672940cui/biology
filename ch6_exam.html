@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>第六章 · 真题演练</title>
+    <title>第六章 · 真题演练（四步法）</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f7fb; color: #1a2332; padding: 12px 12px 100px 12px; max-width: 480px; margin: 0 auto; }
@@ -47,7 +47,11 @@
         .fill-row .correct-answer-hint { font-size: 14px; color: #2d7d46; font-weight: 600; }
         .explanation { background: #f8faff; border-radius: 12px; padding: 14px 16px; margin: 12px 0 6px; border-left: 4px solid #1a5276; display: none; font-size: 14px; line-height: 1.7; color: #2c3e50; }
         .explanation.show { display: block; }
-        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 6px; font-size: 14px; }
+        .step-block { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #fff; border-left: 3px solid #1a5276; }
+        .step-block:last-child { margin-bottom: 0; }
+        .step-label { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #1a5276; padding: 2px 10px; border-radius: 10px; margin-bottom: 6px; }
+        .step-content { font-size: 14px; line-height: 1.7; color: #2c3e50; }
+        .tip-yellow { background: #fcf8e3; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #f0ad4e; margin-top: 8px; font-size: 13px; }
         .tip-yellow strong { color: #8a6d3b; }
         .source-link { font-size: 12px; color: #1a5276; margin-top: 8px; padding: 6px 10px; background: #f0f5fa; border-radius: 6px; }
         .action-row { display: flex; gap: 10px; margin-top: 14px; }
@@ -116,66 +120,126 @@
             question: '下列有关细胞周期的说法，正确的是（　）',
             options: ['不同细胞进行比较，其中细胞周期长的细胞，其分裂期也长', '细胞种类不同，细胞周期长短通常也不同', '高度分化的细胞基因不再表达，不存在细胞周期', '细胞分裂是一个与代谢有关的过程，温度越高所需的时间越短'],
             correct: 1,
-            explanation: '细胞种类不同，细胞周期长短通常不同。高度分化的细胞基因仍会表达（如合成蛋白质）。',
+            explanation: {
+                step1: '题目问细胞周期的正确说法。',
+                step2: '细胞周期的概念、分裂期与间期的关系、高度分化细胞的特点、温度对分裂的影响。',
+                step3: '细胞周期的逻辑链条：细胞周期 = 间期（90%~95%）+ 分裂期（5%~10%）；细胞种类不同，周期长短不同；高度分化的细胞**基因仍会表达**（如合成蛋白质），只是不再分裂；温度过高会使酶变性失活，分裂时间**延长**甚至停止。',
+                step4: 'A：周期长的细胞，分裂期不一定长（间期占比更大）❌；B：细胞种类不同，周期长短通常不同 ✅；C：高度分化细胞基因仍表达，只是无细胞周期 ❌；D：温度过高酶失活，时间延长 ❌。'
+            },
+            tip: '高度分化的细胞基因仍会表达，只是不再分裂，没有细胞周期。',
             source: '第6章单元测试'
         }, {
             id: 2, type: 'choice', section: 'choice',
             question: '含有20条染色体的玉米体细胞连续进行3次有丝分裂，产生的子细胞数和细胞内染色体数分别是（　）',
             options: ['6个，20条', '6个，80条', '8个，20条', '8个，80条'],
             correct: 2,
-            explanation: '连续3次分裂，2³=8个子细胞。有丝分裂染色体数目不变，仍为20条。',
+            explanation: {
+                step1: '题目说玉米体细胞20条染色体，连续有丝分裂3次，问子细胞数和染色体数。',
+                step2: '有丝分裂的子细胞数公式和染色体数目变化规律。',
+                step3: '有丝分裂的逻辑链条：连续分裂n次 → 子细胞数 = **2ⁿ**；有丝分裂**染色体数目不变**（亲代20条 → 子代20条）；只有减数分裂才会使染色体数目减半。',
+                step4: '2³ = **8个**子细胞；染色体数不变，仍为**20条** → C。'
+            },
+            tip: '有丝分裂子细胞数=2ⁿ，染色体数目不变。',
             source: '第6章单元测试'
         }, {
             id: 3, type: 'choice', section: 'choice',
             question: '下列关于洋葱根尖分生区细胞有丝分裂的叙述，正确的是（　）',
             options: ['分裂间期核DNA含量和染色体的数目都加倍', '分裂中期染色体数目与核DNA分子数相等', '纺锤体形成于分裂前期，消失于分裂后期', '染色单体形成于分裂间期，消失于分裂后期'],
             correct: 3,
-            explanation: '染色单体形成于间期（DNA复制），消失于后期（着丝点分裂）。间期染色体数目不变。',
+            explanation: {
+                step1: '题目问有丝分裂各时期变化的正确叙述。',
+                step2: '有丝分裂间期、前期、中期、后期的核心变化。',
+                step3: '有丝分裂的逻辑链条：间期DNA**加倍**，但染色体数目**不变**；中期染色体2N，DNA 4N，**不相等**；纺锤体形成于**前期**，消失于**末期**；染色单体形成于**间期**（DNA复制），消失于**后期**（着丝点分裂）。',
+                step4: 'A：间期DNA加倍，染色体数目不变 ❌；B：中期染色体2N，DNA 4N ❌；C：纺锤体消失于末期 ❌；D：染色单体间期形成、后期消失 ✅。'
+            },
+            tip: '间期DNA加倍但染色体不变；后期染色体加倍但DNA不变。',
             source: '第6章单元测试'
         }, {
             id: 4, type: 'choice', section: 'choice',
             question: '玉米体细胞中含有20条染色体，当姐妹染色单体为40条时，细胞可能处于细胞周期的（　）',
             options: ['后期、末期、间期', '间期、前期、中期', '间期', '间期、末期'],
             correct: 1,
-            explanation: '姐妹染色单体存在时期：间期（复制后）、前期、中期。后期着丝点分裂后消失。',
+            explanation: {
+                step1: '题目说玉米体细胞20条染色体，姐妹染色单体40条，问可能处于哪个时期。',
+                step2: '姐妹染色单体的形成和消失时期。',
+                step3: '姐妹染色单体的逻辑链条：间期DNA复制后 → 每条染色体含2条姐妹染色单体 → 20条染色体 × 2 = 40条；前期、中期姐妹染色单体**仍存在**；后期着丝点分裂 → 姐妹染色单体**消失**（变为0）。',
+                step4: '姐妹染色单体为40条的时期：**间期（复制后）、前期、中期** → B。'
+            },
+            tip: '姐妹染色单体存在于间期（复制后）、前期、中期；后期着丝点分裂后消失。',
             source: '第6章单元测试'
         }, {
             id: 5, type: 'choice', section: 'choice',
-            question: '动植物细胞有丝分裂过程基本相同，但也存在一些差异，下列有关二者分裂过程的叙述，错误的是（　）',
+            question: '动植物细胞有丝分裂过程基本相同，但也存在一些差异。下列有关二者分裂过程的叙述，错误的是（　）',
             options: ['在植物细胞有丝分裂末期高尔基体参与细胞壁的形成', '在动物细胞有丝分裂间期能观察到纺锤体和中心体', '中心体参与低等植物细胞有丝分裂的分裂活动', '有丝分裂消耗的能量主要是由线粒体提供的'],
             correct: 1,
-            explanation: '纺锤体在前期形成，间期观察不到。',
+            explanation: {
+                step1: '题目问动植物细胞有丝分裂差异的错误叙述。',
+                step2: '动植物细胞有丝分裂在前期和末期的区别、各结构出现的时期。',
+                step3: '动植物有丝分裂差异的逻辑链条：前期：植物由**细胞两极**发出纺锤丝，动物由**中心体**发出星射线；末期：植物形成**细胞板**，动物细胞膜**凹陷缢裂**；高尔基体参与植物细胞壁形成；中心体存在于动物和低等植物细胞；能量主要由线粒体提供。',
+                step4: 'A：高尔基体参与细胞壁形成 ✅；B：纺锤体在**前期**形成，间期观察不到 ❌；C：低等植物细胞有中心体 ✅；D：线粒体供能 ✅。'
+            },
+            tip: '纺锤体在前期形成，间期观察不到。',
             source: '第6章单元测试'
         }, {
             id: 6, type: 'choice', section: 'choice',
-            question: '下列关于蛙的红细胞分裂过程的描述正确的是（　）',
-            options: ['该分裂过程比较简单，消耗的能量相对较低', '该分裂过程中没有DNA和染色体的复制', '该分裂过程中没有纺锤体和染色体的变化是因为没有染色体', '该分裂过程由于细胞核缢裂成两个细胞核，因此子细胞中染色体数应减少一半'],
-            correct: 0,
-            explanation: '蛙的红细胞进行无丝分裂，过程简单，消耗能量低。',
-            source: '第6章单元测试'
+            question: '下列关于无丝分裂的叙述，正确的是（　）',
+            options: ['无丝分裂过程中没有DNA和染色体的复制', '无丝分裂过程中没有纺锤体和染色体的变化', '无丝分裂过程中细胞核先缢裂，子细胞染色体数减半', '无丝分裂只发生在原核细胞中'],
+            correct: 1,
+            explanation: {
+                step1: '题目问无丝分裂的正确叙述。',
+                step2: '无丝分裂的特点、过程、实例。',
+                step3: '无丝分裂的逻辑链条：无丝分裂过程中**有DNA复制**，但**没有纺锤体和染色体的出现**；细胞核先延长缢裂，然后整个细胞缢裂；**染色体数目不变**；无丝分裂发生在**真核细胞**中（如蛙的红细胞）。',
+                step4: 'A：无丝分裂**有DNA复制** ❌；B：无丝分裂**没有纺锤体和染色体的变化** ✅；C：无丝分裂染色体数**不变** ❌；D：无丝分裂发生在**真核细胞**中，原核细胞进行二分裂 ❌。'
+            },
+            tip: '无丝分裂有DNA复制，但没有纺锤体和染色体的出现；发生在真核细胞中。',
+            source: '第6章单元测试（改编）'
         }, {
             id: 7, type: 'fill', section: 'fill',
             question: '细胞周期包括【1】和分裂期两个阶段，其中间期占整个细胞周期的比例约为【2】。',
             blanks: ['间期', '90%~95%'],
-            explanation: '细胞周期包括间期和分裂期，间期占90%~95%。',
+            explanation: {
+                step1: '题目问细胞周期的两个阶段及间期占比。',
+                step2: '细胞周期的组成。',
+                step3: '细胞周期的逻辑链条：细胞周期 = **间期** + 分裂期；间期占**90%~95%**，分裂期占5%~10%。',
+                step4: '答案：**间期**、**90%~95%**。'
+            },
+            tip: '间期占细胞周期的90%~95%，完成DNA复制和蛋白质合成。',
             source: '第6章复习学案'
         }, {
             id: 8, type: 'fill', section: 'fill',
             question: '有丝分裂后期，着丝点分裂，染色体数目【1】，但DNA数【2】。',
             blanks: ['加倍', '不变'],
-            explanation: '后期着丝点分裂，染色体数目加倍，DNA数目不变。',
+            explanation: {
+                step1: '题目问有丝分裂后期染色体和DNA数目的变化。',
+                step2: '有丝分裂后期着丝点分裂的后果。',
+                step3: '有丝分裂后期的逻辑链条：着丝点分裂 → 姐妹染色单体分开 → 染色体数目**加倍**（2N→4N）；但DNA数目**不变**（仍为4N）。',
+                step4: '答案：**加倍**、**不变**。'
+            },
+            tip: '后期着丝点分裂，染色体加倍，但DNA不变。',
             source: '第6章复习学案'
         }, {
             id: 9, type: 'fill', section: 'fill',
             question: '细胞分化的实质是【1】，遗传物质【2】（填“改变”或“不变”）。',
             blanks: ['基因的选择性表达', '不变'],
-            explanation: '细胞分化的实质是基因的选择性表达，遗传物质不变。',
+            explanation: {
+                step1: '题目问细胞分化的实质和遗传物质是否改变。',
+                step2: '细胞分化的本质。',
+                step3: '细胞分化的逻辑链条：细胞分化的实质是**基因的选择性表达**；分化过程中遗传物质**不变**（DNA不变），只是不同细胞表达不同的基因。',
+                step4: '答案：**基因的选择性表达**、**不变**。'
+            },
+            tip: '细胞分化过程中遗传物质不变，只是基因选择性表达。',
             source: '第6章复习学案'
         }, {
             id: 10, type: 'fill', section: 'fill',
             question: '细胞凋亡是由【1】控制的程序性死亡，对机体【2】（填“有利”或“有害”）。',
             blanks: ['基因', '有利'],
-            explanation: '细胞凋亡是由基因控制的程序性死亡，对机体有利。',
+            explanation: {
+                step1: '题目问细胞凋亡的控制因素和对机体的影响。',
+                step2: '细胞凋亡的特点。',
+                step3: '细胞凋亡的逻辑链条：细胞凋亡是由**基因**控制的**程序性死亡**；细胞凋亡对机体**有利**（维持内部环境稳定）；细胞坏死对机体**有害**。',
+                step4: '答案：**基因**、**有利**。'
+            },
+            tip: '细胞凋亡是主动的、基因控制的，对机体有利；细胞坏死是被动的，对机体有害。',
             source: '第6章复习学案'
         }];
 
@@ -219,6 +283,18 @@
         }
         function removeWrong(qId) { wrongList = wrongList.filter(function(item) { return !(item.chapter === 6 && item.type === 'exam' && item.qId === qId); }); saveWrong(wrongList); }
 
+        function renderExplanation(q) {
+            var e = q.explanation;
+            var html = '';
+            html += '<div class="step-block"><span class="step-label">第1步 · 识别情境</span><div class="step-content">' + e.step1 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第2步 · 定位知识</span><div class="step-content">' + e.step2 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第3步 · 调用模型</span><div class="step-content">' + e.step3 + '</div></div>';
+            html += '<div class="step-block"><span class="step-label">第4步 · 比对输出</span><div class="step-content">' + e.step4 + '</div></div>';
+            if (q.tip) html += '<div class="tip-yellow"><strong>🟡 易错点：' + q.tip + '</strong></div>';
+            if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
+            return html;
+        }
+
         function render() {
             var container = document.getElementById('questionContainer');
             if (currentFilter === 'wrong' && !isPracticeMode) {
@@ -257,20 +333,14 @@
                 html += '<div class="options">';
                 for (var i = 0; i < q.options.length; i++) { html += '<button class="option-btn" onclick="handleChoice(' + i + ',' + q.id + ')" id="opt_' + i + '"><span class="option-label">' + labels[i] + '.</span> ' + q.options[i] + '</button>'; }
                 html += '</div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtn" onclick="goNext()" disabled>下一题 →</button></div>';
             } else {
                 html += '<div class="fill-input-area">';
                 for (var f = 0; f < q.blanks.length; f++) { html += '<div class="fill-row"><label>空' + (f + 1) + '：</label><input type="text" id="fill_' + q.id + '_' + f + '" placeholder="输入答案" autocomplete="off"><span class="correct-answer-hint" id="fillHint_' + q.id + '_' + f + '" style="display:none;"></span></div>'; }
                 html += '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="fillSubmitBtn" onclick="handleFill(' + q.id + ')">✅ 提交答案</button></div>';
-                html += '<div class="explanation" id="exp_' + q.id + '"><span class="label">📖 解析：</span>' + q.explanation;
-                if (q.tip) html += '<div class="tip-yellow"><strong>🟡 ' + q.tip + '</strong></div>';
-                if (q.source) html += '<div class="source-link">📎 来源：' + q.source + '</div>';
-                html += '</div>';
+                html += '<div class="explanation" id="exp_' + q.id + '">' + renderExplanation(q) + '</div>';
                 html += '<div class="action-row"><button class="btn-primary" id="nextBtnFill" onclick="goNext()" disabled>下一题 →</button></div>';
             }
             html += '</div>';
@@ -328,7 +398,7 @@
         function exitPractice() { isPracticeMode = false; currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         function resetAll() { if (!confirm('重置所有进度？')) return; data = { answered: {}, results: {} }; saveData(data); wrongList = []; saveWrong(wrongList); if (isPracticeMode) { isPracticeMode = false; } currentFilter = 'all'; filteredIds = shuffle(getFilteredIds('all')); var btns = document.querySelectorAll('.filter-btn'); btns.forEach(function(b) { b.classList.remove('active'); }); document.querySelector('.filter-btn[data-filter="all"]').classList.add('active'); render(); }
         filteredIds = shuffle(getFilteredIds('all')); render();
-        console.log('📝 第六章真题演练已加载，共 ' + questionBank.length + ' 题');
+        console.log('📝 第六章真题演练（四步法）已加载，共 ' + questionBank.length + ' 题');
     </script>
 </body>
 </html>
